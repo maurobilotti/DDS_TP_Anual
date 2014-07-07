@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TP_Anual_DDS_E2.Interesado">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="TP_Anual_DDS_E2.Interesado.EnumPrioridad" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Interesado.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <AssociationLine Name="Amigos" Type="TP_Anual_DDS_E2.Interesado" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.032" Y="0.5" />
+        <Point X="5.032" Y="0.125" />
+        <Point X="6.375" Y="0.125" />
+        <Point X="6.375" Y="0.812" />
+        <Point X="6" Y="0.812" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAACAAAEAAAAgAAABAAAAgAAAAAAAUAAAAQ=</HashCode>
+      <FileName>Interesado.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TipoJugador" />
+      <Property Name="IMail" />
+      <Property Name="Amigos" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TP_Anual_DDS_E2.Solidario">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Solidario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TP_Anual_DDS_E2.Partido">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACIIACAEAABAACAAAAEAAAACAAAAAAA=</HashCode>
+      <FileName>Partido.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Interesado" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TP_Anual_DDS_E2.Estandar">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Estandar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TP_Anual_DDS_E2.Condicional">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAIAAAAAAAAAAAAAAAAAAAAAAAAgAgAAAAA=</HashCode>
+      <FileName>Condicional.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ICondiciones" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TP_Anual_DDS_E2.CondicionCantidadMayoresDe20">
+    <Position X="11.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>CondicionCantidadMayoresDe20.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TP_Anual_DDS_E2.CondicionLugar">
+    <Position X="13.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>CondicionLugar.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TP_Anual_DDS_E2.Mail">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAIAACAAAAAAAAAEAA=</HashCode>
+      <FileName>Mail.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TP_Anual_DDS_E2.TipoJugador">
+    <Position X="7" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>TipoJugador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TP_Anual_DDS_E2.ICondiciones">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>ICondiciones.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TP_Anual_DDS_E2.IMail">
+    <Position X="4.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>IMail.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

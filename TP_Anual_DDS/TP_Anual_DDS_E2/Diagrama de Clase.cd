@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TP_Anual_DDS_E3.Calificacion">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAIAAABIA=</HashCode>
+      <FileName>Calificacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.Denegacion">
+    <Position X="0.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAgAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Denegacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.Partido">
+    <Position X="3.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAgIIASAEAABAACAAABEAAACCAAAAAAg=</HashCode>
+      <FileName>Partido.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="listaDenegaciones" />
+      <Property Name="listaCalificaciones" />
+      <Property Name="listaJugadores" />
+      <Property Name="listaInfractores" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.Interesado">
+    <Position X="6.5" Y="1" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="TP_Anual_DDS_E3.Interesado.EnumPrioridad" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Interesado.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAgACAAAAAAAEAAAAgAAABAAAAgAAAAAAAUAAAAQ=</HashCode>
+      <FileName>Interesado.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Tipo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.Mail">
+    <Position X="3.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAIAACAAAAAAAAAEAA=</HashCode>
+      <FileName>Mail.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.Estandar">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Estandar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.Solidario">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Solidario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.TipoJugador">
+    <Position X="8.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>TipoJugador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.CondicionCantidadMayoresDe20">
+    <Position X="7" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>CondicionCantidadMayoresDe20.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.Condicional">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAIAAAAAAAAAAAAAAAAAAAAAAAAgAgAAAAA=</HashCode>
+      <FileName>Condicional.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Condiciones" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TP_Anual_DDS_E3.CondicionLugar">
+    <Position X="9.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>CondicionLugar.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="TP_Anual_DDS_E3.IMail">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>IMail.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TP_Anual_DDS_E3.ICondiciones">
+    <Position X="11.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>ICondiciones.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
