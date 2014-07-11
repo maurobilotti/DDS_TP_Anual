@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Anual_DDS_E2
+namespace TP_Anual_DDS_E3
 {
     public class CondicionCantidadMayoresDe20 : ICondiciones
     {
@@ -22,7 +22,7 @@ namespace TP_Anual_DDS_E2
 
         public bool EvaluarCondicion(Partido partido)
         {
-            return partido.listaInteresados.Count(z => z.Edad > 20) > cantidadDeJugadores;
+            return partido.listaJugadores.Count(z => z.Edad > 20) > cantidadDeJugadores;
         }
     }
 }

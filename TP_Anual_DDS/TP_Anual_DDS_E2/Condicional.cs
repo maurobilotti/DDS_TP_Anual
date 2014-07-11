@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Anual_DDS_E3
+namespace TP_Anual_DDS_E2
 {
     public class Condicional : TipoJugador
     {

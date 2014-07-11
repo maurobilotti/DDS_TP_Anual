@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // La información general sobre un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos atributos para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("TP_Anual_DDS_E3")]
+[assembly: AssemblyTitle("TP_Anual_DDS_E2")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TP_Anual_DDS_E3")]
+[assembly: AssemblyProduct("TP_Anual_DDS_E2")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // El siguiente GUID sirve como identificador de typelib si este proyecto se expone a COM
-[assembly: Guid("c9bb72f6-5290-42e2-8807-696d27080de3")]
+[assembly: Guid("e56e230b-c239-42eb-828d-c8d19a732b31")]
 
 // La información de versión de un ensamblado consta de los cuatro valores siguientes:
 //

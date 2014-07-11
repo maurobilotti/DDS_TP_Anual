@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Anual_DDS_E2
+namespace TP_Anual_DDS_E3
 {
     public class Interesado 
     {
@@ -19,39 +19,25 @@ namespace TP_Anual_DDS_E2
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Mail { get; set; }
-        public List<Interesado> listaAmigos { get; set; }
+        public List<Interesado> listaAmigos { get; set; }       
 
-        public TipoJugador TipoJugador
+     
+        /// <summary>
+        /// Constructor para jugadores amigos... ya que el admin determina el tipo después
+        /// </summary>
+        /// <param name="nombre"></param>
+        /// <param name="apellido"></param>
+        /// <param name="edad"></param>
+        /// <param name="mail"></param>
+        public Interesado(string nombre, string apellido, int edad, string mail)
         {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
-        }
-
-        public IMail IMail
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
-        }
-
-        public Interesado Amigos
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
+            this.listaAmigos = new List<Interesado>();            
+            this.Edad = edad;
+            this.Nombre = nombre;
+            this.Apellido = apellido;
+            this.Mail = mail;
+            // el tipo queda en NULL hasta que el administrador lo confirme
+            this.Tipo = null;
         }
 
         public Interesado(string nombre, string apellido, int edad, string mail, TipoJugador tipo)
@@ -69,23 +55,31 @@ namespace TP_Anual_DDS_E2
             Mail mail = new Mail();
             mail.From = this.Mail;
             mail.Cuerpo = "Cuerpo del mensaje.";
-            
-            foreach(Interesado amigo in listaAmigos)
-            {
-                mail.To += amigo.Mail + "; "; 
-            }
 
-            if (mail.To != null)
+            if (listaAmigos.Count > 0)
             {
-                if (mail.EnviarMail())
+                foreach (Interesado amigo in listaAmigos)
                 {
-                    Console.WriteLine("El interesado: " + this.Nombre + "Le envió mail a: " + mail.To);
+                    mail.To += amigo.Mail + "; ";
                 }
+
+                if (mail.To != null)
+                {
+                    if (mail.EnviarMail())
+                    {
+                        Console.WriteLine("El interesado: " + this.Nombre + " le envió mail a: " + mail.To);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Ninguno de los amigos de " + this.Nombre + " tiene un mail configurado.");
+                } 
             }
-            else 
-            {
-                Console.WriteLine("Ninguno de los amigos de " + this.Nombre + "tiene un mail configurado.");
-            }
-        }       
+        }
+
+        public void AgregarAmigo(Interesado amigo)
+        {
+            this.listaAmigos.Add(amigo);
+        }
     }
 }

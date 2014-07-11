@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Anual_DDS_E2
+namespace TP_Anual_DDS_E3
 {
     public abstract class TipoJugador
     {
@@ -14,6 +14,6 @@ namespace TP_Anual_DDS_E2
         {
             return true;
         }
-        public virtual void AgregarCondicion(ICondiciones condicion) { }
+        public virtual void AgregarCondicion(ICondiciones condicion){}
     }
 }

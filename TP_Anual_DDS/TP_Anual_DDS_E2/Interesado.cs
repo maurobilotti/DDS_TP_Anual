@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Anual_DDS_E3
+namespace TP_Anual_DDS_E2
 {
     public class Interesado 
     {
@@ -19,7 +19,18 @@ namespace TP_Anual_DDS_E3
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Mail { get; set; }
-        public List<Interesado> listaAmigos { get; set; }       
+        public List<Interesado> listaAmigos { get; set; }
+
+        public TipoJugador TipoJugador
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
 
         public IMail IMail
         {
@@ -41,24 +52,6 @@ namespace TP_Anual_DDS_E3
             set
             {
             }
-        }
-
-        /// <summary>
-        /// Constructor para jugadores amigos... ya que el admin determina el tipo después
-        /// </summary>
-        /// <param name="nombre"></param>
-        /// <param name="apellido"></param>
-        /// <param name="edad"></param>
-        /// <param name="mail"></param>
-        public Interesado(string nombre, string apellido, int edad, string mail)
-        {
-            this.listaAmigos = new List<Interesado>();            
-            this.Edad = edad;
-            this.Nombre = nombre;
-            this.Apellido = apellido;
-            this.Mail = mail;
-            // el tipo queda en NULL hasta que el administrador lo confirme
-            this.Tipo = null;
         }
 
         public Interesado(string nombre, string apellido, int edad, string mail, TipoJugador tipo)
@@ -86,18 +79,13 @@ namespace TP_Anual_DDS_E3
             {
                 if (mail.EnviarMail())
                 {
-                    Console.WriteLine("El interesado: " + this.Nombre + " le envió mail a: " + mail.To);
+                    Console.WriteLine("El interesado: " + this.Nombre + "Le envió mail a: " + mail.To);
                 }
             }
             else 
             {
-                Console.WriteLine("Ninguno de los amigos de " + this.Nombre + " tiene un mail configurado.");
+                Console.WriteLine("Ninguno de los amigos de " + this.Nombre + "tiene un mail configurado.");
             }
-        }
-
-        public void AgregarAmigo(Interesado amigo)
-        {
-            this.listaAmigos.Add(amigo);
-        }
+        }       
     }
 }
