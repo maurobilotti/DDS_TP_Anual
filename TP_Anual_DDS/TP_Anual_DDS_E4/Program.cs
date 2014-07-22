@@ -31,8 +31,6 @@ namespace TP_Anual_DDS_E4
 
             #endregion
 
-            
-
             #region Se proponen los jugadores por cada jugador principal
             admin.AgregarSugeridos();
             #endregion
@@ -43,6 +41,7 @@ namespace TP_Anual_DDS_E4
 
 
             #region Criterio de ordenamiento
+
             admin.CrearCriterio();
             #endregion
 

@@ -12,6 +12,8 @@ namespace TP_Anual_DDS_E4
     public class Partido
     {
         #region Propiedades
+
+        public Guid IdPartido { get; set; }
         public DateTime FechaHora { get; set; }
         public string Lugar { get; set; }
         private List<Denegacion> ListaDenegaciones { get; set; }
@@ -19,6 +21,7 @@ namespace TP_Anual_DDS_E4
         private List<Interesado> ListaInfractores { get; set; }
         public List<Calificacion> ListaCalificaciones { get; set; }
         public ArmadorPartido ArmadorPartido { get; set; }
+        public bool Confirmado { get; set; }
 
         #endregion
 
@@ -33,6 +36,7 @@ namespace TP_Anual_DDS_E4
             this.ListaCalificaciones = new List<Calificacion>();
             this.FechaHora = fechaHora;
             this.Lugar = lugar;
+            this.IdPartido = Guid.NewGuid();
         }
         #endregion
 

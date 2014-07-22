@@ -13,6 +13,7 @@ namespace TP_Anual_DDS_E4
             Condicional, Solidario, Estandar
         }
 
+        public Guid IdInteresado { get; set; }
         public TipoJugador Tipo { get; set; }
 
         public int Edad { get; set; }
@@ -25,6 +26,7 @@ namespace TP_Anual_DDS_E4
         public List<int> ListaCalificaciones { get; set; }
         public int Handicap { get; set; }
         public int CantPartidosJugados { get; set; }
+
         /// <summary>
         /// Constructor para jugadores amigos... ya que el admin determina el tipo después
         /// </summary>
@@ -34,6 +36,7 @@ namespace TP_Anual_DDS_E4
         /// <param name="mail"></param>
         public Interesado(string nombre, string apellido, int edad, string mail, int posicion,int handicap,int cantPartidosJugados)
         {
+            this.IdInteresado = Guid.NewGuid();
             this.listaAmigos = new List<Interesado>();         
             this.ListaCalificaciones = new List<int>();
             this.Edad = edad;

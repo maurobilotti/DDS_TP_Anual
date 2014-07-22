@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="TP_Anual_DDS_E4.Admin">
-    <Position X="10.75" Y="6.25" Width="1.5" />
+    <Position X="10.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAIAACAAAAAAAAAAAAAAAAAAAAAIAAABAAgg=</HashCode>
       <FileName>Admin.cs</FileName>
@@ -11,42 +11,42 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="TP_Anual_DDS_E4.ArmadorPartido">
-    <Position X="3.5" Y="3.75" Width="1.5" />
+    <Position X="3.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAAAAAAAAAIAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ArmadorPartido.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TP_Anual_DDS_E4.ArmarPorOrdenAleatorio">
-    <Position X="2.25" Y="6" Width="1.5" />
+    <Position X="2.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ArmarPorOrdenAleatorio.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TP_Anual_DDS_E4.ArmarPorParidad">
-    <Position X="5" Y="6" Width="1.5" />
+    <Position X="5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ArmarPorParidad.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TP_Anual_DDS_E4.Denegacion">
-    <Position X="10.75" Y="4.25" Width="1.5" />
+    <Position X="10.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAACAAgAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Denegacion.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TP_Anual_DDS_E4.Estandar">
-    <Position X="2.5" Y="2.5" Width="1.5" />
+    <Position X="3.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Estandar.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TP_Anual_DDS_E4.Handicap" BaseTypeListCollapsed="true">
-    <Position X="9.5" Y="2.25" Width="1.5" />
+    <Position X="9.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
       <FileName>Handicap.cs</FileName>
@@ -54,7 +54,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TP_Anual_DDS_E4.Interesado">
-    <Position X="7.25" Y="0.5" Width="1.5" />
+    <Position X="7.25" Y="1.25" Width="1.5" />
     <NestedTypes>
       <Enum Name="TP_Anual_DDS_E4.Interesado.EnumPrioridad" Collapsed="true">
         <TypeIdentifier>
@@ -64,10 +64,10 @@
     </NestedTypes>
     <AssociationLine Name="listaAmigos" Type="TP_Anual_DDS_E4.Interesado" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.438" Y="0.5" />
-        <Point X="7.438" Y="0.25" />
-        <Point X="8.438" Y="0.25" />
-        <Point X="8.438" Y="0.5" />
+        <Point X="7.438" Y="1.25" />
+        <Point X="7.438" Y="1" />
+        <Point X="8.438" Y="1" />
+        <Point X="8.438" Y="1.25" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -75,15 +75,15 @@
       <FileName>Interesado.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Criterio" />
       <Property Name="Tipo" />
+      <Property Name="Criterio" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="listaAmigos" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="TP_Anual_DDS_E4.Mail" BaseTypeListCollapsed="true">
-    <Position X="17" Y="3" Width="1.5" />
+    <Position X="16" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAIAACAAAAAAAAAEAA=</HashCode>
       <FileName>Mail.cs</FileName>
@@ -91,7 +91,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TP_Anual_DDS_E4.Mix" BaseTypeListCollapsed="true">
-    <Position X="14.75" Y="2.25" Width="1.5" />
+    <Position X="14.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
       <FileName>Mix.cs</FileName>
@@ -102,13 +102,13 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TP_Anual_DDS_E4.Partido">
-    <Position X="7.75" Y="5.25" Width="1.5" />
+    <Position X="7.25" Y="4.75" Width="1.5" />
     <AssociationLine Name="ArmadorPartido" Type="TP_Anual_DDS_E4.ArmadorPartido" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.75" Y="7.91" />
-        <Point X="7.375" Y="7.91" />
-        <Point X="7.375" Y="4.812" />
-        <Point X="5" Y="4.812" />
+        <Point X="7.25" Y="5.376" />
+        <Point X="6.875" Y="5.376" />
+        <Point X="6.875" Y="5.062" />
+        <Point X="5" Y="5.062" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -124,7 +124,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="TP_Anual_DDS_E4.PromUltimoPartido" BaseTypeListCollapsed="true">
-    <Position X="11.25" Y="2.25" Width="1.5" />
+    <Position X="11.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>PromUltimoPartido.cs</FileName>
@@ -132,7 +132,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TP_Anual_DDS_E4.PromUltimosNPartidos" BaseTypeListCollapsed="true">
-    <Position X="13" Y="2.25" Width="1.5" />
+    <Position X="13" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAAAAAAAAA=</HashCode>
       <FileName>PromUltimosNPartidos.cs</FileName>
@@ -140,21 +140,21 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TP_Anual_DDS_E4.Solidario">
-    <Position X="4.75" Y="2.5" Width="1.5" />
+    <Position X="5.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Solidario.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TP_Anual_DDS_E4.TipoJugador">
-    <Position X="3.75" Y="0.5" Width="1.5" />
+    <Position X="4" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>TipoJugador.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TP_Anual_DDS_E3.CondicionCantidadMayoresDe20">
-    <Position X="13" Y="6.25" Width="1.5" />
+    <Position X="12.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>CondicionCantidadMayoresDe20.cs</FileName>
@@ -162,7 +162,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TP_Anual_DDS_E3.CondicionLugar">
-    <Position X="15.25" Y="6.25" Width="1.5" />
+    <Position X="14" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>CondicionLugar.cs</FileName>
@@ -170,21 +170,21 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="TP_Anual_DDS_E4.ICondiciones">
-    <Position X="14" Y="4.75" Width="1.5" />
+    <Position X="13" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>ICondiciones.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TP_Anual_DDS_E4.ICriterio">
-    <Position X="10.75" Y="0.75" Width="1.5" />
+    <Position X="9.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ICriterio.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="TP_Anual_DDS_E4.IMail">
-    <Position X="17" Y="1.5" Width="1.5" />
+    <Position X="16" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
       <FileName>IMail.cs</FileName>
