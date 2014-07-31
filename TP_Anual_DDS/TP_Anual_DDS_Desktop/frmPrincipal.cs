@@ -60,7 +60,7 @@ namespace TP_Anual_DDS_Desktop
             gridPartidos.DataSource = null;
             try
             {
-                gridPartidos.DataSource = (from x in new Model2Container().DbPartidoSet select x).ToList();
+                //gridPartidos.DataSource = (from x in new Model2Container().DbPartidoSet select x).ToList();
             }
             catch (Exception)
             {

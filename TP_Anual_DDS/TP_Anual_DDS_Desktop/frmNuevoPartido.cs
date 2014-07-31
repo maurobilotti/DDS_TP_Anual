@@ -21,7 +21,7 @@ namespace TP_Anual_DDS_Desktop
         }
 
         public Partido Partido { get; set; }
-        private DbPartido DbPartido { get; set; }
+        //private DbPartido DbPartido { get; set; }
 
         private void btnGuardarPartido_Click(object sender, EventArgs e)
         {
@@ -32,14 +32,14 @@ namespace TP_Anual_DDS_Desktop
 
             try
             {
-                var md = new Model2Container();
-                DbPartido = new DbPartido();
-                DbPartido.IdPartido = Partido.IdPartido;
-                DbPartido.Fecha = Partido.FechaHora;
-                DbPartido.Lugar = Partido.Lugar;
-                DbPartido.Confirmado = false;
-                md.DbPartidoSet.Add(DbPartido);
-                md.SaveChanges();
+                //var md = new Model2Container();
+                //DbPartido = new DbPartido();
+                //DbPartido.IdPartido = Partido.IdPartido;
+                //DbPartido.Fecha = Partido.FechaHora;
+                //DbPartido.Lugar = Partido.Lugar;
+                //DbPartido.Confirmado = false;
+                //md.DbPartidoSet.Add(DbPartido);
+                //md.SaveChanges();
             }
             catch (Exception ex)
             {

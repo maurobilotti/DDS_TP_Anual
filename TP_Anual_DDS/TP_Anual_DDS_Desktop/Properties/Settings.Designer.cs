@@ -44,5 +44,16 @@ namespace TP_Anual_DDS_Desktop.Properties {
                 return ((string)(this["BaseConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\v11.0;AttachDbFilename=|DataDirectory|\\BaseDatos.mdf;Integr" +
+            "ated Security=True")]
+        public string BaseDatosConnectionString {
+            get {
+                return ((string)(this["BaseDatosConnectionString"]));
+            }
+        }
     }
 }

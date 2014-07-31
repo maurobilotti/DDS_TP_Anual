@@ -33,22 +33,22 @@ namespace TP_Anual_DDS_Desktop
                 Jugador = new Interesado(txtNombre.Text, txtApellido.Text, (int) numEdad.Value, txtMail.Text,
                     (int) numPosicion.Value, (int)numHandicap.Value, 0);
 
-                using (var db = new Model2Container())
-                {
-                    var interesado = new DbInteresado()
-                    {
-                        IdInteresado = Jugador.IdInteresado,
-                        Nombre = Jugador.Nombre,
-                        Apellido = Jugador.Apellido,
-                        Edad = Jugador.Edad,
-                        Email = Jugador.Mail,
-                        Posicion = Jugador.Posicion,
-                        Handicap = Jugador.Handicap
-                    };
+                //using (var db = new Model2Container())
+                //{
+                //    var interesado = new DbInteresado()
+                //    {
+                //        IdInteresado = Jugador.IdInteresado,
+                //        Nombre = Jugador.Nombre,
+                //        Apellido = Jugador.Apellido,
+                //        Edad = Jugador.Edad,
+                //        Email = Jugador.Mail,
+                //        Posicion = Jugador.Posicion,
+                //        Handicap = Jugador.Handicap
+                //    };
 
-                    db.DbInteresadoSet.Add(interesado);
-                    db.SaveChanges();
-                }
+                //    db.DbInteresadoSet.Add(interesado);
+                //    db.SaveChanges();
+                //}
             }
         }
 
