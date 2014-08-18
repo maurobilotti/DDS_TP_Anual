@@ -19,8 +19,21 @@ namespace TP_Anual_DDS_E4
         public List<Interesado> ListaJugadores { get; set; }
         private List<Interesado> ListaInfractores { get; set; }
         public List<Calificacion> ListaCalificaciones { get; set; }
+
+        public List<Interesado> ListaPrimerEquipo
+        {
+            get { return this.ArmadorPartido.ArmarPrimerEquipo(); }
+        }
+
+        public List<Interesado> ListaSegundoEquipo
+        {
+            get { return this.ArmadorPartido.ArmarSegundoEquipo(); }
+        }
+
         public ArmadorPartido ArmadorPartido { get; set; }
         public bool Confirmado { get; set; }
+        public bool Finalizado = false;
+
 
         #endregion
 
@@ -138,28 +151,28 @@ namespace TP_Anual_DDS_E4
                             case 'C':
                             case 'c':
                                 {
-                                    this.ListaJugadores[i].listaAmigos[0].Tipo = new Condicional();
+                                    this.ListaJugadores[i].ListaAmigos[0].Tipo = new Condicional();
                                 }
                                 break;
                             case 'E':
                             case 'e':
                                 {
-                                    this.ListaJugadores[i].listaAmigos[0].Tipo = new Estandar();
+                                    this.ListaJugadores[i].ListaAmigos[0].Tipo = new Estandar();
                                 }
                                 break;
                             case 'S':
                             case 's':
                                 {
-                                    this.ListaJugadores[i].listaAmigos[0].Tipo = new Solidario();
+                                    this.ListaJugadores[i].ListaAmigos[0].Tipo = new Solidario();
                                 }
                                 break;
                             default:
                                 //si se equivoca la tecla, se crea estandar
-                                this.ListaJugadores[i].listaAmigos[0].Tipo = new Estandar();
+                                this.ListaJugadores[i].ListaAmigos[0].Tipo = new Estandar();
                                 break;
                         }
                         //se agrega el jugador al partido
-                        this.AgregarInteresado(this.ListaJugadores[i].listaAmigos[0]);
+                        this.AgregarInteresado(this.ListaJugadores[i].ListaAmigos[0]);
 
                     }
                     else if (resp == 'N' || resp == 'n')
@@ -299,18 +312,16 @@ namespace TP_Anual_DDS_E4
         }
         #endregion
 
-        public void ArmarEquipos()
-        {
-            Console.WriteLine("Primer equipo: " + Environment.NewLine);
-            this.ArmadorPartido.ArmarPrimerEquipo().ForEach(z => Console.WriteLine(string.Format("{0} {1} Posicion: {2}, ", z.Nombre, z.Apellido, z.Posicion)));
-            Console.WriteLine("Segundo equipo: " + Environment.NewLine);
-            this.ArmadorPartido.ArmarSegundoEquipo().ForEach(z => Console.WriteLine(string.Format("{0} {1} Posicion: {2}, ", z.Nombre, z.Apellido, z.Posicion)));
-        }
-
+      
         public bool EstaInscripto(Interesado interesado)
         {
             return this.ListaJugadores.Any(x => x.Nombre == interesado.Nombre && x.Apellido == interesado.Apellido);
         }
 
+
+        public void AgregarCalificacion(Interesado critico, Interesado criticado, int puntaje, string critica)
+        {
+            this.ListaCalificaciones.Add(new Calificacion(critico,criticado,critica,puntaje));
+        }
     }
 }

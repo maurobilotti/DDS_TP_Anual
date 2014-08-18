@@ -18,6 +18,8 @@ namespace TP_Anual_DDS_Desktop
         public List<Interesado> ListaUsuarios { get; set; }
         public Interesado Usuario { get; set; }
 
+        private bool EstaLogueado = false;
+
         #endregion
 
         public frmPrincipal()
@@ -29,7 +31,7 @@ namespace TP_Anual_DDS_Desktop
 
         private void DeshablitarControles()
         {
-            btnNuevoPartido.Enabled = btnConfirmar.Enabled = btnCriterios.Enabled = btnBaja.Enabled = btnInscribirse.Enabled = false;
+            btnFinalizarPartido.Visible = btnNuevoPartido.Enabled = btnConfirmar.Enabled = btnCriterios.Enabled = btnBaja.Enabled = btnInscribirse.Enabled = false;
         }
 
         private void btnAgregarPartido_Click(object sender, EventArgs e)
@@ -46,48 +48,106 @@ namespace TP_Anual_DDS_Desktop
         {
             DeshablitarControles();
             //-------------------
-            Administrador.ObtenerInstancia().CrearPartido(new Partido("Ciudad jardin", DateTime.Now));
+            Guid IdPartido = Administrador.ObtenerInstancia().CrearPartido(new Partido("Ciudad jardin", DateTime.Now));
             Administrador.ObtenerInstancia().CrearPartido(new Partido("Caballito", DateTime.Now));
 
             Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
             {
-                Interesado = new Interesado("ezequiel", "Barany", 22, "asdasd111@gmail.com", 6, 9, 0),
+                Interesado = new Interesado("Ezequiel", "Barany", 22, "asdasd111@gmail.com", 6, 9, 0, new Estandar()),
                 contrasena = "1234",
-                usuario = "barany"
+                usuario = "barany",
             });
 
             Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
             {
-                Interesado = new Interesado("pablo", "furst", 22, "asdasd111@gmail.com", 3, 9, 0),
+                Interesado = new Interesado("Pablo", "Furst", 22, "asdasd111@gmail.com", 3, 9, 0, new Solidario()),
                 contrasena = "1234",
                 usuario = "furst"
             });
 
             Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
             {
-                Interesado = new Interesado("mauro", "bilotti", 25, "asdasd111@gmail.com", 9, 9, 0),
+                Interesado = new Interesado("Mauro", "Bilotti", 25, "asdasd111@gmail.com", 9, 9, 0, new Solidario()),
                 contrasena = "1234",
                 usuario = "bilotti"
             });
 
             Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
             {
-                Interesado = new Interesado("federico", "beldevere", 23, "asdasd111@gmail.com", 5, 3, 0),
+                Interesado = new Interesado("Federico", "Beldevere", 23, "asdasd111@gmail.com", 5, 3, 0, new Estandar()),
                 contrasena = "1234",
                 usuario = "beldevere"
             });
 
             Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
             {
-                Interesado = new Interesado("augusto", "bonabia", 22, "asdasd111@gmail.com", 1, 3, 0),
+                Interesado = new Interesado("Augusto", "Bonabia", 22, "asdasd111@gmail.com", 1, 3, 0, new Estandar()),
                 contrasena = "1234",
                 usuario = "bonabia"
             });
 
+
+            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Leo", "Messi", 26, "asdasd111@gmail.com", 10, 10, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "messi"
+            });
+
+            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Cristiano", "Ronaldo", 29, "asdasd111@gmail.com", 7, 10, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "ronaldo"
+            });
+
+            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Sergio", "Aguero", 25, "asdasd111@gmail.com", 9, 10, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "aguero"
+            });
+
+            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Marcelo", "Barovero", 30, "asdasd111@gmail.com", 1, 5, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "barovero"
+            });
+
+            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Javier", "Mascherano", 31, "asdasd111@gmail.com", 5, 8, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "mascherano"
+            });
+
+            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Marcos", "Rojo", 22, "asdasd111@gmail.com", 3, 8, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "rojo"
+            });
+
+            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Angel", "Di Maria", 26, "asdasd111@gmail.com", 7, 9, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "dimaria"
+            });
+
+            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Pablo", "Zabaleta", 32, "asdasd111@gmail.com", 4, 7, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "zabaleta"
+            });
+
+            Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido);
+            Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido);
+
+
             Actualizar();
-
-
-
         }
 
         private void HabilitarControles()
@@ -125,6 +185,8 @@ namespace TP_Anual_DDS_Desktop
                         gridInteresados.DataSource = null;
                         gridInteresados.DataSource = partido.ListaJugadores;
                         btnBaja.Enabled = true;
+                        if (gridInteresados.Rows.Count >= 10)
+                            btnFinalizarPartido.Enabled = EsAdministrador;
                     }
                 }
                 else
@@ -149,15 +211,20 @@ namespace TP_Anual_DDS_Desktop
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 this.EsAdministrador = Properties.Settings.Default.EsAdmin;
+                EstaLogueado = true;
                 HabilitarControles();
                 if (!this.EsAdministrador)
                 {
-                    lblUsuario.Text = Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario).usuario;
+                    Usuario usuario = Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario);
+                    lblUsuario.Text = usuario.usuario;
                     lblUsuario.Visible = true;
+                    btnRealizarCriticas.Visible = Administrador.ObtenerInstancia().DebeCriticas(usuario);
                 }
                 else
                 {
                     VerificarUsuariosPropuestos();
+                    if (gridInteresados.Rows.Count >= 10)
+                        btnFinalizarPartido.Visible = true;
                 }
             }
         }
@@ -209,12 +276,18 @@ namespace TP_Anual_DDS_Desktop
             {
                 var idSeleccionado = new Guid(gridPartidos.SelectedCells[0].Value.ToString());
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(idSeleccionado);
-                btnBaja.Enabled =
-                    partido.EstaInscripto(
+                if (!EsAdministrador && EstaLogueado)
+                {
+                    Interesado interesado =
                         Administrador.ObtenerInstancia()
                             .ObtenerUsuario(Properties.Settings.Default.IdUsuario)
-                            .Interesado);
+                            .Interesado;
+                    btnBaja.Enabled = partido.EstaInscripto(interesado);
+                }
                 gridInteresados.DataSource = partido.ListaJugadores;
+
+                gridEquipo1.DataSource = partido.ArmadorPartido != null ? partido.ListaPrimerEquipo : null;
+                gridEquipo2.DataSource = partido.ArmadorPartido != null ? partido.ListaSegundoEquipo : null;
             }
         }
 
@@ -233,7 +306,7 @@ namespace TP_Anual_DDS_Desktop
             if (gridPartidos.SelectedRows.Count == 1)
             {
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(new Guid(gridPartidos.SelectedCells[0].Value.ToString()));
-                if(partido.Confirmado)
+                if (partido.Confirmado)
                     return;
 
                 DialogResult resp = MessageBox.Show("Va a ser dado de baja al partido. ¿Desea proponer un reemplazo?", "Advertencia",
@@ -282,8 +355,9 @@ namespace TP_Anual_DDS_Desktop
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     gridEquipo1.DataSource = gridEquipo2.DataSource = null;
-                    gridEquipo1.DataSource = frm.Partido.ArmadorPartido.ArmarPrimerEquipo();
-                    gridEquipo2.DataSource = frm.Partido.ArmadorPartido.ArmarSegundoEquipo();
+
+                    gridEquipo1.DataSource = frm.Partido.ListaPrimerEquipo;
+                    gridEquipo2.DataSource = frm.Partido.ListaSegundoEquipo;
                 }
             }
         }
@@ -295,6 +369,38 @@ namespace TP_Anual_DDS_Desktop
                 Administrador.ObtenerInstancia()
                     .ObtenerPartido(new Guid(gridPartidos.SelectedCells[0].Value.ToString()))
                     .Confirmado = true;
+            }
+        }
+
+        private void btnFinalizarPartido_Click(object sender, EventArgs e)
+        {
+            if (gridEquipo1.RowCount >= 5 && gridEquipo2.RowCount >= 5 && gridPartidos.SelectedRows.Count == 1)
+            {
+                Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(new Guid(gridPartidos.SelectedCells[0].Value.ToString()));
+                
+                if (!partido.Finalizado)
+                {
+                    partido.Finalizado = true;
+                    partido.ListaJugadores.ForEach(z => z.ListaPartidosFinalizados.Add(partido));
+                }
+
+                MessageBox.Show(
+                    "El partido se ha finalizado correctamente. Los jugadores realizarán las criticas al conectarse al sistema.",
+                    "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Los equipos no están completos. Revise los jugadores agregados.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void btnRealizarCriticas_Click(object sender, EventArgs e)
+        {
+            Usuario critico = Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario);
+            frmCriticas frm = new frmCriticas(critico.Interesado.ListaPartidosFinalizados,critico.Interesado);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                btnRealizarCriticas.Visible = Administrador.ObtenerInstancia().DebeCriticas(critico);
             }
         }
     }

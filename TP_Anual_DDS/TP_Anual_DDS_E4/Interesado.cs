@@ -20,7 +20,7 @@ namespace TP_Anual_DDS_E4
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Mail { get; set; }
-        public List<Interesado> listaAmigos { get; set; }
+        public List<Interesado> ListaAmigos { get; set; }
         public int Posicion { get; set; }
         public ICriterio Criterio { get; set; }
         public List<int> ListaCalificaciones { get; set; }
@@ -29,6 +29,9 @@ namespace TP_Anual_DDS_E4
         public string NombreYApellido{
             get { return Nombre + " " + Apellido; }
         }
+
+        public List<Partido> ListaPartidosFinalizados { get; set; }
+        public List<Partido> ListaPartidosCriticados { get; set; }
 
         /// <summary>
         /// Constructor para jugadores amigos... ya que el admin determina el tipo después
@@ -39,8 +42,10 @@ namespace TP_Anual_DDS_E4
         /// <param name="mail"></param>
         public Interesado(string nombre, string apellido, int edad, string mail, int posicion, int handicap, int cantPartidosJugados)
         {
-            this.listaAmigos = new List<Interesado>();
+            this.ListaAmigos = new List<Interesado>();
             this.ListaCalificaciones = new List<int>();
+            this.ListaPartidosCriticados = new List<Partido>();
+            this.ListaPartidosFinalizados = new List<Partido>();
             this.Edad = edad;
             this.Nombre = nombre;
             this.Apellido = apellido;
@@ -54,7 +59,9 @@ namespace TP_Anual_DDS_E4
 
         public Interesado(string nombre, string apellido, int edad, string mail, int posicion, int handicap, int cantPartidosJugados, TipoJugador tipo)
         {
-            this.listaAmigos = new List<Interesado>();
+            this.ListaAmigos = new List<Interesado>();
+            this.ListaPartidosCriticados = new List<Partido>();
+            this.ListaPartidosFinalizados = new List<Partido>();
             this.ListaCalificaciones = new List<int>();
             this.Tipo = tipo;
             this.Edad = edad;
@@ -72,9 +79,9 @@ namespace TP_Anual_DDS_E4
             mail.From = this.Mail;
             mail.Cuerpo = "Cuerpo del mensaje.";
 
-            if (listaAmigos.Count > 0)
+            if (ListaAmigos.Count > 0)
             {
-                foreach (Interesado amigo in listaAmigos)
+                foreach (Interesado amigo in ListaAmigos)
                 {
                     mail.To += amigo.Mail + "; ";
                 }
@@ -100,7 +107,7 @@ namespace TP_Anual_DDS_E4
 
         public void AgregarAmigo(Interesado amigo)
         {
-            this.listaAmigos.Add(amigo);
+            this.ListaAmigos.Add(amigo);
         }
 
         public void AgregarCriterio(ICriterio criterio)

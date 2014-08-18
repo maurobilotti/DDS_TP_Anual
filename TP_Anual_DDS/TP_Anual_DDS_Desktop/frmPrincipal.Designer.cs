@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.btnNuevoPartido = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnInscribirse = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gridPartidos = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,13 +44,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRegistrarse = new System.Windows.Forms.Button();
             this.lblUsuario = new System.Windows.Forms.Label();
+            this.btnNuevoPartido = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnInscribirse = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnBaja = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnProponerAmigo = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip1.SuspendLayout();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnFinalizarPartido = new System.Windows.Forms.Button();
+            this.btnRealizarCriticas = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPartidos)).BeginInit();
             this.panel2.SuspendLayout();
@@ -65,46 +67,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridEquipo1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridEquipo2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridInteresados)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNuevoPartido,
-            this.toolStripSeparator1,
-            this.btnInscribirse,
-            this.toolStripSeparator2,
-            this.btnBaja,
-            this.toolStripSeparator3,
-            this.btnProponerAmigo});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(922, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // btnNuevoPartido
-            // 
-            this.btnNuevoPartido.Name = "btnNuevoPartido";
-            this.btnNuevoPartido.Size = new System.Drawing.Size(83, 22);
-            this.btnNuevoPartido.Text = "Nuevo Partido";
-            this.btnNuevoPartido.Click += new System.EventHandler(this.btnAgregarPartido_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnInscribirse
-            // 
-            this.btnInscribirse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnInscribirse.Image = ((System.Drawing.Image)(resources.GetObject("btnInscribirse.Image")));
-            this.btnInscribirse.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.btnInscribirse.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnInscribirse.Name = "btnInscribirse";
-            this.btnInscribirse.Size = new System.Drawing.Size(109, 22);
-            this.btnInscribirse.Text = "Incribirse a partido";
-            this.btnInscribirse.Click += new System.EventHandler(this.btnInscribirse_Click);
             // 
             // panel1
             // 
@@ -128,6 +92,7 @@
             this.gridPartidos.Location = new System.Drawing.Point(0, 30);
             this.gridPartidos.MultiSelect = false;
             this.gridPartidos.Name = "gridPartidos";
+            this.gridPartidos.ReadOnly = true;
             this.gridPartidos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.gridPartidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridPartidos.Size = new System.Drawing.Size(463, 415);
@@ -147,6 +112,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.panel2.Controls.Add(this.btnFinalizarPartido);
             this.panel2.Controls.Add(this.splitContainer1);
             this.panel2.Controls.Add(this.btnConfirmar);
             this.panel2.Controls.Add(this.btnCriterios);
@@ -186,6 +152,7 @@
             this.gridEquipo1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridEquipo1.Location = new System.Drawing.Point(0, 0);
             this.gridEquipo1.Name = "gridEquipo1";
+            this.gridEquipo1.ReadOnly = true;
             this.gridEquipo1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridEquipo1.Size = new System.Drawing.Size(225, 133);
             this.gridEquipo1.TabIndex = 2;
@@ -197,6 +164,7 @@
             this.gridEquipo2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridEquipo2.Location = new System.Drawing.Point(0, 0);
             this.gridEquipo2.Name = "gridEquipo2";
+            this.gridEquipo2.ReadOnly = true;
             this.gridEquipo2.Size = new System.Drawing.Size(218, 133);
             this.gridEquipo2.TabIndex = 3;
             // 
@@ -249,6 +217,7 @@
             this.gridInteresados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridInteresados.Location = new System.Drawing.Point(3, 30);
             this.gridInteresados.Name = "gridInteresados";
+            this.gridInteresados.ReadOnly = true;
             this.gridInteresados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridInteresados.Size = new System.Drawing.Size(447, 198);
             this.gridInteresados.TabIndex = 1;
@@ -285,11 +254,6 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnRegistrarse
             // 
             this.btnRegistrarse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -308,12 +272,40 @@
             this.lblUsuario.BackColor = System.Drawing.Color.White;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblUsuario.Location = new System.Drawing.Point(562, 4);
+            this.lblUsuario.Location = new System.Drawing.Point(562, 3);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(57, 20);
             this.lblUsuario.TabIndex = 9;
             this.lblUsuario.Text = "label3";
             this.lblUsuario.Visible = false;
+            // 
+            // btnNuevoPartido
+            // 
+            this.btnNuevoPartido.Name = "btnNuevoPartido";
+            this.btnNuevoPartido.Size = new System.Drawing.Size(75, 22);
+            this.btnNuevoPartido.Text = "Nuevo Partido";
+            this.btnNuevoPartido.Click += new System.EventHandler(this.btnAgregarPartido_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnInscribirse
+            // 
+            this.btnInscribirse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnInscribirse.Image = ((System.Drawing.Image)(resources.GetObject("btnInscribirse.Image")));
+            this.btnInscribirse.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.btnInscribirse.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnInscribirse.Name = "btnInscribirse";
+            this.btnInscribirse.Size = new System.Drawing.Size(101, 22);
+            this.btnInscribirse.Text = "Incribirse a partido";
+            this.btnInscribirse.Click += new System.EventHandler(this.btnInscribirse_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // btnBaja
             // 
@@ -321,7 +313,7 @@
             this.btnBaja.Image = ((System.Drawing.Image)(resources.GetObject("btnBaja.Image")));
             this.btnBaja.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBaja.Name = "btnBaja";
-            this.btnBaja.Size = new System.Drawing.Size(81, 22);
+            this.btnBaja.Size = new System.Drawing.Size(78, 22);
             this.btnBaja.Text = "Darse de baja";
             this.btnBaja.Click += new System.EventHandler(this.btnBaja_Click);
             // 
@@ -336,9 +328,55 @@
             this.btnProponerAmigo.Image = ((System.Drawing.Image)(resources.GetObject("btnProponerAmigo.Image")));
             this.btnProponerAmigo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnProponerAmigo.Name = "btnProponerAmigo";
-            this.btnProponerAmigo.Size = new System.Drawing.Size(97, 22);
+            this.btnProponerAmigo.Size = new System.Drawing.Size(86, 22);
             this.btnProponerAmigo.Text = "Proponer amigo";
             this.btnProponerAmigo.Click += new System.EventHandler(this.btnProponerAmigo_Click);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnNuevoPartido,
+            this.toolStripSeparator1,
+            this.btnInscribirse,
+            this.toolStripSeparator2,
+            this.btnBaja,
+            this.toolStripSeparator3,
+            this.btnProponerAmigo,
+            this.toolStripSeparator4,
+            this.btnRealizarCriticas});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(922, 25);
+            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnFinalizarPartido
+            // 
+            this.btnFinalizarPartido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFinalizarPartido.Location = new System.Drawing.Point(0, 419);
+            this.btnFinalizarPartido.Name = "btnFinalizarPartido";
+            this.btnFinalizarPartido.Size = new System.Drawing.Size(125, 23);
+            this.btnFinalizarPartido.TabIndex = 10;
+            this.btnFinalizarPartido.Text = "Partido Finalizado";
+            this.btnFinalizarPartido.UseVisualStyleBackColor = true;
+            this.btnFinalizarPartido.Click += new System.EventHandler(this.btnFinalizarPartido_Click);
+            // 
+            // btnRealizarCriticas
+            // 
+            this.btnRealizarCriticas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnRealizarCriticas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnRealizarCriticas.Image = ((System.Drawing.Image)(resources.GetObject("btnRealizarCriticas.Image")));
+            this.btnRealizarCriticas.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRealizarCriticas.Name = "btnRealizarCriticas";
+            this.btnRealizarCriticas.Size = new System.Drawing.Size(87, 22);
+            this.btnRealizarCriticas.Text = "Realizar Criticas";
+            this.btnRealizarCriticas.Visible = false;
+            this.btnRealizarCriticas.Click += new System.EventHandler(this.btnRealizarCriticas_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // frmPrincipal
             // 
@@ -359,8 +397,6 @@
             this.Text = "Principal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPartidos)).EndInit();
@@ -373,6 +409,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridEquipo1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridEquipo2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridInteresados)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -380,10 +418,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripLabel btnNuevoPartido;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton btnInscribirse;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView gridPartidos;
         private System.Windows.Forms.Label label1;
@@ -399,12 +433,19 @@
         private System.Windows.Forms.DataGridView gridEquipo1;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Button btnRegistrarse;
         private System.Windows.Forms.Label lblUsuario;
+        private System.Windows.Forms.Button btnFinalizarPartido;
+        private System.Windows.Forms.ToolStripLabel btnNuevoPartido;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton btnInscribirse;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btnBaja;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton btnProponerAmigo;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton btnRealizarCriticas;
     }
 }
 

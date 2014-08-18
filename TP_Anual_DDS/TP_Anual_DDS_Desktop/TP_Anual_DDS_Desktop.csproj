@@ -72,11 +72,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BaseDatosDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Critica.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Critica.Designer.cs">
+      <DependentUpon>Critica.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCriterios.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmCriterios.Designer.cs">
       <DependentUpon>frmCriterios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCriticas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCriticas.Designer.cs">
+      <DependentUpon>frmCriticas.cs</DependentUpon>
     </Compile>
     <Compile Include="frmDenegacion.cs">
       <SubType>Form</SubType>
@@ -122,8 +134,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Critica.resx">
+      <DependentUpon>Critica.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCriterios.resx">
       <DependentUpon>frmCriterios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCriticas.resx">
+      <DependentUpon>frmCriticas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDenegacion.resx">
       <DependentUpon>frmDenegacion.cs</DependentUpon>

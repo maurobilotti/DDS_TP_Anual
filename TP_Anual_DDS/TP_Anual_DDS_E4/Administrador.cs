@@ -11,8 +11,8 @@ namespace TP_Anual_DDS_E4
         private static Administrador _instancia = null;
         private List<Partido> listaPartidos;
         private List<Usuario> listaUsuarios;
-        private List<Usuario> listaUsuariosPropuestos; 
-        private List<Denegacion> listaDenegaciones; 
+        private List<Usuario> listaUsuariosPropuestos;
+        private List<Denegacion> listaDenegaciones;
 
         private Administrador()
         {
@@ -24,14 +24,15 @@ namespace TP_Anual_DDS_E4
 
         public static Administrador ObtenerInstancia()
         {
-            if(null == _instancia)
+            if (null == _instancia)
                 _instancia = new Administrador();
             return _instancia;
         }
 
-        public void CrearPartido(Partido partido)
+        public Guid CrearPartido(Partido partido)
         {
             this.listaPartidos.Add(partido);
+            return partido.IdPartido;
         }
 
         public List<Partido> ObtenerPartidos()
@@ -66,7 +67,7 @@ namespace TP_Anual_DDS_E4
 
         public List<Interesado> ObtenerJugadoresNoInscriptos(Partido partido)
         {
-            return this.listaUsuarios.Where(x => !x.Interesado.EstasInscriptoEn(partido)).Select(z=> z.Interesado).ToList();
+            return this.listaUsuarios.Where(x => !x.Interesado.EstasInscriptoEn(partido)).Select(z => z.Interesado).ToList();
         }
 
         public void CrearUsuarioPropuesto(Usuario usuario)
@@ -83,5 +84,29 @@ namespace TP_Anual_DDS_E4
         {
             this.listaDenegaciones.Add(new Denegacion(usuario.Interesado, motivo, DateTime.Now));
         }
+
+        public void CompletarJugadoresPartido(Partido partido)
+        {
+            while (partido.ListaJugadores.Count < 10)
+            {
+                foreach (Usuario jugador in this.listaUsuarios)
+                {
+                    partido.ListaJugadores.Add(jugador.Interesado);
+                }
+            }
+        }
+
+        public bool DebeCriticas(Usuario usuario)
+        {
+            return this.listaPartidos.Any(z => z.Finalizado 
+                    && z.ListaJugadores.Contains(usuario.Interesado) 
+                    && !usuario.Interesado.ListaPartidosCriticados.Contains(z));
+        }
+
+        public List<Partido> ObtenerPartidosDeInteresado(Interesado interesado)
+        {
+            return this.listaPartidos.Where(z => z.ListaJugadores.Contains(interesado)).ToList();
+        }
+
     }
 }
