@@ -7,40 +7,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TP_Anual_DDS_E4;
+
 
 namespace TP_Anual_DDS_Desktop
 {
     public partial class frmLogin : Form
     {
+        public List<Interesado> ListaInteresados { get; set; }
+        public Usuario Usuario { get; set; }
+
         public frmLogin()
         {
             InitializeComponent();
         }
 
-        private void btnAdministrador_Click(object sender, EventArgs e)
+        private void btnEntrar_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.EsAdmin = true;
-            if (new frmPrincipal().ShowDialog() == DialogResult.OK)
+            if (!string.IsNullOrEmpty(txtUsuario.Text) && !string.IsNullOrEmpty(txtContraseña.Text))
             {
-
-            }
-            else
-            {
-                this.Close();
+                if (txtUsuario.Text == "admin" && txtContraseña.Text == "admin")
+                {
+                    Properties.Settings.Default.EsAdmin = true;
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    //sera PERSISTIDO
+                    Usuario usuario = Administrador.ObtenerInstancia().ObtenerUsuario(txtUsuario.Text,txtContraseña.Text);
+                    if (usuario != null)
+                    {
+                        Properties.Settings.Default.EsAdmin = false;
+                        Properties.Settings.Default.IdUsuario = usuario.IdUsuario;
+                        this.Usuario = usuario;
+                        DialogResult = DialogResult.OK;
+                    }
+                    else
+                        lblError.Visible = true;
+                }
             }
         }
 
-        private void btnInteresado_Click(object sender, EventArgs e)
+        private void frmLogin_Load(object sender, EventArgs e)
         {
-            Properties.Settings.Default.EsAdmin = false;
-            if (new frmPrincipal().ShowDialog() == DialogResult.OK)
-            {
-
-            }
-            else
-            {
-                this.Close();
-            }
+            lblError.Visible = false;
         }
     }
 }

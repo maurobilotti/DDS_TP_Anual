@@ -1,15 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="TP_Anual_DDS_E4.Admin">
-    <Position X="10.25" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAgAAAAIAACAAAAAAAAAAAAAAAAAAAAAIAAABAAgg=</HashCode>
-      <FileName>Admin.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="partido" />
-    </ShowAsAssociation>
-  </Class>
   <Class Name="TP_Anual_DDS_E4.ArmadorPartido">
     <Position X="3.5" Y="4" Width="1.5" />
     <TypeIdentifier>
@@ -34,7 +24,7 @@
   <Class Name="TP_Anual_DDS_E4.Denegacion">
     <Position X="10.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAACAAgAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAgAAAAAAAAAAAAAAAAACAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Denegacion.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -71,7 +61,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAACFgAAAAAEAAAAgAAABAAAAgAAAQQAAQAAAAY=</HashCode>
+      <HashCode>AAAAAAACFgBAAIAEAAAAgAAABAAAggAAAQQAAQAAAA4=</HashCode>
       <FileName>Interesado.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -102,24 +92,23 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="TP_Anual_DDS_E4.Partido">
-    <Position X="7.25" Y="4.75" Width="1.5" />
+    <Position X="7.5" Y="6" Width="1.5" />
     <AssociationLine Name="ArmadorPartido" Type="TP_Anual_DDS_E4.ArmadorPartido" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.25" Y="5.376" />
-        <Point X="6.875" Y="5.376" />
+        <Point X="7.5" Y="6.626" />
+        <Point X="6.875" Y="6.626" />
         <Point X="6.875" Y="5.062" />
         <Point X="5" Y="5.062" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAIAgAACAoAAAAIIAQAEIAAAAQAAQBAAAQACAgAAAAg=</HashCode>
+      <HashCode>AAAAgAACAoAAAAIIAAAEIAAAAQAAQhAAAQACAgAAEQg=</HashCode>
       <FileName>Partido.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="ArmadorPartido" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="ListaDenegaciones" />
       <Property Name="ListaJugadores" />
     </ShowAsCollectionAssociation>
   </Class>
@@ -153,7 +142,7 @@
       <FileName>TipoJugador.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TP_Anual_DDS_E3.CondicionCantidadMayoresDe20">
+  <Class Name="TP_Anual_DDS_E4.CondicionCantidadMayoresDe20">
     <Position X="12.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
@@ -161,7 +150,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="TP_Anual_DDS_E3.CondicionLugar">
+  <Class Name="TP_Anual_DDS_E4.CondicionLugar">
     <Position X="14" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAACAAAAA=</HashCode>

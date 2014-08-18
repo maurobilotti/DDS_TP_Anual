@@ -46,6 +46,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.gridInteresados = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnLogout = new System.Windows.Forms.Button();
+            this.btnLogin = new System.Windows.Forms.Button();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnRegistrarse = new System.Windows.Forms.Button();
+            this.lblUsuario = new System.Windows.Forms.Label();
+            this.btnBaja = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnProponerAmigo = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPartidos)).BeginInit();
@@ -64,7 +72,11 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnNuevoPartido,
             this.toolStripSeparator1,
-            this.btnInscribirse});
+            this.btnInscribirse,
+            this.toolStripSeparator2,
+            this.btnBaja,
+            this.toolStripSeparator3,
+            this.btnProponerAmigo});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(922, 25);
@@ -74,7 +86,7 @@
             // btnNuevoPartido
             // 
             this.btnNuevoPartido.Name = "btnNuevoPartido";
-            this.btnNuevoPartido.Size = new System.Drawing.Size(75, 22);
+            this.btnNuevoPartido.Size = new System.Drawing.Size(83, 22);
             this.btnNuevoPartido.Text = "Nuevo Partido";
             this.btnNuevoPartido.Click += new System.EventHandler(this.btnAgregarPartido_Click);
             // 
@@ -90,7 +102,7 @@
             this.btnInscribirse.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.btnInscribirse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnInscribirse.Name = "btnInscribirse";
-            this.btnInscribirse.Size = new System.Drawing.Size(101, 22);
+            this.btnInscribirse.Size = new System.Drawing.Size(109, 22);
             this.btnInscribirse.Text = "Incribirse a partido";
             this.btnInscribirse.Click += new System.EventHandler(this.btnInscribirse_Click);
             // 
@@ -102,13 +114,15 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(407, 445);
+            this.panel1.Size = new System.Drawing.Size(469, 445);
             this.panel1.TabIndex = 2;
             // 
             // gridPartidos
             // 
             this.gridPartidos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridPartidos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridPartidos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders;
             this.gridPartidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridPartidos.GridColor = System.Drawing.Color.White;
             this.gridPartidos.Location = new System.Drawing.Point(0, 30);
@@ -116,7 +130,7 @@
             this.gridPartidos.Name = "gridPartidos";
             this.gridPartidos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.gridPartidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPartidos.Size = new System.Drawing.Size(407, 415);
+            this.gridPartidos.Size = new System.Drawing.Size(463, 415);
             this.gridPartidos.TabIndex = 1;
             this.gridPartidos.Click += new System.EventHandler(this.gridPartidos_Click);
             // 
@@ -141,9 +155,9 @@
             this.panel2.Controls.Add(this.gridInteresados);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(407, 25);
+            this.panel2.Location = new System.Drawing.Point(469, 25);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(515, 445);
+            this.panel2.Size = new System.Drawing.Size(453, 445);
             this.panel2.TabIndex = 3;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
@@ -162,8 +176,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gridEquipo2);
-            this.splitContainer1.Size = new System.Drawing.Size(509, 133);
-            this.splitContainer1.SplitterDistance = 257;
+            this.splitContainer1.Size = new System.Drawing.Size(447, 133);
+            this.splitContainer1.SplitterDistance = 225;
             this.splitContainer1.TabIndex = 9;
             // 
             // gridEquipo1
@@ -172,8 +186,10 @@
             this.gridEquipo1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridEquipo1.Location = new System.Drawing.Point(0, 0);
             this.gridEquipo1.Name = "gridEquipo1";
-            this.gridEquipo1.Size = new System.Drawing.Size(257, 133);
+            this.gridEquipo1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridEquipo1.Size = new System.Drawing.Size(225, 133);
             this.gridEquipo1.TabIndex = 2;
+            this.gridEquipo1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridEquipo1_MouseClick);
             // 
             // gridEquipo2
             // 
@@ -181,18 +197,19 @@
             this.gridEquipo2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridEquipo2.Location = new System.Drawing.Point(0, 0);
             this.gridEquipo2.Name = "gridEquipo2";
-            this.gridEquipo2.Size = new System.Drawing.Size(248, 133);
+            this.gridEquipo2.Size = new System.Drawing.Size(218, 133);
             this.gridEquipo2.TabIndex = 3;
             // 
             // btnConfirmar
             // 
             this.btnConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConfirmar.Location = new System.Drawing.Point(426, 419);
+            this.btnConfirmar.Location = new System.Drawing.Point(364, 419);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(86, 23);
             this.btnConfirmar.TabIndex = 8;
             this.btnConfirmar.Text = "Confirmar";
             this.btnConfirmar.UseVisualStyleBackColor = true;
+            this.btnConfirmar.Click += new System.EventHandler(this.btnConfirmar_Click);
             // 
             // btnCriterios
             // 
@@ -202,13 +219,14 @@
             this.btnCriterios.TabIndex = 7;
             this.btnCriterios.Text = "Elegir criterios";
             this.btnCriterios.UseVisualStyleBackColor = true;
+            this.btnCriterios.Click += new System.EventHandler(this.btnCriterios_Click);
             // 
             // label5
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.Color.Yellow;
-            this.label5.Location = new System.Drawing.Point(271, 264);
+            this.label5.Location = new System.Drawing.Point(240, 264);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(49, 13);
             this.label5.TabIndex = 6;
@@ -231,7 +249,8 @@
             this.gridInteresados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridInteresados.Location = new System.Drawing.Point(3, 30);
             this.gridInteresados.Name = "gridInteresados";
-            this.gridInteresados.Size = new System.Drawing.Size(509, 198);
+            this.gridInteresados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridInteresados.Size = new System.Drawing.Size(447, 198);
             this.gridInteresados.TabIndex = 1;
             // 
             // label2
@@ -244,12 +263,93 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Interesados";
             // 
+            // btnLogout
+            // 
+            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogout.Location = new System.Drawing.Point(847, 2);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(75, 23);
+            this.btnLogout.TabIndex = 5;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // btnLogin
+            // 
+            this.btnLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogin.Location = new System.Drawing.Point(768, 2);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(75, 23);
+            this.btnLogin.TabIndex = 6;
+            this.btnLogin.Text = "Login";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnRegistrarse
+            // 
+            this.btnRegistrarse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRegistrarse.Location = new System.Drawing.Point(687, 2);
+            this.btnRegistrarse.Name = "btnRegistrarse";
+            this.btnRegistrarse.Size = new System.Drawing.Size(75, 23);
+            this.btnRegistrarse.TabIndex = 8;
+            this.btnRegistrarse.Text = "Registrarse";
+            this.btnRegistrarse.UseVisualStyleBackColor = true;
+            this.btnRegistrarse.Click += new System.EventHandler(this.btnRegistrarse_Click);
+            // 
+            // lblUsuario
+            // 
+            this.lblUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.BackColor = System.Drawing.Color.White;
+            this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsuario.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblUsuario.Location = new System.Drawing.Point(562, 4);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(57, 20);
+            this.lblUsuario.TabIndex = 9;
+            this.lblUsuario.Text = "label3";
+            this.lblUsuario.Visible = false;
+            // 
+            // btnBaja
+            // 
+            this.btnBaja.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnBaja.Image = ((System.Drawing.Image)(resources.GetObject("btnBaja.Image")));
+            this.btnBaja.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnBaja.Name = "btnBaja";
+            this.btnBaja.Size = new System.Drawing.Size(81, 22);
+            this.btnBaja.Text = "Darse de baja";
+            this.btnBaja.Click += new System.EventHandler(this.btnBaja_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnProponerAmigo
+            // 
+            this.btnProponerAmigo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnProponerAmigo.Image = ((System.Drawing.Image)(resources.GetObject("btnProponerAmigo.Image")));
+            this.btnProponerAmigo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProponerAmigo.Name = "btnProponerAmigo";
+            this.btnProponerAmigo.Size = new System.Drawing.Size(97, 22);
+            this.btnProponerAmigo.Text = "Proponer amigo";
+            this.btnProponerAmigo.Click += new System.EventHandler(this.btnProponerAmigo_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(922, 470);
+            this.Controls.Add(this.lblUsuario);
+            this.Controls.Add(this.btnRegistrarse);
+            this.Controls.Add(this.btnLogin);
+            this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
@@ -297,6 +397,14 @@
         private System.Windows.Forms.Button btnCriterios;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView gridEquipo1;
+        private System.Windows.Forms.Button btnLogout;
+        private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.Button btnRegistrarse;
+        private System.Windows.Forms.Label lblUsuario;
+        private System.Windows.Forms.ToolStripButton btnBaja;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton btnProponerAmigo;
     }
 }
 

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace TP_Anual_DDS_E4
 {
-    public class Interesado 
+    public class Interesado
     {
         public enum EnumPrioridad
         {
             Condicional, Solidario, Estandar
         }
 
-        public Guid IdInteresado { get; set; }
         public TipoJugador Tipo { get; set; }
 
         public int Edad { get; set; }
@@ -26,6 +26,9 @@ namespace TP_Anual_DDS_E4
         public List<int> ListaCalificaciones { get; set; }
         public int Handicap { get; set; }
         public int CantPartidosJugados { get; set; }
+        public string NombreYApellido{
+            get { return Nombre + " " + Apellido; }
+        }
 
         /// <summary>
         /// Constructor para jugadores amigos... ya que el admin determina el tipo después
@@ -34,10 +37,9 @@ namespace TP_Anual_DDS_E4
         /// <param name="apellido"></param>
         /// <param name="edad"></param>
         /// <param name="mail"></param>
-        public Interesado(string nombre, string apellido, int edad, string mail, int posicion,int handicap,int cantPartidosJugados)
+        public Interesado(string nombre, string apellido, int edad, string mail, int posicion, int handicap, int cantPartidosJugados)
         {
-            this.IdInteresado = Guid.NewGuid();
-            this.listaAmigos = new List<Interesado>();         
+            this.listaAmigos = new List<Interesado>();
             this.ListaCalificaciones = new List<int>();
             this.Edad = edad;
             this.Nombre = nombre;
@@ -50,7 +52,7 @@ namespace TP_Anual_DDS_E4
             this.Handicap = handicap;
         }
 
-        public Interesado(string nombre, string apellido, int edad, string mail, int posicion,int handicap,int cantPartidosJugados, TipoJugador tipo)
+        public Interesado(string nombre, string apellido, int edad, string mail, int posicion, int handicap, int cantPartidosJugados, TipoJugador tipo)
         {
             this.listaAmigos = new List<Interesado>();
             this.ListaCalificaciones = new List<int>();
@@ -64,7 +66,7 @@ namespace TP_Anual_DDS_E4
             this.Handicap = handicap;
         }
 
-        public void EstasIncriptoEn(Partido partido)
+        public void IncriptoEn(Partido partido)
         {
             Mail mail = new Mail();
             mail.From = this.Mail;
@@ -87,8 +89,13 @@ namespace TP_Anual_DDS_E4
                 else
                 {
                     Console.WriteLine("Ninguno de los amigos de " + this.Nombre + " tiene un mail configurado.");
-                } 
+                }
             }
+        }
+
+        public bool EstasInscriptoEn(Partido partido)
+        {
+            return partido.ListaJugadores.Any(z => z.Nombre == this.Nombre && z.Apellido == this.Apellido);
         }
 
         public void AgregarAmigo(Interesado amigo)
@@ -99,6 +106,20 @@ namespace TP_Anual_DDS_E4
         public void AgregarCriterio(ICriterio criterio)
         {
             this.Criterio = criterio;
+        }
+
+        public static DataTable ObtenerTipoJugadores()
+        {
+            DataTable tabla = new DataTable();
+
+            tabla.Columns.Add("Id", typeof(int));
+            tabla.Columns.Add("Descripcion", typeof(string));
+
+            tabla.Rows.Add((int)EnumPrioridad.Condicional, EnumPrioridad.Condicional);
+            tabla.Rows.Add((int)EnumPrioridad.Estandar, EnumPrioridad.Estandar);
+            tabla.Rows.Add((int)EnumPrioridad.Solidario, EnumPrioridad.Solidario);
+
+            return tabla;
         }
     }
 }

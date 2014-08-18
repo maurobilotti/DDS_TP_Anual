@@ -7,7 +7,7 @@
     <ProjectGuid>{EE025004-E7D2-46AE-AD5B-E734D609F2D1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TP_Anual_DDS_E3</RootNamespace>
+    <RootNamespace>TP_Anual_DDS_E4</RootNamespace>
     <AssemblyName>TP_Anual_DDS_E3</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -72,17 +72,41 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BaseDatosDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="frmCriterios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCriterios.Designer.cs">
+      <DependentUpon>frmCriterios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDenegacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDenegacion.Designer.cs">
+      <DependentUpon>frmDenegacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmInscribirseAPartido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInscribirseAPartido.Designer.cs">
+      <DependentUpon>frmInscribirseAPartido.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmNuevoJugador.cs">
+    <Compile Include="frmProponerJugador.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmNuevoJugador.Designer.cs">
-      <DependentUpon>frmNuevoJugador.cs</DependentUpon>
+    <Compile Include="frmProponerJugador.Designer.cs">
+      <DependentUpon>frmProponerJugador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRegistrar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRegistrar.Designer.cs">
+      <DependentUpon>frmRegistrar.cs</DependentUpon>
     </Compile>
     <Compile Include="frmNuevoPartido.cs">
       <SubType>Form</SubType>
@@ -98,11 +122,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmCriterios.resx">
+      <DependentUpon>frmCriterios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDenegacion.resx">
+      <DependentUpon>frmDenegacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInscribirseAPartido.resx">
+      <DependentUpon>frmInscribirseAPartido.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNuevoJugador.resx">
-      <DependentUpon>frmNuevoJugador.cs</DependentUpon>
+    <EmbeddedResource Include="frmProponerJugador.resx">
+      <DependentUpon>frmProponerJugador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRegistrar.resx">
+      <DependentUpon>frmRegistrar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmNuevoPartido.resx">
       <DependentUpon>frmNuevoPartido.cs</DependentUpon>

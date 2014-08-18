@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using TP_Anual_DDS_E3;
+using TP_Anual_DDS_E4;
 
 namespace TP_Anual_DDS_E4
 {
@@ -16,7 +16,6 @@ namespace TP_Anual_DDS_E4
         public Guid IdPartido { get; set; }
         public DateTime FechaHora { get; set; }
         public string Lugar { get; set; }
-        private List<Denegacion> ListaDenegaciones { get; set; }
         public List<Interesado> ListaJugadores { get; set; }
         private List<Interesado> ListaInfractores { get; set; }
         public List<Calificacion> ListaCalificaciones { get; set; }
@@ -32,7 +31,6 @@ namespace TP_Anual_DDS_E4
         {
             this.ListaJugadores = new List<Interesado>();
             this.ListaInfractores = new List<Interesado>();
-            this.ListaDenegaciones = new List<Denegacion>();
             this.ListaCalificaciones = new List<Calificacion>();
             this.FechaHora = fechaHora;
             this.Lugar = lugar;
@@ -171,7 +169,7 @@ namespace TP_Anual_DDS_E4
                         Console.WriteLine("Ingrese el motivo de la denegación del jugador");
                         string motivo = Console.ReadLine();
                         //se añade el jugador que sugiere, el motivo y la fecha de la denegación
-                        this.AgregarDenegacion(new Denegacion(this.ListaJugadores[i], motivo, DateTime.Now));
+                        
                     }
 
                     Console.WriteLine("Presione una tecla para continuar.");
@@ -194,7 +192,7 @@ namespace TP_Anual_DDS_E4
                 if (ListaJugadores.Count < 10)
                 {
                     ListaJugadores.Add(interesado);
-                    interesado.EstasIncriptoEn(this);
+                    interesado.IncriptoEn(this);
                     if (ListaJugadores.Count == 10)
                         Console.WriteLine("La lista está completa.");
                 }
@@ -228,11 +226,7 @@ namespace TP_Anual_DDS_E4
             this.ListaJugadores.Add(interesadoAlta);
         }
 
-        public void AgregarDenegacion(Denegacion denegacion)
-        {
-            this.ListaDenegaciones.Add(denegacion);
-        }
-
+      
         #endregion
 
         #region Métodos privados
@@ -261,7 +255,7 @@ namespace TP_Anual_DDS_E4
                 {
                     ListaJugadores.Remove(interes);
                     ListaJugadores.Add(interesadoAIngresar);
-                    interesadoAIngresar.EstasIncriptoEn(this);
+                    interesadoAIngresar.IncriptoEn(this);
                     if (ListaJugadores.Count == 10)
                         Console.WriteLine("La lista está completa.");
                     return true;
@@ -312,5 +306,11 @@ namespace TP_Anual_DDS_E4
             Console.WriteLine("Segundo equipo: " + Environment.NewLine);
             this.ArmadorPartido.ArmarSegundoEquipo().ForEach(z => Console.WriteLine(string.Format("{0} {1} Posicion: {2}, ", z.Nombre, z.Apellido, z.Posicion)));
         }
+
+        public bool EstaInscripto(Interesado interesado)
+        {
+            return this.ListaJugadores.Any(x => x.Nombre == interesado.Nombre && x.Apellido == interesado.Apellido);
+        }
+
     }
 }

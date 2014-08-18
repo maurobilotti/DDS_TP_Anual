@@ -8,13 +8,13 @@ namespace TP_Anual_DDS_E4
 {
     public class Denegacion
     {
-        public Interesado jugadorQueSugiere { get; set; }
+        public Interesado JugadorRechazado { get; set; }
         public string motivo { get; set; }
         public DateTime fechaDenegacion { get; set; }
 
         public Denegacion(Interesado principal, string motivo, DateTime fecha)
         {
-            this.jugadorQueSugiere = principal;
+            this.JugadorRechazado = principal;
             this.motivo = motivo;
             this.fechaDenegacion = fecha;
         }

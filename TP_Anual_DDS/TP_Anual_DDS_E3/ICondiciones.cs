@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Anual_DDS_E3
+namespace TP_Anual_DDS_E4
 {
     public interface ICondiciones
     {

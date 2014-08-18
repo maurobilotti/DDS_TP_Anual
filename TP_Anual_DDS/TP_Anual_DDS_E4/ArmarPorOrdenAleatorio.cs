@@ -41,7 +41,7 @@ namespace TP_Anual_DDS_E4
                 {
                     case 2:
                     case 3:
-                    case 5:
+                    case 6:
                     case 7:
                     case 10:
                         listaSegundoEquipo.Add(jugador);
