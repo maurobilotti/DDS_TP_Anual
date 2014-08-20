@@ -11,16 +11,16 @@ namespace TP_Anual_DDS_E4
     {
         public Interesado JugadorCritico { get; set; }
         public Interesado JugadorCriticado { get; set; }
-        private string descripcion { get; set; }
-        private int calificacion { get; set; }
+        public string Critica { get; set; }
+        public int Puntaje { get; set; }
 
-        public Calificacion(Interesado jugadorCritico, Interesado jugadorCriticado, string descripcion, int calificacion)
+        public Calificacion(Interesado jugadorCritico, Interesado jugadorCriticado, string critica, int puntaje)
         {
             this.JugadorCritico = jugadorCritico;
             this.JugadorCriticado = jugadorCriticado;
-            this.descripcion = descripcion;
-            this.calificacion = calificacion;
-            jugadorCriticado.ListaCalificaciones.Add(calificacion);
+            this.Critica = critica;
+            this.Puntaje = puntaje;
+            jugadorCriticado.ListaCalificaciones.Add(puntaje);
         }
     }
 }

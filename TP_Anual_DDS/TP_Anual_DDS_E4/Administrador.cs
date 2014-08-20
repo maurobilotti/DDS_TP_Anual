@@ -29,6 +29,122 @@ namespace TP_Anual_DDS_E4
             return _instancia;
         }
 
+        public void CargarUsuariosIniciales()
+        {
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Ezequiel", "Barany", 22, "asdasd111@gmail.com", 6, 9, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "barany",
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Pablo", "Furst", 22, "asdasd111@gmail.com", 3, 9, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "furst"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Mauro", "Bilotti", 25, "asdasd111@gmail.com", 9, 9, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "bilotti"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Federico", "Beldevere", 23, "asdasd111@gmail.com", 5, 3, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "beldevere"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Augusto", "Bonabia", 22, "asdasd111@gmail.com", 1, 3, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "bonabia"
+            });
+
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Leo", "Messi", 26, "asdasd111@gmail.com", 10, 10, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "messi"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Cristiano", "Ronaldo", 29, "asdasd111@gmail.com", 7, 10, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "ronaldo"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Sergio", "Aguero", 25, "asdasd111@gmail.com", 9, 10, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "aguero"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Marcelo", "Barovero", 30, "asdasd111@gmail.com", 1, 5, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "barovero"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Javier", "Mascherano", 31, "asdasd111@gmail.com", 5, 8, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "mascherano"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Marcos", "Rojo", 22, "asdasd111@gmail.com", 3, 8, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "rojo"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Angel", "Di Maria", 26, "asdasd111@gmail.com", 7, 9, 0, new Estandar()),
+                contrasena = "1234",
+                usuario = "dimaria"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Pablo", "Zabaleta", 32, "asdasd111@gmail.com", 4, 7, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "zabaleta"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Pablo", "Zabaleta", 32, "asdasd111@gmail.com", 4, 7, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "zabaleta"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Lucas", "Biglia", 27, "asdasd111@gmail.com", 5, 6, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "biblia"
+            });
+
+            this.CrearUsuario(new Usuario()
+            {
+                Interesado = new Interesado("Enzo", "Perez", 32, "asdasd111@gmail.com", 4, 7, 0, new Solidario()),
+                contrasena = "1234",
+                usuario = "perez"
+            });
+        }
+
         public Guid CrearPartido(Partido partido)
         {
             this.listaPartidos.Add(partido);

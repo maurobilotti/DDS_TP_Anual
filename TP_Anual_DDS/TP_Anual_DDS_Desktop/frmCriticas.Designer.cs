@@ -33,18 +33,19 @@
             // 
             // container
             // 
+            this.container.AutoScroll = true;
             this.container.BackColor = System.Drawing.Color.Silver;
             this.container.Dock = System.Windows.Forms.DockStyle.Fill;
             this.container.Location = new System.Drawing.Point(0, 0);
             this.container.Name = "container";
-            this.container.Size = new System.Drawing.Size(878, 446);
+            this.container.Size = new System.Drawing.Size(1042, 446);
             this.container.TabIndex = 0;
             // 
             // frmCriticas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 446);
+            this.ClientSize = new System.Drawing.Size(1042, 446);
             this.Controls.Add(this.container);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmCriticas";

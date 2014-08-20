@@ -13,23 +13,31 @@ namespace TP_Anual_DDS_Desktop
 {
     public partial class Critica : UserControl
     {
-        public Critica(Interesado jugadorCritico,Interesado jugadorCriticado, Partido partido)
+        public Critica(Interesado jugadorCritico,Interesado jugadorCriticado, Partido partido, frmCriticas.Modo modo, int puntaje = 5 ,string critica = "")
         {
             InitializeComponent();
             JugadorCriticado = jugadorCriticado;
             Partido = partido;
             JugadorCritico = jugadorCritico;
+            _modoApertura = modo;
+            txtCritica.Text = critica;
+            numPuntaje.Value = puntaje;
         }
 
+        private readonly frmCriticas.Modo _modoApertura;
         public Interesado JugadorCriticado { get; set; }
         public Partido Partido { get; set; }
         public Interesado JugadorCritico { get; set; }
 
         private void Critica_Load(object sender, EventArgs e)
         {
-            BackColor = Color.Tomato;
+            BackColor = _modoApertura == frmCriticas.Modo.Realizar ? Color.Tomato : Color.LimeGreen;
+            //si se pide realizar la critica habilito los controles
+            numPuntaje.Enabled = txtCritica.Enabled = btnOK.Visible = _modoApertura == frmCriticas.Modo.Realizar;
+
             lblLugarPartido.Text = Partido.Lugar;
-            lblNombre.Text = JugadorCriticado.NombreYApellido;
+            lblCriticado.Text = JugadorCriticado.NombreYApellido;
+            lblCritico.Text = JugadorCritico.NombreYApellido;
         }
 
         private void btnOK_Click(object sender, EventArgs e)

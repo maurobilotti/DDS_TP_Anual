@@ -22,16 +22,25 @@ namespace TP_Anual_DDS_Desktop
 
         #endregion
 
+        #region Constructor
         public frmPrincipal()
         {
             InitializeComponent();
             this.ListaUsuarios = new List<Interesado>();
             DeshablitarControles();
         }
+        #endregion
 
         private void DeshablitarControles()
         {
-            btnFinalizarPartido.Visible = btnNuevoPartido.Enabled = btnConfirmar.Enabled = btnCriterios.Enabled = btnBaja.Enabled = btnInscribirse.Enabled = false;
+            // se deshablitan todos los controles que no van al principio.
+            btnProponerAmigo.Enabled = 
+            btnFinalizarPartido.Visible = 
+            btnNuevoPartido.Enabled = 
+            btnConfirmar.Enabled = 
+            btnCriterios.Enabled = 
+            btnBaja.Enabled = 
+            btnInscribirse.Enabled = false;
         }
 
         private void btnAgregarPartido_Click(object sender, EventArgs e)
@@ -48,104 +57,17 @@ namespace TP_Anual_DDS_Desktop
         {
             DeshablitarControles();
             //-------------------
-            Guid IdPartido = Administrador.ObtenerInstancia().CrearPartido(new Partido("Ciudad jardin", DateTime.Now));
-            Administrador.ObtenerInstancia().CrearPartido(new Partido("Caballito", DateTime.Now));
+            Guid IdPartido1 = Administrador.ObtenerInstancia().CrearPartido(new Partido("Ciudad Jardin", DateTime.Now));
+            Guid IdPartido2 = Administrador.ObtenerInstancia().CrearPartido(new Partido("Caballito", DateTime.Now));
+            Administrador.ObtenerInstancia().CrearPartido(new Partido("Flores", DateTime.Now));
+            Administrador.ObtenerInstancia().CrearPartido(new Partido("Parque Avellaneda", DateTime.Now));
 
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Ezequiel", "Barany", 22, "asdasd111@gmail.com", 6, 9, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "barany",
-            });
+            Administrador.ObtenerInstancia().CargarUsuariosIniciales();
 
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Pablo", "Furst", 22, "asdasd111@gmail.com", 3, 9, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "furst"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Mauro", "Bilotti", 25, "asdasd111@gmail.com", 9, 9, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "bilotti"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Federico", "Beldevere", 23, "asdasd111@gmail.com", 5, 3, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "beldevere"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Augusto", "Bonabia", 22, "asdasd111@gmail.com", 1, 3, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "bonabia"
-            });
-
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Leo", "Messi", 26, "asdasd111@gmail.com", 10, 10, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "messi"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Cristiano", "Ronaldo", 29, "asdasd111@gmail.com", 7, 10, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "ronaldo"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Sergio", "Aguero", 25, "asdasd111@gmail.com", 9, 10, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "aguero"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Marcelo", "Barovero", 30, "asdasd111@gmail.com", 1, 5, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "barovero"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Javier", "Mascherano", 31, "asdasd111@gmail.com", 5, 8, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "mascherano"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Marcos", "Rojo", 22, "asdasd111@gmail.com", 3, 8, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "rojo"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Angel", "Di Maria", 26, "asdasd111@gmail.com", 7, 9, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "dimaria"
-            });
-
-            Administrador.ObtenerInstancia().CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Pablo", "Zabaleta", 32, "asdasd111@gmail.com", 4, 7, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "zabaleta"
-            });
-
-            Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido);
-            Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido);
-
+            Partido partido1 = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido1);
+            Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido1);
+            Partido partido2 = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido2);
+            Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido2);
 
             Actualizar();
         }
@@ -153,12 +75,7 @@ namespace TP_Anual_DDS_Desktop
         private void HabilitarControles()
         {
             btnNuevoPartido.Enabled = btnCriterios.Enabled = btnConfirmar.Enabled = EsAdministrador;
-            btnInscribirse.Enabled = !EsAdministrador;
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
+            btnInscribirse.Enabled = btnProponerAmigo.Enabled = !EsAdministrador;
         }
 
         public void Actualizar()
@@ -207,9 +124,9 @@ namespace TP_Anual_DDS_Desktop
         {
             var frm = new frmLogin();
             frm.ListaInteresados = this.ListaUsuarios;
-
             if (frm.ShowDialog() == DialogResult.OK)
             {
+                lblUsuario.Visible = true;
                 this.EsAdministrador = Properties.Settings.Default.EsAdmin;
                 EstaLogueado = true;
                 HabilitarControles();
@@ -217,12 +134,12 @@ namespace TP_Anual_DDS_Desktop
                 {
                     Usuario usuario = Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario);
                     lblUsuario.Text = usuario.usuario;
-                    lblUsuario.Visible = true;
                     btnRealizarCriticas.Visible = Administrador.ObtenerInstancia().DebeCriticas(usuario);
                 }
                 else
                 {
                     VerificarUsuariosPropuestos();
+                    lblUsuario.Text = "Admin";
                     if (gridInteresados.Rows.Count >= 10)
                         btnFinalizarPartido.Visible = true;
                 }
@@ -358,6 +275,7 @@ namespace TP_Anual_DDS_Desktop
 
                     gridEquipo1.DataSource = frm.Partido.ListaPrimerEquipo;
                     gridEquipo2.DataSource = frm.Partido.ListaSegundoEquipo;
+                    btnFinalizarPartido.Visible = gridEquipo1.RowCount >= 5 && gridEquipo2.RowCount >= 5;
                 }
             }
         }
@@ -377,7 +295,7 @@ namespace TP_Anual_DDS_Desktop
             if (gridEquipo1.RowCount >= 5 && gridEquipo2.RowCount >= 5 && gridPartidos.SelectedRows.Count == 1)
             {
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(new Guid(gridPartidos.SelectedCells[0].Value.ToString()));
-                
+
                 if (!partido.Finalizado)
                 {
                     partido.Finalizado = true;
@@ -397,11 +315,39 @@ namespace TP_Anual_DDS_Desktop
         private void btnRealizarCriticas_Click(object sender, EventArgs e)
         {
             Usuario critico = Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario);
-            frmCriticas frm = new frmCriticas(critico.Interesado.ListaPartidosFinalizados,critico.Interesado);
+            frmCriticas frm = new frmCriticas(critico.Interesado.ListaPartidosFinalizados, critico.Interesado);
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 btnRealizarCriticas.Visible = Administrador.ObtenerInstancia().DebeCriticas(critico);
             }
+        }
+
+        private void gridEquipo1_DataSourceChanged(object sender, EventArgs e)
+        {
+            if (gridEquipo1.RowCount >= 5)
+            {
+                for (int i = 0; i < 5 && i <= gridEquipo1.RowCount; i++)
+                {
+                    gridEquipo1.Rows[i].DefaultCellStyle.BackColor = Color.LimeGreen;
+                } 
+            }
+        }
+
+        private void gridEquipo2_DataSourceChanged(object sender, EventArgs e)
+        {
+            if (gridEquipo2.RowCount >= 5)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    gridEquipo2.Rows[i].DefaultCellStyle.BackColor = Color.LimeGreen;
+                } 
+            }
+        }
+
+        private void btnVerCriticas_Click(object sender, EventArgs e)
+        {
+            frmCriticas frm = new frmCriticas(Administrador.ObtenerInstancia().ObtenerPartidos());
+            frm.ShowDialog();
         }
     }
 }
