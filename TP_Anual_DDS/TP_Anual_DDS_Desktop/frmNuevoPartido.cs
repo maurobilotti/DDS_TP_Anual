@@ -8,7 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TP_Anual_DDS_Desktop;
 using TP_Anual_DDS_E4;
+using System.Data.SqlServerCe;
 
 
 namespace TP_Anual_DDS_Desktop
@@ -30,20 +32,15 @@ namespace TP_Anual_DDS_Desktop
 
             this.Partido = new Partido(txtLugar.Text, dateFecha.Value);
 
-            //try
-            //{
-            //    //var md = new Model2Container();
-            //    //DbPartido = new DbPartido();
-            //    //DbPartido.IdPartido = Partido.IdPartido;
-            //    //DbPartido.Fecha = Partido.FechaHora;
-            //    //DbPartido.Lugar = Partido.Lugar;
-            //    //DbPartido.Confirmado = false;
-            //    //md.DbPartidoSet.Add(DbPartido);
-            //    //md.SaveChanges();
-            //}
-            //catch (Exception ex)
-            //{
-            //}
+            try
+            {
+                BaseDatos db = new BaseDatos("SELECT * FROM Persona");
+                DataTable dt = db.ObtenerDataTable();
+
+            }
+            catch (Exception ex)
+            {
+            }
 
             DialogResult = DialogResult.OK;
         }
