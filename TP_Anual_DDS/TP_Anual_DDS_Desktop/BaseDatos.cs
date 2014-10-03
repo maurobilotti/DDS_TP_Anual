@@ -13,12 +13,12 @@ namespace TP_Anual_DDS_Desktop
             Obtener, Ejecutar
         }
 
-        string CadenaConexion = TP_Anual_DDS_Desktop.Properties.Settings.Default.BaseDatos_DDSConnectionString;
+        private string CadenaConexion = "Data Source=" + System.IO.Directory.GetCurrentDirectory().Replace("\\bin\\Debug","") + "\\BaseDatos_DDS.sdf;Persist Security Info=False;";
         public string pComando { get; set; }
         public List<SqlCeParameter> pParametros = new List<SqlCeParameter>();
         public int pTimeOut = 0;
         public CommandType? pTipoComando;
-        
+
         public BaseDatos()
         {
 
@@ -28,7 +28,7 @@ namespace TP_Anual_DDS_Desktop
         {
             this.pComando = _Comando;
         }
-        
+
         public DataTable ObtenerDataTable()
         {
             SqlCeConnection sqlConnection = new SqlCeConnection();
@@ -85,11 +85,11 @@ namespace TP_Anual_DDS_Desktop
                 }
                 sqlConnection.Open();
                 obj = sqlCommand.ExecuteScalar();
-            
+
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message + Environment.NewLine+ pComando);
+                throw new Exception(ex.Message + Environment.NewLine + pComando);
             }
             finally
             {
@@ -135,7 +135,7 @@ namespace TP_Anual_DDS_Desktop
         {
             if (this.pTipoComando.HasValue)
                 return this.pTipoComando.Value;
-            if (this.pComando.TrimStart(new char[1]{' '}).StartsWith("exec ", StringComparison.InvariantCultureIgnoreCase))
+            if (this.pComando.TrimStart(new char[1] { ' ' }).StartsWith("exec ", StringComparison.InvariantCultureIgnoreCase))
             {
                 this.pComando = this.pComando.Remove(0, 5);
                 return CommandType.StoredProcedure;
@@ -145,7 +145,7 @@ namespace TP_Anual_DDS_Desktop
                 switch (_TipoQuery)
                 {
                     case BaseDatos.TipoQuery.Ejecutar:
-                        return this.pComando.ToLowerInvariant().Contains("update ") || this.pComando.ToLowerInvariant().Contains("insert ") 
+                        return this.pComando.ToLowerInvariant().Contains("update ") || this.pComando.ToLowerInvariant().Contains("insert ")
                             || this.pComando.ToLowerInvariant().Contains("delete ") ? CommandType.Text : CommandType.StoredProcedure;
                     default:
                         return this.pComando.ToLowerInvariant().Contains("select ") ? CommandType.Text : CommandType.StoredProcedure;

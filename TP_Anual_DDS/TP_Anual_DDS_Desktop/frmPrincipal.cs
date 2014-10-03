@@ -26,6 +26,14 @@ namespace TP_Anual_DDS_Desktop
         public frmPrincipal()
         {
             InitializeComponent();
+            DataTable tabla = new DataTable();
+            BaseDatos db = new BaseDatos("INSERT INTO Partido (Confirmado) " +
+                                         "VALUES('1')");
+            db.Ejecutar();
+
+            db.pComando = "SELECT * FROM Partido";
+            tabla = db.ObtenerDataTable();
+
             this.ListaUsuarios = new List<Interesado>();
             DeshablitarControles();
         }
