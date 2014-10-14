@@ -90,7 +90,7 @@ namespace TP_Anual_DDS_E4
             if (gridPartidos.SelectedRows.Count == 1)
             {
                 int idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
-                Partido partido = Administrador.ObtenerInstancia().ObtenerPartidos().Single(z => z.IdPartido == idSeleccionado);
+                Partido partido = Administrador.ObtenerInstancia().ObtenerPartidos().Single(z => z.Id_Partido == idSeleccionado);
                 if (partido.Confirmado)
                     return;
 
@@ -134,7 +134,7 @@ namespace TP_Anual_DDS_E4
                 if (!this.EsAdministrador)
                 {
                     Usuario usuario = Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario);
-                    lblUsuario.Text = usuario.usuario;
+                    lblUsuario.Text = usuario._Usuario;
                     btnRealizarCriticas.Visible = Administrador.ObtenerInstancia().DebeCriticas(usuario);
                 }
                 else

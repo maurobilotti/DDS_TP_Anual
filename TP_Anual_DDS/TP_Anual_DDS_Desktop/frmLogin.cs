@@ -38,7 +38,7 @@ namespace TP_Anual_DDS_E4
                     if (usuario != null)
                     {
                         Properties.Settings.Default.EsAdmin = false;
-                        Properties.Settings.Default.IdUsuario = usuario.IdUsuario;
+                        Properties.Settings.Default.IdUsuario = usuario.Id_Usuario;
                         this.Usuario = usuario;
                         DialogResult = DialogResult.OK;
                     }

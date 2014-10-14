@@ -7,22 +7,22 @@ using System.Data;
 
 namespace TP_Anual_DDS_E4
 {
-    public class Interesado : Entidad
+    public class Interesado 
     {
         public enum EnumPrioridad
         {
             Condicional, Solidario, Estandar
         }
 
-        public int IdUsuario { get; set; }
+        public int Id_Usuario { get; set; }
 
-        public int IdInteresado
+        public int Id_Interesado
         {
             get
             {
-                string consulta = string.Format("SELECT Id_Interesado FROM " +
-                    " Interesado WHERE Id_Usuario = {0}", this.IdUsuario);
-                return (int)new BaseDatos(consulta).ObtenerUnicoCampo();
+                return (from x in new DDSDataContext().DBInteresados
+                                      where x.Nombre == Nombre && x.Apellido == Apellido
+                                      select x.Id_Interesado).SingleOrDefault();
             }
         }
 
@@ -166,19 +166,10 @@ namespace TP_Anual_DDS_E4
 
         private void ActualizarYGuardar(int idUsuario)
         {
-            //ver porque da null?
-            List<Parametro> parametros = new List<Parametro>();
-            parametros.Add(new Parametro("@Id_Usuario",SqlDbType.Int,idUsuario));
-            parametros.Add(new Parametro("@Nombre", SqlDbType.NVarChar, Nombre));
-            parametros.Add(new Parametro("@Apellido", SqlDbType.NVarChar, Apellido));
-            parametros.Add(new Parametro("@Edad", SqlDbType.Int, Edad));
-            parametros.Add(new Parametro("@Mail", SqlDbType.NVarChar, Mail));
-            parametros.Add(new Parametro("@Tipo_Jugador", SqlDbType.NVarChar, new Estandar().Descripcion));
-            parametros.Add(new Parametro("@Posicion", SqlDbType.Int, Posicion));
-            parametros.Add(new Parametro("@Handicap", SqlDbType.Int, Handicap));
-            parametros.Add(new Parametro("@Criterio", SqlDbType.NVarChar, new Handicap(this.Handicap).Descripcion));
-
-            base.Guardar("Interesado_UI", parametros);
+            DDSDataContext db = new DDSDataContext();
+            db.Interesado_UI((int) idUsuario, this.Nombre, this.Apellido, this.Edad, this.Mail,
+                new Estandar().Descripcion, this.Posicion, this.Handicap, new Handicap(this.Handicap).Descripcion);
+            db.SubmitChanges();
         }
 
     }

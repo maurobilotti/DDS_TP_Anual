@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.75, 9.625" name="DDS">
+  <DataContextMoniker Name="/DDSDataContext" />
+  <nestedChildShapes>
+    <classShape Id="502d3427-c13d-4429-bc6f-3ad056a34005" absoluteBounds="0.875, 1.125, 2, 1.0961531575520833">
+      <DataClassMoniker Name="/DDSDataContext/DBAmigos" />
+      <nestedChildShapes>
+        <elementListCompartment Id="16b9a138-1c34-4fdd-988b-266d1734bf20" absoluteBounds="0.88999999999999968, 1.585, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="08579f2b-1b40-4e21-8a25-f6f30696fae3" absoluteBounds="5, 1.25, 2, 1.5891951497395831">
+      <DataClassMoniker Name="/DDSDataContext/DBCalificacion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0240dde5-3b59-4017-853b-24c7326bea51" absoluteBounds="5.015, 1.71, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="96e60bfc-7ca2-4fc3-b14a-995e6f8a24d3" absoluteBounds="10.5, 3, 2, 1.0961531575520833">
+      <DataClassMoniker Name="/DDSDataContext/DBCondicion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c1396770-af76-4a22-acfc-d1821b88ed0e" absoluteBounds="10.515, 3.46, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4deb967b-5f81-4836-9bc5-975b5c63bf38" absoluteBounds="10.5, 6.375, 2, 1.0961531575520833">
+      <DataClassMoniker Name="/DDSDataContext/DBCondicion_Interesado" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e139499a-d002-4b2e-972f-ec7c41efade4" absoluteBounds="10.515, 6.835, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(12.0625 : 4.09615315755208); (12.0625 : 6.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DDSDataContext/DBCondicion/Condicion_Condicion_Interesado" />
+      <nodes>
+        <classShapeMoniker Id="96e60bfc-7ca2-4fc3-b14a-995e6f8a24d3" />
+        <classShapeMoniker Id="4deb967b-5f81-4836-9bc5-975b5c63bf38" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c483b24e-07c6-4563-a982-64413864ea4e" absoluteBounds="0.75, 6.25, 2, 1.75354248046875">
+      <DataClassMoniker Name="/DDSDataContext/DBDenegacion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="97dbe647-3152-4a21-8fb6-83ed68ef794e" absoluteBounds="0.76499999999999968, 6.71, 1.9700000000000002, 1.19354248046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7149e1ac-3144-430b-9603-117bca085904" absoluteBounds="4.5, 3.75, 2, 2.5752791341145831">
+      <DataClassMoniker Name="/DDSDataContext/DBInteresado" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ed4d5ce0-6dba-4e9f-87f3-bef0af40b1cc" absoluteBounds="4.515, 4.21, 1.9700000000000002, 2.015279134114583" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.71875 : 3.75); (4.71875 : 1.15625); (2.875 : 1.15625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DDSDataContext/DBInteresado/Interesado_Amigo" />
+      <nodes>
+        <classShapeMoniker Id="7149e1ac-3144-430b-9603-117bca085904" />
+        <classShapeMoniker Id="502d3427-c13d-4429-bc6f-3ad056a34005" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 6.32527913411458); (5.5 : 6.92307657877604); (10.5 : 6.92307657877604)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DDSDataContext/DBInteresado/Interesado_Condicion_Interesado" />
+      <nodes>
+        <classShapeMoniker Id="7149e1ac-3144-430b-9603-117bca085904" />
+        <classShapeMoniker Id="4deb967b-5f81-4836-9bc5-975b5c63bf38" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5 : 4.9999995); (1.75 : 4.9999995); (1.75 : 6.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DDSDataContext/DBInteresado/Interesado_Denegacion" />
+      <nodes>
+        <classShapeMoniker Id="7149e1ac-3144-430b-9603-117bca085904" />
+        <classShapeMoniker Id="c483b24e-07c6-4563-a982-64413864ea4e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="3bed0043-a2c2-4b2a-bf2f-ff96d60f5c5a" absoluteBounds="8.75, 1.25, 2, 1.4248478190104168">
+      <DataClassMoniker Name="/DDSDataContext/DBPartido" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b1f2d1c1-9aa0-457e-880f-8d38e5ba8b30" absoluteBounds="8.765, 1.71, 1.9700000000000002, 0.86484781901041674" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.75 : 1.96242390950521); (7 : 1.96242390950521)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DDSDataContext/DBPartido/Partido_Calificacion" />
+      <nodes>
+        <classShapeMoniker Id="3bed0043-a2c2-4b2a-bf2f-ff96d60f5c5a" />
+        <classShapeMoniker Id="08579f2b-1b40-4e21-8a25-f6f30696fae3" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="b427aaf9-d50e-46ed-b0be-3e9ab7f3879e" absoluteBounds="8, 3.625, 2, 1.26050048828125">
+      <DataClassMoniker Name="/DDSDataContext/DBPartido_Interesado" />
+      <nestedChildShapes>
+        <elementListCompartment Id="576dd324-12f8-46bf-b48f-640dfe45bd40" absoluteBounds="8.015, 4.085, 1.9700000000000002, 0.70050048828125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.5 : 4.31775024414063); (8 : 4.31775024414063)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DDSDataContext/DBInteresado/Interesado_Partido_Interesado" />
+      <nodes>
+        <classShapeMoniker Id="7149e1ac-3144-430b-9603-117bca085904" />
+        <classShapeMoniker Id="b427aaf9-d50e-46ed-b0be-3e9ab7f3879e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.375 : 2.67484781901042); (9.375 : 3.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DDSDataContext/DBPartido/Partido_Partido_Interesado" />
+      <nodes>
+        <classShapeMoniker Id="3bed0043-a2c2-4b2a-bf2f-ff96d60f5c5a" />
+        <classShapeMoniker Id="b427aaf9-d50e-46ed-b0be-3e9ab7f3879e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1e29df7f-f222-4484-a826-33b7a485e9b5" absoluteBounds="6.375, 8, 2, 1.4248478190104168">
+      <DataClassMoniker Name="/DDSDataContext/DBUsuario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e125779f-39d8-4942-ade9-a5e13586417c" absoluteBounds="6.39, 8.46, 1.9700000000000002, 0.86484781901041674" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.375 : 8.9816436623227); (1.75 : 8.9816436623227); (1.75 : 8.00354248046875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DDSDataContext/DBUsuario/Usuario_Denegacion" />
+      <nodes>
+        <classShapeMoniker Id="1e29df7f-f222-4484-a826-33b7a485e9b5" />
+        <classShapeMoniker Id="c483b24e-07c6-4563-a982-64413864ea4e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.375 : 8.47593450563499); (4.9687475 : 8.47593450563499); (4.9687475 : 6.32527913411458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DDSDataContext/DBUsuario/Usuario_Interesado" />
+      <nodes>
+        <classShapeMoniker Id="1e29df7f-f222-4484-a826-33b7a485e9b5" />
+        <classShapeMoniker Id="7149e1ac-3144-430b-9603-117bca085904" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

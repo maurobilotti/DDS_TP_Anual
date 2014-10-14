@@ -32,21 +32,10 @@ namespace TP_Anual_DDS_E4
 
         public List<Usuario> CargarUsuariosIniciales()
         {
-            BaseDatos bd = new BaseDatos("Usuario_L");
-            bd.pTipoComando = CommandType.StoredProcedure;
-            listaUsuarios = (from x in bd.ObtenerDataTable().AsEnumerable()
-                select
-                    new Usuario(x.Field<string>("Nombre_Usuario"), x.Field<string>("Password_Usuario"),
-                        new Interesado(
-                            x.Field<string>("Nombre"),
-                            x.Field<string>("Apellido"),
-                            x.Field<int>("Edad"),
-                            x.Field<string>("Mail"),
-                            x.Field<int>("Posicion"),
-                            x.Field<int>("Handicap"),
-                            x.Field<int>("CantPartidosJugados"),
-                            x.Field<string>("Tipo_Jugador")))).ToList();
-            return listaUsuarios;
+            return listaUsuarios = (from x in new DDSDataContext().Usuario_L()
+                                    select new Usuario(x.Nombre_Usuario, x.Password_Usuario,
+                                        new Interesado(x.Nombre, x.Apellido, (int)x.Edad, x.Mail, (int)x.Posicion, (int)x.Handicap, x.CantPartidosJugados,
+                                            x.Tipo_Jugador))).ToList(); 
         }
 
         public void CrearPartido(Partido partido)
@@ -56,11 +45,8 @@ namespace TP_Anual_DDS_E4
 
         public List<Partido> ObtenerPartidos()
         {
-            BaseDatos bd = new BaseDatos("Partido_L");
-            bd.pTipoComando = CommandType.StoredProcedure;
-            DataTable dt = bd.ObtenerDataTable();
-            this.listaPartidos = (from x in dt.AsEnumerable()
-                                  select new Partido(x["Lugar"].ToString(), (DateTime)x["Fecha_Hora"])).ToList();
+            this.listaPartidos = (from x in new DDSDataContext().Partido_L()
+                select new Partido(x.Lugar, (DateTime)x.Fecha_Hora)).ToList();
 
             return this.listaPartidos;
         }
@@ -77,17 +63,17 @@ namespace TP_Anual_DDS_E4
 
         public Usuario ObtenerUsuario(int id)
         {
-            return this.listaUsuarios.SingleOrDefault(x => x.IdUsuario == id);
+            return this.listaUsuarios.SingleOrDefault(x => x.Id_Usuario == id);
         }
 
         public Usuario ObtenerUsuario(string usuario, string contrasena)
         {
-            return listaUsuarios.SingleOrDefault(z => z.contrasena.Equals(contrasena) && z.usuario.Equals(usuario));
+            return listaUsuarios.SingleOrDefault(z => z.Password.Equals(contrasena) && z._Usuario.Equals(usuario));
         }
 
         public Partido ObtenerPartido(int id)
         {
-            return this.listaPartidos.SingleOrDefault(x => x.IdPartido == id);
+            return this.listaPartidos.SingleOrDefault(x => x.Id_Partido == id);
         }
 
         public List<Usuario> ObtenerJugadoresNoInscriptos(Partido partido)

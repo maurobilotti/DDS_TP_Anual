@@ -7,32 +7,31 @@ using System.Threading.Tasks;
 
 namespace TP_Anual_DDS_E4
 {
-    public class Usuario : Entidad
+    public class Usuario 
     {
-        public string usuario { get; set; }
-        public string contrasena { get; set; }
+        public string _Usuario { get; set; }
+        public string Password { get; set; }
         public Interesado Interesado { get; set; }
 
-        public int IdUsuario
+        public int Id_Usuario
         {
             get
             {
-                string consulta = string.Format("SELECT Id_Usuario FROM " +
-                    " Usuario WHERE Nombre_Usuario LIKE '{0}'", this.usuario);
-                return (int)new BaseDatos(consulta).ObtenerUnicoCampo();
+                return (from x in new DDSDataContext().DBUsuarios
+                    where x.Nombre_Usuario.Contains(this._Usuario)
+                    select x.Id_Usuario).SingleOrDefault();
             }
         }
 
         public Usuario(string nombreUsuario, string contrasena, Interesado interesado)
         {
-            this.usuario = nombreUsuario;
-            this.contrasena = contrasena;
+            this._Usuario = nombreUsuario;
+            this.Password = contrasena;
             this.Interesado = interesado;
             ActualizarYGuardar();
-            this.Interesado.IdUsuario = this.IdUsuario;
+            this.Interesado.Guardar(this.Id_Usuario);
         }
 
-        
         public void Actualizar()
         {
             ActualizarYGuardar();
@@ -40,16 +39,9 @@ namespace TP_Anual_DDS_E4
 
         private void ActualizarYGuardar()
         {
-            List<Parametro> parametros = new List<Parametro>()
-            {
-                new Parametro("@Nombre_Usuario", SqlDbType.NVarChar, usuario),
-                new Parametro("@Password_Usuario", SqlDbType.NVarChar, contrasena),
-                new Parametro("@Usuario_Administrador", SqlDbType.Bit, false),
-            };
-
-            base.Guardar("Usuario_UI", parametros);
-            //guarda en la tabla de interesado también
-            this.Interesado.Guardar(this.IdUsuario);
+            DDSDataContext db = new DDSDataContext();
+            db.Usuario_UI(_Usuario, Password, false);
+            db.SubmitChanges();
         }
     }
 }

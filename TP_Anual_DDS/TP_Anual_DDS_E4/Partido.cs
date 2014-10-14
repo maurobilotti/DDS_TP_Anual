@@ -8,24 +8,24 @@ using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using TP_Anual_DDS_E4;
 
 namespace TP_Anual_DDS_E4
 {
-    public class Partido : Entidad
+    public class Partido 
     {
         #region Propiedades
-        public int IdPartido
+        public int Id_Partido
         {
             get
             {
-                string consulta = string.Format("SELECT Id_Partido FROM " +
-                    " Partido WHERE Lugar LIKE '{0}' AND Fecha_Hora = convert(datetime,'{1}',111)", this.Lugar, this.FechaHora.ToString("yyyy-MM-dd HH:mm"));
-                return (int) new BaseDatos(consulta).ObtenerUnicoCampo();
+                return (from x in new DDSDataContext().DBPartidos
+                    where x.Lugar.Contains(this.Lugar)
+                          && x.Fecha_Hora == Fecha_Hora
+                    select x.Id_Partido).SingleOrDefault();
 
             }
         }
-        public DateTime FechaHora { get; set; }
+        public DateTime Fecha_Hora { get; set; }
         public string Lugar { get; set; }
         public List<Usuario> ListaJugadores { get; set; }
         private List<Usuario> ListaInfractores { get; set; }
@@ -54,7 +54,7 @@ namespace TP_Anual_DDS_E4
         public Partido(string lugar, DateTime fechaHora)
         {
             //ojo, el orden es importante
-            this.FechaHora = fechaHora;
+            this.Fecha_Hora = fechaHora;
             this.Lugar = lugar;
             
             ObtenerInscriptos();
@@ -92,12 +92,10 @@ namespace TP_Anual_DDS_E4
                     }
                 }
                 ChequearCondicionales();
-                List<Parametro> parametros = new List<Parametro>()
-                {
-                    new Parametro("@Id_Partido", SqlDbType.Int, this.IdPartido),
-                    new Parametro("@Id_Interesado",SqlDbType.Int, usuario.Interesado.IdInteresado)
-                };
-                base.Guardar("Partido_Interesado_UI",parametros);
+
+                DDSDataContext db = new DDSDataContext();
+                db.Partido_Interesado_UI((int) this.Id_Partido, usuario.Interesado.Id_Interesado, false);
+                db.SubmitChanges();
             }
             return true;
         }
@@ -121,22 +119,20 @@ namespace TP_Anual_DDS_E4
         private void RegistrarInfraccion(Usuario usuarioInfractor)
         {
             this.ListaInfractores.Add(usuarioInfractor);//Se agrega a una lista de infractores.
-            List<Parametro> parametros = new List<Parametro>()
-            {
-                new Parametro("@Id_Usuario",SqlDbType.Int, usuarioInfractor.IdUsuario)
-            };
-            base.Guardar("Infraccion_I",parametros);
+            DDSDataContext db = new DDSDataContext();
+            db.Infraccion_I(usuarioInfractor.Id_Usuario);
+            db.SubmitChanges();
         }
 
         private void RemoverJugador(Usuario usuarioBaja)
         {
             this.ListaJugadores.Remove(usuarioBaja);
-            List<Parametro> parametros = new List<Parametro>()
-            {
-                new Parametro("@Id_Partido",SqlDbType.Int, this.IdPartido),
-                new Parametro("@Id_Interesado",SqlDbType.Int, usuarioBaja.Interesado.IdUsuario)
-            };
-            base.Actualizar("Partido_Interesado_D",parametros);
+            
+
+            DDSDataContext db = new DDSDataContext();
+            db.Partido_Interesado_D((int) this.Id_Partido, (int) usuarioBaja.Interesado.Id_Usuario);
+            db.SubmitChanges();
+
         }
 
         private void ChequearCondicionales()
@@ -173,41 +169,20 @@ namespace TP_Anual_DDS_E4
 
         private List<Usuario> ObtenerInscriptos()
         {
-            List<Parametro> parametros = new List<Parametro>()
-            {
-                new Parametro("@Id_Partido", SqlDbType.Int, this.IdPartido)
-            };
-
-            DataTable dt = base.Obtener("Partido_ObtenerInteresados", parametros);
-            
-            return ListaJugadores = (from x in dt.AsEnumerable() 
-                                     select new Usuario(x.Field<string>("Nombre_Usuario"),x.Field<string>("Password_Usuario"), 
-                                         new Interesado(
-                                        x.Field<string>("Nombre"),
-                                        x.Field<string>("Apellido"),
-                                        x.Field<int>("Edad"),
-                                        x.Field<string>("Mail"),
-                                        x.Field<int>("Posicion"),
-                                        x.Field<int>("Handicap"),
-                                        x.Field<int>("CantPartidosJugados"),
-                                        x.Field<string>("Tipo_Jugador")))).ToList();
+            //ejecuta el SP Partido_ObtenerInteresados y lo mapea a los tipos de la solucion
+            return ListaJugadores = (from x in new DDSDataContext().Partido_ObtenerInteresados(this.Id_Partido)
+                select new Usuario(x.Nombre_Usuario, x.Password_Usuario,
+                    new Interesado(x.Nombre, x.Apellido, (int)x.Edad, x.Mail, (int)x.Posicion,
+                        (int)x.Handicap, x.CantPartidosJugados, x.Tipo_Jugador))).ToList();
         }
 
         private List<Usuario> ObtenerInfractores()
         {
-            DataTable dt = base.Obtener("Infraccion_L");
-
-            return ListaJugadores = (from x in dt.AsEnumerable()
-                                     select new Usuario(x.Field<string>("Nombre_Usuario"), x.Field<string>("Password_Usuario"),
-                                         new Interesado(
-                                        x.Field<string>("Nombre"),
-                                        x.Field<string>("Apellido"),
-                                        x.Field<int>("Edad"),
-                                        x.Field<string>("Mail"),
-                                        x.Field<int>("Posicion"),
-                                        x.Field<int>("Handicap"),
-                                        x.Field<int>("CantPartidosJugados"),
-                                        x.Field<string>("Tipo_Jugador")))).ToList();
+            //ejecuta el SP Infraccion_L y lo mapea a los tipos de la solucion
+            return ListaJugadores = (from x in new DDSDataContext().Infraccion_L()
+                                     select new Usuario(x.Nombre_Usuario, x.Password_Usuario,
+                                         new Interesado(x.Nombre, x.Apellido, (int)x.Edad, x.Mail, (int)x.Posicion,
+                                             (int)x.Handicap, x.CantPartidosJugados, x.Tipo_Jugador))).ToList();
         }
 
         public void AgregarCriterio(char opcion)
@@ -263,14 +238,10 @@ namespace TP_Anual_DDS_E4
 
         private void ActualizarYGuardar()
         {
-            List<Parametro> parametros = new List<Parametro>()
-            {
-                new Parametro("@Lugar", SqlDbType.NVarChar, Lugar),
-                new Parametro("@Confirmado", SqlDbType.Bit, Confirmado),
-                new Parametro("@Fecha_Hora", SqlDbType.DateTime, FechaHora.ToString("yyyy-MM-dd HH:mm")),
-            };
-
-            base.Guardar("Partido_UI", parametros);
+            DDSDataContext db = new DDSDataContext();
+            db.Partido_UI(this.Lugar, (bool) this.Confirmado,
+                Convert.ToDateTime(this.Fecha_Hora.ToString("yyyy-MM-dd HH:mm")));
+            db.SubmitChanges();
         }
 
     }

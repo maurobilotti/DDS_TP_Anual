@@ -31,13 +31,20 @@ namespace TP_Anual_DDS_E4
 
                 DialogResult = DialogResult.OK;
             }
+            else
+            {
+                MessageBox.Show("Los datos ingresados no son correctos.");
+            }
         }
 
         private bool Validar()
         {
             return !string.IsNullOrEmpty(txtNombre.Text) &&
                    !string.IsNullOrEmpty(txtApellido.Text) &&
-                   !string.IsNullOrEmpty(txtMail.Text);
+                   !string.IsNullOrEmpty(txtMail.Text) &&
+                   new DDSDataContext().DBInteresados.All(z => z.Apellido != txtApellido.Text &&
+                   z.Nombre != txtNombre.Text) && 
+                   new DDSDataContext().DBUsuarios.All(z=> z.Nombre_Usuario != txtUsuario.Text);
         }
     }
 }
