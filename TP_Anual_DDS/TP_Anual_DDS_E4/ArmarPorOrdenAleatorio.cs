@@ -8,15 +8,15 @@ namespace TP_Anual_DDS_E4
 {
     public class ArmarPorOrdenAleatorio : ArmadorPartido
     {
-        public ArmarPorOrdenAleatorio(List<Interesado> listaJugadores) : base(listaJugadores) { }
+        public ArmarPorOrdenAleatorio(List<Usuario> listaJugadores) : base(listaJugadores) { }
 
-        public override List<Interesado> ArmarPrimerEquipo()
+        public override List<Usuario> ArmarPrimerEquipo()
         {
-            List<Interesado> listaPrimerEquipo = new List<Interesado>();
+            List<Usuario> listaPrimerEquipo = new List<Usuario>();
             foreach (var jugador in this.ListaJugadores)
             {
                 //si las posiciones son 1, 4, 5, 8 o 9, va a la lista del primer equipo
-                switch (jugador.Posicion)
+                switch (jugador.Interesado.Posicion)
                 {
                     case 1:
                     case 4:
@@ -30,14 +30,14 @@ namespace TP_Anual_DDS_E4
             return listaPrimerEquipo;
         }
 
-        public override List<Interesado> ArmarSegundoEquipo()
+        public override List<Usuario> ArmarSegundoEquipo()
         {
-            List<Interesado> listaSegundoEquipo = new List<Interesado>();
+            List<Usuario> listaSegundoEquipo = new List<Usuario>();
 
             foreach (var jugador in this.ListaJugadores)
             {
                 //si las posiciones son 1, 4, 5, 8 o 9, va a la lista del primer equipo
-                switch (jugador.Posicion)
+                switch (jugador.Interesado.Posicion)
                 {
                     case 2:
                     case 3:

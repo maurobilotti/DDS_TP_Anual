@@ -4,12 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP_Anual_DDS_E4;
 
-namespace TP_Anual_DDS_Desktop
+namespace TP_Anual_DDS_E4
 {
     public partial class frmPrincipal : Form
     {
@@ -26,15 +27,7 @@ namespace TP_Anual_DDS_Desktop
         public frmPrincipal()
         {
             InitializeComponent();
-            DataTable tabla = new DataTable();
-            BaseDatos db = new BaseDatos("INSERT INTO Partido (Confirmado) " +
-                                         "VALUES('1')");
-            db.Ejecutar();
-
-            db.pComando = "SELECT * FROM Partido";
-            tabla = db.ObtenerDataTable();
-
-            this.ListaUsuarios = new List<Interesado>();
+            this.ListaUsuarios = Administrador.ObtenerInstancia().CargarUsuariosIniciales().Select(x => x.Interesado).ToList();
             DeshablitarControles();
         }
         #endregion
@@ -42,12 +35,12 @@ namespace TP_Anual_DDS_Desktop
         private void DeshablitarControles()
         {
             // se deshablitan todos los controles que no van al principio.
-            btnProponerAmigo.Enabled = 
-            btnFinalizarPartido.Visible = 
-            btnNuevoPartido.Enabled = 
-            btnConfirmar.Enabled = 
-            btnCriterios.Enabled = 
-            btnBaja.Enabled = 
+            btnProponerAmigo.Enabled =
+            btnFinalizarPartido.Visible =
+            btnNuevoPartido.Enabled =
+            btnConfirmar.Enabled =
+            btnCriterios.Enabled =
+            btnBaja.Enabled =
             btnInscribirse.Enabled = false;
         }
 
@@ -65,17 +58,17 @@ namespace TP_Anual_DDS_Desktop
         {
             DeshablitarControles();
             //-------------------
-            Guid IdPartido1 = Administrador.ObtenerInstancia().CrearPartido(new Partido("Ciudad Jardin", DateTime.Now));
-            Guid IdPartido2 = Administrador.ObtenerInstancia().CrearPartido(new Partido("Caballito", DateTime.Now));
-            Administrador.ObtenerInstancia().CrearPartido(new Partido("Flores", DateTime.Now));
-            Administrador.ObtenerInstancia().CrearPartido(new Partido("Parque Avellaneda", DateTime.Now));
+            //Guid IdPartido1 = Administrador.ObtenerInstancia().CrearPartido(new Partido("Ciudad Jardin", DateTime.Now));
+            //Guid IdPartido2 = Administrador.ObtenerInstancia().CrearPartido(new Partido("Caballito", DateTime.Now));
+            //Administrador.ObtenerInstancia().CrearPartido(new Partido("Flores", DateTime.Now));
+            //Administrador.ObtenerInstancia().CrearPartido(new Partido("Parque Avellaneda", DateTime.Now));
 
-            Administrador.ObtenerInstancia().CargarUsuariosIniciales();
+            //Administrador.ObtenerInstancia().CargarUsuariosIniciales();
 
-            Partido partido1 = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido1);
-            Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido1);
-            Partido partido2 = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido2);
-            Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido2);
+            //Partido partido1 = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido1);
+            //Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido1);
+            //Partido partido2 = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido2);
+            //Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido2);
 
             Actualizar();
         }
@@ -96,7 +89,7 @@ namespace TP_Anual_DDS_Desktop
         {
             if (gridPartidos.SelectedRows.Count == 1)
             {
-                var idSeleccionado = new Guid(gridPartidos.SelectedCells[0].Value.ToString());
+                int idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartidos().Single(z => z.IdPartido == idSeleccionado);
                 if (partido.Confirmado)
                     return;
@@ -106,7 +99,7 @@ namespace TP_Anual_DDS_Desktop
                     var frmJugador = new frmInscribirseAPartido(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario));
                     if (frmJugador.ShowDialog() == DialogResult.OK)
                     {
-                        partido.AgregarInteresado(frmJugador.Usuario.Interesado);
+                        partido.AgregarInteresado(frmJugador.Usuario);
                         gridInteresados.DataSource = null;
                         gridInteresados.DataSource = partido.ListaJugadores;
                         btnBaja.Enabled = true;
@@ -199,7 +192,7 @@ namespace TP_Anual_DDS_Desktop
         {
             if (gridPartidos.SelectedRows.Count == 1)
             {
-                var idSeleccionado = new Guid(gridPartidos.SelectedCells[0].Value.ToString());
+                var idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(idSeleccionado);
                 if (!EsAdministrador && EstaLogueado)
                 {
@@ -230,7 +223,7 @@ namespace TP_Anual_DDS_Desktop
         {
             if (gridPartidos.SelectedRows.Count == 1)
             {
-                Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(new Guid(gridPartidos.SelectedCells[0].Value.ToString()));
+                Partido partido = Administrador.ObtenerInstancia().ObtenerPartido((int)gridPartidos.SelectedCells[0].Value);
                 if (partido.Confirmado)
                     return;
 
@@ -239,20 +232,19 @@ namespace TP_Anual_DDS_Desktop
 
                 if (resp == DialogResult.No)
                 {
-                    partido.DarBaja(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario).Interesado);
+                    partido.DarBaja(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario));
                 }
                 if (resp == DialogResult.Yes)
                 {
                     frmProponerJugador frmProponer = new frmProponerJugador(partido);
                     if (frmProponer.ShowDialog() == DialogResult.OK)
                     {
-                        Interesado jugBaja =
+                        Usuario jugBaja =
                             Administrador.ObtenerInstancia()
-                                .ObtenerUsuario(Properties.Settings.Default.IdUsuario)
-                                .Interesado;
+                                .ObtenerUsuario(Properties.Settings.Default.IdUsuario);
 
-                        Interesado jugAlta = frmProponer.JugadorPropuesto;
-                        jugAlta.Tipo = jugBaja.Tipo;
+                        Usuario jugAlta = frmProponer.JugadorPropuesto;
+                        jugAlta.Interesado.Tipo = jugBaja.Interesado.Tipo;
                         partido.DarBaja(jugBaja, jugAlta);
                     }
                 }
@@ -275,7 +267,7 @@ namespace TP_Anual_DDS_Desktop
         {
             if (gridInteresados.RowCount >= 10)
             {
-                Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(new Guid(gridPartidos.SelectedCells[0].Value.ToString()));
+                Partido partido = Administrador.ObtenerInstancia().ObtenerPartido((int)gridPartidos.SelectedCells[0].Value);
                 frmCriterios frm = new frmCriterios(partido);
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -293,7 +285,7 @@ namespace TP_Anual_DDS_Desktop
             if (gridInteresados.RowCount >= 10 && gridEquipo1.RowCount > 0 && gridEquipo2.RowCount > 0)
             {
                 Administrador.ObtenerInstancia()
-                    .ObtenerPartido(new Guid(gridPartidos.SelectedCells[0].Value.ToString()))
+                    .ObtenerPartido((int)gridPartidos.SelectedCells[0].Value)
                     .Confirmado = true;
             }
         }
@@ -302,12 +294,12 @@ namespace TP_Anual_DDS_Desktop
         {
             if (gridEquipo1.RowCount >= 5 && gridEquipo2.RowCount >= 5 && gridPartidos.SelectedRows.Count == 1)
             {
-                Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(new Guid(gridPartidos.SelectedCells[0].Value.ToString()));
+                Partido partido = Administrador.ObtenerInstancia().ObtenerPartido((int)gridPartidos.SelectedCells[0].Value);
 
                 if (!partido.Finalizado)
                 {
                     partido.Finalizado = true;
-                    partido.ListaJugadores.ForEach(z => z.ListaPartidosFinalizados.Add(partido));
+                    partido.ListaJugadores.ForEach(z => z.Interesado.ListaPartidosFinalizados.Add(partido));
                 }
 
                 MessageBox.Show(
@@ -337,7 +329,7 @@ namespace TP_Anual_DDS_Desktop
                 for (int i = 0; i < 5 && i <= gridEquipo1.RowCount; i++)
                 {
                     gridEquipo1.Rows[i].DefaultCellStyle.BackColor = Color.LimeGreen;
-                } 
+                }
             }
         }
 
@@ -348,7 +340,7 @@ namespace TP_Anual_DDS_Desktop
                 for (int i = 0; i < 5; i++)
                 {
                     gridEquipo2.Rows[i].DefaultCellStyle.BackColor = Color.LimeGreen;
-                } 
+                }
             }
         }
 

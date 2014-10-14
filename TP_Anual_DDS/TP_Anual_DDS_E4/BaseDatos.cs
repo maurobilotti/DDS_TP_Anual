@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlServerCe;
+using System.Data.SqlClient;
 
-namespace TP_Anual_DDS_Desktop
+namespace TP_Anual_DDS_E4
 {
 
     public class BaseDatos
@@ -13,12 +13,12 @@ namespace TP_Anual_DDS_Desktop
             Obtener, Ejecutar
         }
 
-        private string CadenaConexion = "Data Source=" + System.IO.Directory.GetCurrentDirectory().Replace("\\bin\\Debug","") + "\\BaseDatos_DDS.sdf;Persist Security Info=False;";
+        string CadenaConexion = "Server=localhost\\SQLSERVER2008;Database=DDS;Trusted_Connection=True";
         public string pComando { get; set; }
-        public List<SqlCeParameter> pParametros = new List<SqlCeParameter>();
+        public List<SqlParameter> pParametros = new List<SqlParameter>();
         public int pTimeOut = 0;
         public CommandType? pTipoComando;
-
+        
         public BaseDatos()
         {
 
@@ -28,29 +28,29 @@ namespace TP_Anual_DDS_Desktop
         {
             this.pComando = _Comando;
         }
-
+        
         public DataTable ObtenerDataTable()
         {
-            SqlCeConnection sqlConnection = new SqlCeConnection();
+            SqlConnection sqlConnection = new SqlConnection();
             DataTable dataTable = new DataTable();
             try
             {
                 sqlConnection.ConnectionString = this.CadenaConexion;
-                SqlCeCommand sqlCommand = new SqlCeCommand();
+                SqlCommand sqlCommand = new SqlCommand();
                 sqlCommand.Connection = sqlConnection;
                 sqlCommand.CommandType = this.GetCommandType(BaseDatos.TipoQuery.Obtener);
                 sqlCommand.CommandText = this.pComando;
-                SqlCeCommand selectCommand = sqlCommand;
+                SqlCommand selectCommand = sqlCommand;
                 selectCommand.CommandTimeout = this.pTimeOut;
                 if (this.pParametros != null)
                 {
-                    foreach (SqlCeParameter sqlParameter in this.pParametros)
+                    foreach (SqlParameter sqlParameter in this.pParametros)
                     {
                         sqlCommand.Parameters.Add(sqlParameter);
                     }
                 }
                 sqlConnection.Open();
-                new SqlCeDataAdapter(selectCommand).Fill(dataTable);
+                new SqlDataAdapter(selectCommand).Fill(dataTable);
             }
             catch (Exception ex)
             {
@@ -66,30 +66,30 @@ namespace TP_Anual_DDS_Desktop
 
         public object ObtenerUnicoCampo()
         {
-            SqlCeConnection sqlConnection = new SqlCeConnection();
+            SqlConnection sqlConnection = new SqlConnection();
             object obj;
             try
             {
                 sqlConnection.ConnectionString = this.CadenaConexion;
-                SqlCeCommand sqlCommand = new SqlCeCommand();
+                SqlCommand sqlCommand = new SqlCommand();
                 sqlCommand.Connection = sqlConnection;
                 sqlCommand.CommandType = this.GetCommandType(BaseDatos.TipoQuery.Obtener);
                 sqlCommand.CommandText = this.pComando;
                 sqlCommand.CommandTimeout = this.pTimeOut;
                 if (this.pParametros != null)
                 {
-                    foreach (SqlCeParameter sqlParameter in this.pParametros)
+                    foreach (SqlParameter sqlParameter in this.pParametros)
                     {
                         sqlCommand.Parameters.Add(sqlParameter);
                     }
                 }
                 sqlConnection.Open();
                 obj = sqlCommand.ExecuteScalar();
-
+            
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message + Environment.NewLine + pComando);
+                throw new Exception(ex.Message + Environment.NewLine+ pComando);
             }
             finally
             {
@@ -102,14 +102,14 @@ namespace TP_Anual_DDS_Desktop
         public bool Ejecutar()
         {
             int num = 1;
-            SqlCeConnection connection = new SqlCeConnection();
+            SqlConnection connection = new SqlConnection();
             try
             {
                 connection.ConnectionString = this.CadenaConexion;
-                SqlCeCommand sqlCommand = new SqlCeCommand(this.pComando, connection);
+                SqlCommand sqlCommand = new SqlCommand(this.pComando, connection);
                 if (this.pParametros != null)
                 {
-                    foreach (SqlCeParameter sqlParameter in this.pParametros)
+                    foreach (SqlParameter sqlParameter in this.pParametros)
                     {
                         sqlCommand.Parameters.Add(sqlParameter);
                     }
@@ -135,7 +135,7 @@ namespace TP_Anual_DDS_Desktop
         {
             if (this.pTipoComando.HasValue)
                 return this.pTipoComando.Value;
-            if (this.pComando.TrimStart(new char[1] { ' ' }).StartsWith("exec ", StringComparison.InvariantCultureIgnoreCase))
+            if (this.pComando.TrimStart(new char[1]{' '}).StartsWith("exec ", StringComparison.InvariantCultureIgnoreCase))
             {
                 this.pComando = this.pComando.Remove(0, 5);
                 return CommandType.StoredProcedure;
@@ -145,7 +145,7 @@ namespace TP_Anual_DDS_Desktop
                 switch (_TipoQuery)
                 {
                     case BaseDatos.TipoQuery.Ejecutar:
-                        return this.pComando.ToLowerInvariant().Contains("update ") || this.pComando.ToLowerInvariant().Contains("insert ")
+                        return this.pComando.ToLowerInvariant().Contains("update ") || this.pComando.ToLowerInvariant().Contains("insert ") 
                             || this.pComando.ToLowerInvariant().Contains("delete ") ? CommandType.Text : CommandType.StoredProcedure;
                     default:
                         return this.pComando.ToLowerInvariant().Contains("select ") ? CommandType.Text : CommandType.StoredProcedure;

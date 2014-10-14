@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP_Anual_DDS_E4;
 
-namespace TP_Anual_DDS_Desktop
+namespace TP_Anual_DDS_E4
 {
     public partial class frmRegistrar : Form
     {
@@ -25,15 +25,9 @@ namespace TP_Anual_DDS_Desktop
         {
             if (Validar())
             {
-                this.Usuario = new Usuario()
-                {
-                    contrasena = txtContrasena.Text,
-                    usuario = txtUsuario.Text,
-                    Interesado =
-                        new Interesado(txtNombre.Text, txtApellido.Text, (int)numEdad.Value, txtMail.Text,
-                            (int)numPosicion.Value, (int)numHandicap.Value, 0)
-
-                };
+                this.Usuario = new Usuario(txtUsuario.Text,txtContrasena.Text,
+                    new Interesado(txtNombre.Text, txtApellido.Text, (int) numEdad.Value, txtMail.Text,
+                        (int) numPosicion.Value, (int) numHandicap.Value, 0));
 
                 DialogResult = DialogResult.OK;
             }

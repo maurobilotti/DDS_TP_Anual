@@ -1,4 +1,4 @@
-﻿namespace TP_Anual_DDS_Desktop
+﻿namespace TP_Anual_DDS_E4
 {
     partial class frmCriticas
     {

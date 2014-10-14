@@ -11,6 +11,11 @@ namespace TP_Anual_DDS_E4
         public int partidos {get;set;}
         private List<int> ListaCalificaciones;
 
+        public string Descripcion
+        {
+            get { return typeof(PromUltimosNPartidos).Name; }
+        }
+
         public PromUltimosNPartidos(List<int> listaCalificaciones, int cantidadPartidos)
         {
             this.ListaCalificaciones = new List<int>();

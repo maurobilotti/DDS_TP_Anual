@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using TP_Anual_DDS_E4;
 
 
-namespace TP_Anual_DDS_Desktop
+namespace TP_Anual_DDS_E4
 {
     public partial class frmLogin : Form
     {
@@ -34,7 +34,7 @@ namespace TP_Anual_DDS_Desktop
                 else
                 {
                     //sera PERSISTIDO
-                    Usuario usuario = Administrador.ObtenerInstancia().ObtenerUsuario(txtUsuario.Text,txtContraseña.Text);
+                    Usuario usuario = Administrador.ObtenerInstancia().ObtenerUsuario(txtUsuario.Text.ToLowerInvariant(),txtContraseña.Text.ToLowerInvariant());
                     if (usuario != null)
                     {
                         Properties.Settings.Default.EsAdmin = false;

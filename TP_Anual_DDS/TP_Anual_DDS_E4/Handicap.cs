@@ -10,6 +10,11 @@ namespace TP_Anual_DDS_E4
     {
         private int NivelJuego;
 
+        public string Descripcion
+        {
+            get { return typeof(Handicap).Name; }
+        }
+
         public Handicap(int nivelJuego) 
         {
             this.NivelJuego = nivelJuego;    

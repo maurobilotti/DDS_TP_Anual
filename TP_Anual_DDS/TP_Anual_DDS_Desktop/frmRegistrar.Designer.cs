@@ -1,4 +1,4 @@
-﻿namespace TP_Anual_DDS_Desktop
+﻿namespace TP_Anual_DDS_E4
 {
     partial class frmRegistrar
     {
@@ -55,21 +55,21 @@
             this.txtNombre.Location = new System.Drawing.Point(64, 51);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(131, 20);
-            this.txtNombre.TabIndex = 0;
+            this.txtNombre.TabIndex = 2;
             // 
             // txtApellido
             // 
             this.txtApellido.Location = new System.Drawing.Point(292, 55);
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(121, 20);
-            this.txtApellido.TabIndex = 1;
+            this.txtApellido.TabIndex = 3;
             // 
             // txtMail
             // 
             this.txtMail.Location = new System.Drawing.Point(64, 94);
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(131, 20);
-            this.txtMail.TabIndex = 2;
+            this.txtMail.TabIndex = 4;
             // 
             // numEdad
             // 
@@ -81,7 +81,7 @@
             0});
             this.numEdad.Name = "numEdad";
             this.numEdad.Size = new System.Drawing.Size(46, 20);
-            this.numEdad.TabIndex = 3;
+            this.numEdad.TabIndex = 11;
             this.numEdad.Value = new decimal(new int[] {
             12,
             0,
@@ -160,7 +160,7 @@
             this.btnConfirmar.Location = new System.Drawing.Point(179, 201);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(75, 23);
-            this.btnConfirmar.TabIndex = 10;
+            this.btnConfirmar.TabIndex = 6;
             this.btnConfirmar.Text = "Confirmar";
             this.btnConfirmar.UseVisualStyleBackColor = true;
             this.btnConfirmar.Click += new System.EventHandler(this.btnConfirmar_Click);
@@ -189,7 +189,7 @@
             0});
             this.numHandicap.Name = "numHandicap";
             this.numHandicap.Size = new System.Drawing.Size(46, 20);
-            this.numHandicap.TabIndex = 13;
+            this.numHandicap.TabIndex = 6;
             this.numHandicap.Value = new decimal(new int[] {
             10,
             0,
@@ -209,15 +209,16 @@
             // 
             this.txtContrasena.Location = new System.Drawing.Point(292, 12);
             this.txtContrasena.Name = "txtContrasena";
+            this.txtContrasena.PasswordChar = '*';
             this.txtContrasena.Size = new System.Drawing.Size(121, 20);
-            this.txtContrasena.TabIndex = 16;
+            this.txtContrasena.TabIndex = 1;
             // 
             // txtUsuario
             // 
             this.txtUsuario.Location = new System.Drawing.Point(64, 12);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(131, 20);
-            this.txtUsuario.TabIndex = 15;
+            this.txtUsuario.TabIndex = 0;
             // 
             // label8
             // 

@@ -8,6 +8,8 @@ namespace TP_Anual_DDS_E4
 {
     public class Solidario : TipoJugador
     {
+        public string Descripcion { get { return typeof(Solidario).Name; } }
+
         public Solidario()
         {
             this.Prioridad =  Interesado.EnumPrioridad.Solidario;

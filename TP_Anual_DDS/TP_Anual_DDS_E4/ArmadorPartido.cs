@@ -8,15 +8,15 @@ namespace TP_Anual_DDS_E4
 {
     public abstract class ArmadorPartido
     {
-        public List<Interesado> ListaJugadores { get; set; }
+        public List<Usuario> ListaJugadores { get; set; }
 
-        protected ArmadorPartido(List<Interesado> listaJugadores)
+        protected ArmadorPartido(List<Usuario> listaJugadores)
         {
-            this.ListaJugadores = new List<Interesado>();
+            this.ListaJugadores = new List<Usuario>();
             this.ListaJugadores = listaJugadores;
         }
 
-        public abstract List<Interesado> ArmarPrimerEquipo();
-        public abstract List<Interesado> ArmarSegundoEquipo();
+        public abstract List<Usuario> ArmarPrimerEquipo();
+        public abstract List<Usuario> ArmarSegundoEquipo();
     }
 }

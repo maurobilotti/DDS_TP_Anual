@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,10 @@ namespace TP_Anual_DDS_E4
     public class Administrador
     {
         private static Administrador _instancia = null;
-        private List<Partido> listaPartidos;
-        private List<Usuario> listaUsuarios;
-        private List<Usuario> listaUsuariosPropuestos;
-        private List<Denegacion> listaDenegaciones;
+        private List<Partido> listaPartidos { get; set; }
+        private List<Usuario> listaUsuarios { get; set; }
+        private List<Usuario> listaUsuariosPropuestos { get; set; }
+        private List<Denegacion> listaDenegaciones { get; set; }
 
         private Administrador()
         {
@@ -29,130 +30,37 @@ namespace TP_Anual_DDS_E4
             return _instancia;
         }
 
-        public void CargarUsuariosIniciales()
+        public List<Usuario> CargarUsuariosIniciales()
         {
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Ezequiel", "Barany", 22, "asdasd111@gmail.com", 6, 9, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "barany",
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Pablo", "Furst", 22, "asdasd111@gmail.com", 3, 9, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "furst"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Mauro", "Bilotti", 25, "asdasd111@gmail.com", 9, 9, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "bilotti"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Federico", "Beldevere", 23, "asdasd111@gmail.com", 5, 3, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "beldevere"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Augusto", "Bonabia", 22, "asdasd111@gmail.com", 1, 3, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "bonabia"
-            });
-
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Leo", "Messi", 26, "asdasd111@gmail.com", 10, 10, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "messi"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Cristiano", "Ronaldo", 29, "asdasd111@gmail.com", 7, 10, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "ronaldo"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Sergio", "Aguero", 25, "asdasd111@gmail.com", 9, 10, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "aguero"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Marcelo", "Barovero", 30, "asdasd111@gmail.com", 1, 5, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "barovero"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Javier", "Mascherano", 31, "asdasd111@gmail.com", 5, 8, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "mascherano"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Marcos", "Rojo", 22, "asdasd111@gmail.com", 3, 8, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "rojo"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Angel", "Di Maria", 26, "asdasd111@gmail.com", 7, 9, 0, new Estandar()),
-                contrasena = "1234",
-                usuario = "dimaria"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Pablo", "Zabaleta", 32, "asdasd111@gmail.com", 4, 7, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "zabaleta"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Pablo", "Zabaleta", 32, "asdasd111@gmail.com", 4, 7, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "zabaleta"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Lucas", "Biglia", 27, "asdasd111@gmail.com", 5, 6, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "biblia"
-            });
-
-            this.CrearUsuario(new Usuario()
-            {
-                Interesado = new Interesado("Enzo", "Perez", 32, "asdasd111@gmail.com", 4, 7, 0, new Solidario()),
-                contrasena = "1234",
-                usuario = "perez"
-            });
+            //listaUsuarios = (from x in new BaseDatos(string.Format("SELECT Nombre_Usuario,Password_Usuario,Confirmado FROM Usuario"))
+            //                     .ObtenerDataTable().AsEnumerable() 
+            //                 select new Usuario(x["Nombre_Usuario"].ToString(),))
+            BaseDatos bd = new BaseDatos("Usuario_L");
+            bd.pTipoComando = CommandType.StoredProcedure;
+            listaUsuarios = (from x in bd.ObtenerDataTable().AsEnumerable()
+                select
+                    new Usuario(x.Field<string>("Nombre_Usuario"), x.Field<string>("Password_Usuario"),
+                        new Interesado(
+                            x.Field<string>("Nombre"),
+                            x.Field<string>("Apellido"),
+                            x.Field<int>("Edad"),
+                            x.Field<string>("Mail"),
+                            x.Field<int>("Posicion"),
+                            x.Field<int>("Handicap"),
+                            x.Field<int>("CantPartidosJugados")))).ToList();
+            return listaUsuarios;
         }
 
-        public Guid CrearPartido(Partido partido)
+        public void CrearPartido(Partido partido)
         {
             this.listaPartidos.Add(partido);
-            return partido.IdPartido;
         }
 
         public List<Partido> ObtenerPartidos()
         {
+            this.listaPartidos = (from x in new BaseDatos("SELECT Lugar,Fecha_Hora,Confirmado FROM Partido").ObtenerDataTable().AsEnumerable()
+                                  select new Partido(x["Lugar"].ToString(), (DateTime)x["Fecha_Hora"])).ToList();
+
             return this.listaPartidos;
         }
 
@@ -166,24 +74,24 @@ namespace TP_Anual_DDS_E4
             this.listaUsuariosPropuestos.Remove(usuario);
         }
 
-        public Usuario ObtenerUsuario(Guid id)
+        public Usuario ObtenerUsuario(int id)
         {
             return this.listaUsuarios.SingleOrDefault(x => x.IdUsuario == id);
         }
 
         public Usuario ObtenerUsuario(string usuario, string contrasena)
         {
-            return this.listaUsuarios.SingleOrDefault(x => x.contrasena == contrasena && x.usuario == usuario);
+            return listaUsuarios.SingleOrDefault(z => z.contrasena.Equals(contrasena) && z.usuario.Equals(usuario));
         }
 
-        public Partido ObtenerPartido(Guid id)
+        public Partido ObtenerPartido(int id)
         {
             return this.listaPartidos.SingleOrDefault(x => x.IdPartido == id);
         }
 
-        public List<Interesado> ObtenerJugadoresNoInscriptos(Partido partido)
+        public List<Usuario> ObtenerJugadoresNoInscriptos(Partido partido)
         {
-            return this.listaUsuarios.Where(x => !x.Interesado.EstasInscriptoEn(partido)).Select(z => z.Interesado).ToList();
+            return this.listaUsuarios.Where(x => !x.Interesado.EstasInscriptoEn(partido)).ToList();
         }
 
         public void CrearUsuarioPropuesto(Usuario usuario)
@@ -207,21 +115,21 @@ namespace TP_Anual_DDS_E4
             {
                 foreach (Usuario jugador in this.listaUsuarios)
                 {
-                    partido.ListaJugadores.Add(jugador.Interesado);
+                    partido.ListaJugadores.Add(jugador);
                 }
             }
         }
 
         public bool DebeCriticas(Usuario usuario)
         {
-            return this.listaPartidos.Any(z => z.Finalizado 
-                    && z.ListaJugadores.Contains(usuario.Interesado) 
+            return this.listaPartidos.Any(z => z.Finalizado
+                    && z.ListaJugadores.Contains(usuario)
                     && !usuario.Interesado.ListaPartidosCriticados.Contains(z));
         }
 
-        public List<Partido> ObtenerPartidosDeInteresado(Interesado interesado)
+        public List<Partido> ObtenerPartidosDeInteresado(Usuario usuario)
         {
-            return this.listaPartidos.Where(z => z.ListaJugadores.Contains(interesado)).ToList();
+            return this.listaPartidos.Where(z => z.ListaJugadores.Contains(usuario)).ToList();
         }
 
     }

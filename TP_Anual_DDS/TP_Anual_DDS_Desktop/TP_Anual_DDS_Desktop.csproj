@@ -7,7 +7,7 @@
     <ProjectGuid>{D8239D7C-C71E-4232-9CCF-B4D7940D3EFD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TP_Anual_DDS_Desktop</RootNamespace>
+    <RootNamespace>TP_Anual_DDS_E4</RootNamespace>
     <AssemblyName>TP_Anual_DDS_Desktop</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -67,16 +67,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseDatos_DDSDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BaseDatos_DDSDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Critica.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Critica.Designer.cs">
       <DependentUpon>Critica.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmConfirmarEquipo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConfirmarEquipo.Designer.cs">
+      <DependentUpon>frmConfirmarEquipo.cs</DependentUpon>
     </Compile>
     <Compile Include="frmCriterios.cs">
       <SubType>Form</SubType>
@@ -134,9 +135,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BaseDatos.cs" />
     <EmbeddedResource Include="Critica.resx">
       <DependentUpon>Critica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConfirmarEquipo.resx">
+      <DependentUpon>frmConfirmarEquipo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCriterios.resx">
       <DependentUpon>frmCriterios.cs</DependentUpon>
@@ -173,18 +176,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="BaseDatos_DDSDataSet.xsc">
-      <DependentUpon>BaseDatos_DDSDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="BaseDatos_DDSDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>BaseDatos_DDSDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="BaseDatos_DDSDataSet.xss">
-      <DependentUpon>BaseDatos_DDSDataSet.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -233,7 +226,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BaseDatos_DDS.sdf" />
+    <Content Include="DDS_BaseDatos.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Script Modelo TP.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

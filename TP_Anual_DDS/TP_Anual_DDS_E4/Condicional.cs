@@ -12,6 +12,8 @@ namespace TP_Anual_DDS_E4
     {
         public List<ICondiciones> Condiciones { get; set; }
 
+        public string  Descripcion { get { return typeof (Condicional).Name; }}
+
         public ICondiciones ICondiciones
         {
             get

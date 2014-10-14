@@ -1,4 +1,4 @@
-﻿namespace TP_Anual_DDS_Desktop
+﻿namespace TP_Anual_DDS_E4
 {
     partial class frmPrincipal
     {
@@ -56,9 +56,9 @@
             this.btnProponerAmigo = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnRealizarCriticas = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnVerCriticas = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnRealizarCriticas = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPartidos)).BeginInit();
             this.panel2.SuspendLayout();
@@ -371,6 +371,21 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnVerCriticas
+            // 
+            this.btnVerCriticas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnVerCriticas.Image = ((System.Drawing.Image)(resources.GetObject("btnVerCriticas.Image")));
+            this.btnVerCriticas.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnVerCriticas.Name = "btnVerCriticas";
+            this.btnVerCriticas.Size = new System.Drawing.Size(65, 22);
+            this.btnVerCriticas.Text = "Ver Criticas";
+            this.btnVerCriticas.Click += new System.EventHandler(this.btnVerCriticas_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
             // btnRealizarCriticas
             // 
             this.btnRealizarCriticas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -382,21 +397,6 @@
             this.btnRealizarCriticas.Text = "Realizar Criticas";
             this.btnRealizarCriticas.Visible = false;
             this.btnRealizarCriticas.Click += new System.EventHandler(this.btnRealizarCriticas_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnVerCriticas
-            // 
-            this.btnVerCriticas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnVerCriticas.Image = ((System.Drawing.Image)(resources.GetObject("btnVerCriticas.Image")));
-            this.btnVerCriticas.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnVerCriticas.Name = "btnVerCriticas";
-            this.btnVerCriticas.Size = new System.Drawing.Size(65, 22);
-            this.btnVerCriticas.Text = "Ver Criticas";
-            this.btnVerCriticas.Click += new System.EventHandler(this.btnVerCriticas_Click);
             // 
             // frmPrincipal
             // 
@@ -411,6 +411,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "frmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

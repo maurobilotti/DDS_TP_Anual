@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TP_Anual_DDS_Desktop
+namespace TP_Anual_DDS_E4
 {
     static class Program
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP_Anual_DDS_E4;
 
-namespace TP_Anual_DDS_Desktop
+namespace TP_Anual_DDS_E4
 {
     public partial class frmCriticas : Form
     {
@@ -45,13 +45,13 @@ namespace TP_Anual_DDS_Desktop
             {
                 if (ModoApertura == Modo.Realizar)
                 {
-                    foreach (Interesado jugadorCriticado in partido.ListaJugadores)
+                    foreach (Usuario usuarioCriticado in partido.ListaJugadores)
                     {
-                        if (jugadorCriticado == JugadorCritico ||
-                            partido.ListaCalificaciones.Exists(z => z.JugadorCriticado == jugadorCriticado && z.JugadorCritico == JugadorCritico))
+                        if (usuarioCriticado.Interesado == JugadorCritico ||
+                            partido.ListaCalificaciones.Exists(z => z.JugadorCriticado == usuarioCriticado.Interesado && z.JugadorCritico == JugadorCritico))
                             continue;
 
-                        container.Controls.Add(new Critica(this.JugadorCritico, jugadorCriticado, partido, this.ModoApertura));
+                        container.Controls.Add(new Critica(this.JugadorCritico, usuarioCriticado.Interesado, partido, this.ModoApertura));
                     }
                 }
                 if (ModoApertura == Modo.Ver)

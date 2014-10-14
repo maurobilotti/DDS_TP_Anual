@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using TP_Anual_DDS_E4;
 
-namespace TP_Anual_DDS_Desktop
+namespace TP_Anual_DDS_E4
 {
     public partial class frmCriterios : Form
     {

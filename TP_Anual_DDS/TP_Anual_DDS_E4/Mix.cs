@@ -10,6 +10,10 @@ namespace TP_Anual_DDS_E4
     {
         private List<ICriterio> ListaCriterios;
 
+        public string Descripcion {
+            get { return typeof (Mix).Name; }
+        }
+
         public Mix(List<ICriterio> listaCriterios) 
         {
             this.ListaCriterios = new List<ICriterio>();

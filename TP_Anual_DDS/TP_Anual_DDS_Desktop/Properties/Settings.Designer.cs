@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TP_Anual_DDS_Desktop.Properties {
+namespace TP_Anual_DDS_E4.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -58,10 +58,10 @@ namespace TP_Anual_DDS_Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("00000000-0000-0000-0000-000000000000")]
-        public global::System.Guid IdUsuario {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int IdUsuario {
             get {
-                return ((global::System.Guid)(this["IdUsuario"]));
+                return ((int)(this["IdUsuario"]));
             }
             set {
                 this["IdUsuario"] = value;

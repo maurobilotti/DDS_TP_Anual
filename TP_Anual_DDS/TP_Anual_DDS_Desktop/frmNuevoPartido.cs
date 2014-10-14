@@ -8,12 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TP_Anual_DDS_Desktop;
+using TP_Anual_DDS_E4;
 using TP_Anual_DDS_E4;
 using System.Data.SqlServerCe;
 
 
-namespace TP_Anual_DDS_Desktop
+namespace TP_Anual_DDS_E4
 {
     public partial class frmNuevoPartido : Form
     {
@@ -31,17 +31,7 @@ namespace TP_Anual_DDS_Desktop
                 return;
 
             this.Partido = new Partido(txtLugar.Text, dateFecha.Value);
-
-            try
-            {
-                BaseDatos db = new BaseDatos("SELECT * FROM Persona");
-                DataTable dt = db.ObtenerDataTable();
-
-            }
-            catch (Exception ex)
-            {
-            }
-
+            this.Partido.Guardar();
             DialogResult = DialogResult.OK;
         }
 

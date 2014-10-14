@@ -8,16 +8,16 @@ namespace TP_Anual_DDS_E4
 {
     public class ArmarPorParidad : ArmadorPartido 
     {
-        public ArmarPorParidad(List<Interesado> listaJugadores) : base(listaJugadores) { }
+        public ArmarPorParidad(List<Usuario> listaJugadores) : base(listaJugadores) { }
         
-        public override List<Interesado> ArmarPrimerEquipo()
+        public override List<Usuario> ArmarPrimerEquipo()
         {
-            return this.ListaJugadores.Where(x => x.Posicion % 2 == 1).ToList();    
+            return this.ListaJugadores.Where(x => x.Interesado.Posicion % 2 == 1).ToList();    
         }
 
-        public override List<Interesado> ArmarSegundoEquipo()
+        public override List<Usuario> ArmarSegundoEquipo()
         {
-            return this.ListaJugadores.Where(x => x.Posicion % 2 == 0).ToList(); 
+            return this.ListaJugadores.Where(x => x.Interesado.Posicion % 2 == 0).ToList(); 
         }
     }
 }

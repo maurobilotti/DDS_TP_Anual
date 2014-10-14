@@ -1,4 +1,7 @@
-﻿using System;using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,23 +12,31 @@ using TP_Anual_DDS_E4;
 
 namespace TP_Anual_DDS_E4
 {
-    public class Partido
+    public class Partido : Entidad
     {
         #region Propiedades
+        public int IdPartido
+        {
+            get
+            {
+                string consulta = string.Format("SELECT Id_Partido FROM " +
+                    " Partido WHERE Lugar LIKE '{0}' AND Fecha_Hora = convert(datetime,'{1}',111)", this.Lugar, this.FechaHora.ToString("yyyy-MM-dd HH:mm"));
+                return (int) new BaseDatos(consulta).ObtenerUnicoCampo();
 
-        public Guid IdPartido { get; set; }
+            }
+        }
         public DateTime FechaHora { get; set; }
         public string Lugar { get; set; }
-        public List<Interesado> ListaJugadores { get; set; }
-        private List<Interesado> ListaInfractores { get; set; }
+        public List<Usuario> ListaJugadores { get; set; }
+        private List<Usuario> ListaInfractores { get; set; }
         public List<Calificacion> ListaCalificaciones { get; set; }
 
-        public List<Interesado> ListaPrimerEquipo
+        public List<Usuario> ListaPrimerEquipo
         {
             get { return this.ArmadorPartido.ArmarPrimerEquipo(); }
         }
 
-        public List<Interesado> ListaSegundoEquipo
+        public List<Usuario> ListaSegundoEquipo
         {
             get { return this.ArmadorPartido.ArmarSegundoEquipo(); }
         }
@@ -42,216 +53,78 @@ namespace TP_Anual_DDS_E4
         public Partido() { }
         public Partido(string lugar, DateTime fechaHora)
         {
-            this.ListaJugadores = new List<Interesado>();
-            this.ListaInfractores = new List<Interesado>();
+            ObtenerInscriptos();
+            ObtenerInfractores();
             this.ListaCalificaciones = new List<Calificacion>();
             this.FechaHora = fechaHora;
             this.Lugar = lugar;
-            this.IdPartido = Guid.NewGuid();
         }
+
         #endregion
 
         #region Métodos públicos
 
-        internal void AgregarCalificaciones()
+
+
+        public bool AgregarInteresado(Usuario usuario)
         {
-            foreach (Interesado jugadorCritico in this.ListaJugadores)
-            {
-                foreach (Interesado jugadorCriticado in this.ListaJugadores)
-                {
-                    if (jugadorCritico != jugadorCriticado)
-                    {
-                        //se inicia la critica al primer jugador
-                        Console.WriteLine(string.Format("El jugador {0} {1} le realiza la critica al jugador {2} {3}",
-                                jugadorCritico.Nombre, jugadorCritico.Apellido, jugadorCriticado.Nombre, jugadorCriticado.Apellido));
-
-                        Console.WriteLine("Escriba la critica y luego presione 'enter'.");
-                        string critica = Console.ReadLine();
-
-                        //valido que la calificacion sea correcta
-                        bool esValido = false;
-                        int calificacion = 0;
-                        while (!esValido)
-                        {
-                            Console.WriteLine("Ingrese un puntaje numérico y luego presione 'enter' (0 a 5).");
-                            esValido = int.TryParse(Console.ReadLine(), out calificacion);
-                            if (calificacion > 5 || calificacion < 0)
-                            {
-                                Console.WriteLine("Los valores de calificacion deben estar entre 0 y 5.");
-                                esValido = false;
-                            }
-                        }
-                        this.AgregarCalificacion(new Calificacion(jugadorCritico, jugadorCriticado, critica, calificacion));
-                    }
-                }
-            }
-        }
-
-        internal void AgregarSugeridos()
-        {
-            if (this.ListaJugadores.Count > 0)
-            {
-                for (int i = this.ListaJugadores.Count - 1; i >= 0; i--)
-                {
-                    string nombrePrincipal = this.ListaJugadores[i].Nombre;
-                    string apellidoPrincipal = this.ListaJugadores[i].Apellido;
-                    Console.WriteLine(string.Format("{0} {1} ha propuesto un jugador." +
-                        " ¿Desea agregarlo al partido? (S/N)", nombrePrincipal, apellidoPrincipal));
-                    char resp = (char)Console.Read();
-
-                    if (resp == 'S' || resp == 's')
-                    {
-                        Console.WriteLine("////Se ingresan los datos del nuevo jugador: ");
-                        Console.ReadLine();
-                        Console.WriteLine("Ingrese el nombre y presione 'enter':");
-                        string nombreAmigo = Console.ReadLine();
-                        Console.WriteLine("Ingrese el apellido y presione 'enter':");
-                        string apellidoAmigo = Console.ReadLine();
-                        int edadAmigo = 0;
-                        bool esValido = false;
-                        while (!esValido)
-                        {
-                            Console.WriteLine("Ingrese la edad y presione 'enter':");
-                            esValido = int.TryParse(Console.ReadLine(), out edadAmigo);
-                        }
-                        Console.WriteLine("Ingrese el mail y presione 'enter',:");
-                        string mailAmigo = Console.ReadLine();
-
-                        int posicion = 0;
-                        esValido = false;
-                        while (!esValido)
-                        {
-                            Console.WriteLine("Ingrese la posición en la que juega el jugador sugerido: ");
-                            esValido = int.TryParse(Console.ReadLine(), out posicion);
-                        }
-
-                        int handicap = 0;
-                        esValido = false;
-                        while (!esValido)
-                        {
-                            Console.WriteLine("Ingrese el handicap del jugador: ");
-                            esValido = int.TryParse(Console.ReadLine(), out handicap);
-                            esValido = handicap >= 0 && handicap <= 10;
-                        }
-
-                        this.ListaJugadores[i].AgregarAmigo(new Interesado(nombreAmigo, apellidoAmigo, edadAmigo, mailAmigo, posicion, handicap, 1));
-                        //valida que la tecla apretada sea correcta
-                        esValido = false;
-                        char tipo = 'E';
-                        while (!esValido)
-                        {
-                            Console.WriteLine(string.Format("El jugador {0} {1} se incluirá a la lista para el partido," +
-                                                "escoja el tipo de jugador que será (C = CONDICIONAL, E = ESTANDAR, S = SOLIDARIO)", nombreAmigo, apellidoAmigo));
-                            tipo = (char)Console.Read();
-                            if (tipo == 'c' || tipo == 'C' || tipo == 'e' || tipo == 'E' || tipo == 's' || tipo == 'S')
-                                break;
-                        }
-                        switch (tipo)
-                        {
-                            case 'C':
-                            case 'c':
-                                {
-                                    this.ListaJugadores[i].ListaAmigos[0].Tipo = new Condicional();
-                                }
-                                break;
-                            case 'E':
-                            case 'e':
-                                {
-                                    this.ListaJugadores[i].ListaAmigos[0].Tipo = new Estandar();
-                                }
-                                break;
-                            case 'S':
-                            case 's':
-                                {
-                                    this.ListaJugadores[i].ListaAmigos[0].Tipo = new Solidario();
-                                }
-                                break;
-                            default:
-                                //si se equivoca la tecla, se crea estandar
-                                this.ListaJugadores[i].ListaAmigos[0].Tipo = new Estandar();
-                                break;
-                        }
-                        //se agrega el jugador al partido
-                        this.AgregarInteresado(this.ListaJugadores[i].ListaAmigos[0]);
-
-                    }
-                    else if (resp == 'N' || resp == 'n')
-                    {
-                        //limpia el buffer de entrada
-                        Console.ReadLine();
-                        Console.WriteLine("Ingrese el motivo de la denegación del jugador");
-                        string motivo = Console.ReadLine();
-                        //se añade el jugador que sugiere, el motivo y la fecha de la denegación
-                        
-                    }
-
-                    Console.WriteLine("Presione una tecla para continuar.");
-                    Console.ReadLine();
-                }
-            }
-            else
-            {
-                //si el partido no tiene jugadores, se sale.
-                Console.WriteLine("El partido no cuenta con jugadores. Se sale del programa.");
-                Console.ReadKey();
-                return;
-            }
-        }
-
-        public bool AgregarInteresado(Interesado interesado)
-        {
-            if (interesado.Tipo.PuedoJugarEn(this))
+            if (usuario.Interesado.Tipo.PuedoJugarEn(this))
             {
                 if (ListaJugadores.Count < 10)
                 {
-                    ListaJugadores.Add(interesado);
-                    interesado.IncriptoEn(this);
+                    ListaJugadores.Add(usuario);
+                    usuario.Interesado.IncriptoEn(this);
                     if (ListaJugadores.Count == 10)
-                        Console.WriteLine("La lista está completa.");
+                        return false;
                 }
                 else
                 {
-                    if (interesado.Tipo.Prioridad == Interesado.EnumPrioridad.Solidario)//Si quiere ingresar un solidario
+                    if (usuario.Interesado.Tipo.Prioridad == Interesado.EnumPrioridad.Solidario)//Si quiere ingresar un solidario
                     {
-                        BuscarYEliminar(interesado, Interesado.EnumPrioridad.Condicional);//Busca si hay condicional y los cambia.
+                        BuscarYEliminar(usuario, Interesado.EnumPrioridad.Condicional);//Busca si hay condicional y los cambia.
                     }
-                    if (interesado.Tipo.Prioridad == Interesado.EnumPrioridad.Estandar)//Si quiere ingresar un estandar
+                    if (usuario.Interesado.Tipo.Prioridad == Interesado.EnumPrioridad.Estandar)//Si quiere ingresar un estandar
                     {
                         //Si hay un condicional, lo saca. Si no, busca si hay un solidario para sacarlo.
-                        if (!BuscarYEliminar(interesado, Interesado.EnumPrioridad.Condicional))//Busca si hay condicional.
-                            BuscarYEliminar(interesado, Interesado.EnumPrioridad.Solidario);//Busca si hay solidario.
+                        if (!BuscarYEliminar(usuario, Interesado.EnumPrioridad.Condicional))//Busca si hay condicional.
+                            BuscarYEliminar(usuario, Interesado.EnumPrioridad.Solidario);//Busca si hay solidario.
                     }
                 }
                 ChequearCondicionales();
+                List<Parametro> parametros = new List<Parametro>()
+                {
+                    new Parametro("@Id_Partido", SqlDbType.Int, this.IdPartido),
+                    new Parametro("@Id_Interesado",SqlDbType.Int, usuario.Interesado.IdInteresado)
+                };
+                base.Guardar("Partido_Interesado_UI",parametros);
             }
             return true;
         }
 
-        public void DarBaja(Interesado interesadoBaja)
+        public void DarBaja(Usuario usuarioBaja)
         {
-            this.ListaJugadores.Remove(interesadoBaja);
-            this.ListaInfractores.Add(interesadoBaja);//Se agrega a una lista de infractores.
+            this.ListaJugadores.Remove(usuarioBaja);
+            this.ListaInfractores.Add(usuarioBaja);//Se agrega a una lista de infractores.
         }
 
-        public void DarBaja(Interesado interesadoBaja, Interesado interesadoAlta)
+        public void DarBaja(Usuario usuarioBaja, Usuario usuarioAlta)
         {
-            this.ListaJugadores.Remove(interesadoBaja);
-            this.ListaJugadores.Add(interesadoAlta);
+            this.ListaJugadores.Remove(usuarioBaja);
+            this.ListaJugadores.Add(usuarioAlta);
         }
 
-      
         #endregion
 
         #region Métodos privados
 
         private void ChequearCondicionales()
         {
-            foreach (Interesado interes in this.ListaJugadores)
+            foreach (Usuario usuario in this.ListaJugadores)
             {
-                if (!interes.Tipo.PuedoJugarEn(this))
+                if (!usuario.Interesado.Tipo.PuedoJugarEn(this))
                 {
-                    this.ListaJugadores.Remove(interes);
-                    Console.WriteLine("Fue sacado de la lista: " + interes.Nombre + " por dejar de cumplir sus condiciones.");
+                    this.ListaJugadores.Remove(usuario);
+                    Console.WriteLine("Fue sacado de la lista: " + usuario.Interesado.Nombre + " por dejar de cumplir sus condiciones.");
                 }
             }
         }
@@ -260,23 +133,66 @@ namespace TP_Anual_DDS_E4
         /// </summary>
         /// <param name="interesadoAIngresar"></param>
         /// <param name="prioridadDeIngresanteAVolar">Busca interesados segun esto</param>
-        private bool BuscarYEliminar(Interesado interesadoAIngresar, Interesado.EnumPrioridad prioridadDeIngresanteAVolar)
+        private bool BuscarYEliminar(Usuario usuarioAIngresar, Interesado.EnumPrioridad prioridadDeIngresanteAVolar)
         {
-            foreach (Interesado interes in this.ListaJugadores)
+            foreach (Usuario usuario in this.ListaJugadores)
             {
-                if (interes.Tipo.Prioridad == prioridadDeIngresanteAVolar)
+                if (usuario.Interesado.Tipo.Prioridad == prioridadDeIngresanteAVolar)
                 {
-                    ListaJugadores.Remove(interes);
-                    ListaJugadores.Add(interesadoAIngresar);
-                    interesadoAIngresar.IncriptoEn(this);
+                    ListaJugadores.Remove(usuario);
+                    ListaJugadores.Add(usuarioAIngresar);
+                    usuarioAIngresar.Interesado.IncriptoEn(this);
                     if (ListaJugadores.Count == 10)
-                        Console.WriteLine("La lista está completa.");
+                        return false;
                     return true;
                 }
             }
             return false;
         }
 
+        private List<Usuario> ObtenerInscriptos()
+        {
+            List<Parametro> parametros = new List<Parametro>()
+            {
+                new Parametro("@Id_Partido", SqlDbType.Int, this.IdPartido)
+            };
+
+            DataTable dt = base.Obtener("Partido_ObtenerInteresados", parametros);
+            
+            return ListaJugadores = (from x in dt.AsEnumerable() 
+                                     select new Usuario(x.Field<string>("Nombre_Usuario"),x.Field<string>("Password_Usuario"), 
+                                         new Interesado(
+                                        x.Field<string>("Nombre"),
+                                        x.Field<string>("Apellido"),
+                                        x.Field<int>("Edad"),
+                                        x.Field<string>("Mail"),
+                                        x.Field<int>("Posicion"),
+                                        x.Field<int>("Handicap"),
+                                        x.Field<int>("CantPartidosJugados"),
+                                        x.Field<string>("Tipo_Jugador")))).ToList();
+        }
+
+        private List<Usuario> ObtenerInfractores()
+        {
+            List<Parametro> parametros = new List<Parametro>()
+            {
+                new Parametro("@Id_Partido", SqlDbType.Int, this.IdPartido)
+            };
+
+            DataTable dt = base.Obtener("Partido_ObtenerInfractores", parametros);
+
+            return ListaJugadores = (from x in dt.AsEnumerable()
+                                     select new Usuario(x.Field<string>("Nombre_Usuario"), x.Field<string>("Password_Usuario"),
+                                         new Interesado(
+                                        x.Field<string>("Nombre"),
+                                        x.Field<string>("Apellido"),
+                                        x.Field<int>("Edad"),
+                                        x.Field<string>("Mail"),
+                                        x.Field<int>("Posicion"),
+                                        x.Field<int>("Handicap"),
+                                        x.Field<int>("CantPartidosJugados"),
+                                        x.Field<string>("Tipo_Jugador")))).ToList();
+        }
 
         private void AgregarCalificacion(Calificacion calificacion)
         {
@@ -289,39 +205,62 @@ namespace TP_Anual_DDS_E4
             switch (opcion)
             {
                 case 'H':
-                    ListaJugadores.ForEach(z => z.Criterio = new Handicap(z.Handicap));
+                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new Handicap(z.Interesado.Handicap));
                     break;
                 case 'P':
-                    ListaJugadores.ForEach(z => z.Criterio = new PromUltimoPartido(z.ListaCalificaciones));
+                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new PromUltimoPartido(z.Interesado.ListaCalificaciones));
                     break;
                 case 'N':
-                    ListaJugadores.ForEach(z => z.Criterio = new PromUltimosNPartidos(z.ListaCalificaciones, z.CantPartidosJugados));
+                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new PromUltimosNPartidos(z.Interesado.ListaCalificaciones, z.Interesado.CantPartidosJugados));
                     break;
                 case 'M':
                     //incluye los tres criterios
-                    ListaJugadores.ForEach(z => z.Criterio = new Mix(new List<ICriterio>()
+                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new Mix(new List<ICriterio>()
                     {
-                        new Handicap(z.Handicap),
-                        new PromUltimoPartido(z.ListaCalificaciones),
-                        new PromUltimosNPartidos(z.ListaCalificaciones,z.CantPartidosJugados)
+                        new Handicap(z.Interesado.Handicap),
+                        new PromUltimoPartido(z.Interesado.ListaCalificaciones),
+                        new PromUltimosNPartidos(z.Interesado.ListaCalificaciones,z.Interesado.CantPartidosJugados)
                     }));
                     break;
             }
             //ordeno la lista por posición y aplicando el criterio especificado
-            this.ListaJugadores = (from x in ListaJugadores orderby x.Posicion, x.Criterio.AplicarCriterio() select x).ToList();
+            this.ListaJugadores = (from x in ListaJugadores orderby x.Interesado.Posicion, x.Interesado.Criterio.AplicarCriterio() select x).ToList();
         }
         #endregion
 
-      
+
         public bool EstaInscripto(Interesado interesado)
         {
-            return this.ListaJugadores.Any(x => x.Nombre == interesado.Nombre && x.Apellido == interesado.Apellido);
+            return this.ListaJugadores.Any(x => x.Interesado.Nombre == interesado.Nombre && x.Interesado.Apellido == interesado.Apellido);
         }
 
 
         public void AgregarCalificacion(Interesado critico, Interesado criticado, int puntaje, string critica)
         {
-            this.ListaCalificaciones.Add(new Calificacion(critico,criticado,critica,puntaje));
+            this.ListaCalificaciones.Add(new Calificacion(critico, criticado, critica, puntaje));
         }
+
+        public void Guardar()
+        {
+            ActualizarYGuardar();
+        }
+
+        public void Actualizar()
+        {
+            ActualizarYGuardar();
+        }
+
+        private void ActualizarYGuardar()
+        {
+            List<Parametro> parametros = new List<Parametro>()
+            {
+                new Parametro("@Lugar", SqlDbType.NVarChar, Lugar),
+                new Parametro("@Confirmado", SqlDbType.Bit, Confirmado),
+                new Parametro("@Fecha_Hora", SqlDbType.DateTime, FechaHora.ToString("yyyy-MM-dd HH:mm")),
+            };
+
+            base.Guardar("Partido_UI", parametros);
+        }
+
     }
 }
