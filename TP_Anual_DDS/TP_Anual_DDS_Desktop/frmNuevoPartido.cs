@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP_Anual_DDS_E4;
-using TP_Anual_DDS_E4;
 using System.Data.SqlServerCe;
 
 

@@ -170,17 +170,17 @@ CREATE PROCEDURE Usuario_L
 AS
 BEGIN
 	SELECT 
-	U.Id_Usuario
-	Nombre_Usuario,
-	Password_Usuario,
-	Nombre,
-	Apellido,
-	Edad,
-	Mail,
-	Posicion,
-	Handicap,
-	CantPartidosJugados,
-	Tipo_Jugador
+	U.Id_Usuario AS Id_Usuario,
+	U.Nombre_Usuario,
+	U.Password_Usuario,
+	I.Nombre,
+	I.Apellido,
+	I.Edad,
+	I.Mail,
+	I.Posicion,
+	I.Handicap,
+	I.CantPartidosJugados,
+	I.Tipo_Jugador
 	FROM Usuario U
 	INNER JOIN Interesado I ON U.Id_Usuario = I.Id_Usuario
 END
@@ -252,6 +252,70 @@ BEGIN
 END 
 GO
 
+CREATE PROCEDURE Partido_L
+AS
+BEGIN
+	SELECT Lugar,Fecha_Hora,Confirmado
+	FROM Partido		
+END
+GO
+
+
+CREATE PROCEDURE Partido_ObtenerInteresados(
+	@Id_Partido int
+)
+AS
+BEGIN
+	SELECT 
+		Nombre_Usuario,
+		Password_Usuario,
+		Nombre,
+		Apellido,
+		Edad,
+		Mail,
+		Tipo_Jugador,
+		Posicion,
+		Handicap,
+		CantPartidosJugados
+	FROM Usuario U
+	INNER JOIN Interesado I ON U.Id_Usuario = I.Id_Usuario
+	INNER JOIN Partido_Interesado PINT ON PiNT.Id_Interesado = I.Id_Interesado
+	WHERE Baja <> 1 AND PINT.Id_Partido = @Id_Partido
+END
+GO
+
+CREATE PROCEDURE Infraccion_L
+AS
+BEGIN
+	SELECT 
+		Nombre_Usuario,
+		Password_Usuario,
+		Nombre,
+		Apellido,
+		Edad,
+		Mail,
+		Tipo_Jugador,
+		Posicion,
+		Handicap,
+		CantPartidosJugados
+	FROM Usuario U
+	INNER JOIN Interesado I ON U.Id_Usuario = I.Id_Usuario
+	INNER JOIN Infraccion INF ON U.Id_Usuario = INF.Id_Usuario
+END
+GO
+
+CREATE PROCEDURE Partido_Interesado_D(
+	@Id_Partido int,
+	@Id_Interesado int
+)
+AS 
+BEGIN
+	UPDATE Partido_Interesado
+	SET Baja = 1
+	WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado
+
+END
+GO
 
 CREATE PROCEDURE ObtenerJugadoresTraicioneros
 AS
@@ -294,24 +358,13 @@ END
 GO
 
 
-CREATE PROCEDURE Interesado_DarBaja
+CREATE PROCEDURE Infraccion_I
 (
-	@Id_Interesado INT,
-	@Id_Partido INT,
-	@Id_Interesado_Reemplazante INT = -1
+	@Id_Usuario int	
 )
 AS
 BEGIN
-	UPDATE PARTIDO_INTERESADO
-	SET Baja = 0
-	WHERE Id_Interesado = @Id_Interesado AND Id_Partido = @Id_Partido
-	
-	IF(@Id_Interesado_Reemplazante = 1)
-	BEGIN
-		DECLARE @Id_Usuario INT = (SELECT Id_Usuario FROM INTERESADO WHERE Id_Interesado = @Id_Interesado)
-		
-		INSERT INTO INFRACCIONES (Descripcion,Id_Usuario) 
-		VALUES ('No recomendó jugador tras baja.',@Id_Usuario)		
-	END	
+	INSERT INTO Infracciones (Descripcion,Id_Usuario) 
+	VALUES ('No recomendó jugador tras baja.',@Id_Usuario)				
 END
 GO

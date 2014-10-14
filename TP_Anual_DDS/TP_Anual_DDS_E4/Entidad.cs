@@ -29,11 +29,14 @@ namespace TP_Anual_DDS_E4
             bd.Ejecutar();
         }
 
-        public DataTable Obtener(string nombreSP, List<Parametro> parametros)
+        public DataTable Obtener(string nombreSP, List<Parametro> parametros = null)
         {
             BaseDatos bd = new BaseDatos(nombreSP);
             bd.pTipoComando = CommandType.StoredProcedure;
-            parametros.ForEach(z => bd.pParametros.Add(z.pParametro));
+            
+            if(parametros != null)
+                parametros.ForEach(z => bd.pParametros.Add(z.pParametro));
+
             return bd.ObtenerDataTable();
         }
     }

@@ -99,7 +99,7 @@ namespace TP_Anual_DDS_E4
                     var frmJugador = new frmInscribirseAPartido(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario));
                     if (frmJugador.ShowDialog() == DialogResult.OK)
                     {
-                        partido.AgregarInteresado(frmJugador.Usuario);
+                        partido.AgregarJugador(frmJugador.Usuario);
                         gridInteresados.DataSource = null;
                         gridInteresados.DataSource = partido.ListaJugadores;
                         btnBaja.Enabled = true;

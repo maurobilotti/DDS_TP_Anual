@@ -32,9 +32,6 @@ namespace TP_Anual_DDS_E4
 
         public List<Usuario> CargarUsuariosIniciales()
         {
-            //listaUsuarios = (from x in new BaseDatos(string.Format("SELECT Nombre_Usuario,Password_Usuario,Confirmado FROM Usuario"))
-            //                     .ObtenerDataTable().AsEnumerable() 
-            //                 select new Usuario(x["Nombre_Usuario"].ToString(),))
             BaseDatos bd = new BaseDatos("Usuario_L");
             bd.pTipoComando = CommandType.StoredProcedure;
             listaUsuarios = (from x in bd.ObtenerDataTable().AsEnumerable()
@@ -47,7 +44,8 @@ namespace TP_Anual_DDS_E4
                             x.Field<string>("Mail"),
                             x.Field<int>("Posicion"),
                             x.Field<int>("Handicap"),
-                            x.Field<int>("CantPartidosJugados")))).ToList();
+                            x.Field<int>("CantPartidosJugados"),
+                            x.Field<string>("Tipo_Jugador")))).ToList();
             return listaUsuarios;
         }
 
@@ -58,7 +56,10 @@ namespace TP_Anual_DDS_E4
 
         public List<Partido> ObtenerPartidos()
         {
-            this.listaPartidos = (from x in new BaseDatos("SELECT Lugar,Fecha_Hora,Confirmado FROM Partido").ObtenerDataTable().AsEnumerable()
+            BaseDatos bd = new BaseDatos("Partido_L");
+            bd.pTipoComando = CommandType.StoredProcedure;
+            DataTable dt = bd.ObtenerDataTable();
+            this.listaPartidos = (from x in dt.AsEnumerable()
                                   select new Partido(x["Lugar"].ToString(), (DateTime)x["Fecha_Hora"])).ToList();
 
             return this.listaPartidos;

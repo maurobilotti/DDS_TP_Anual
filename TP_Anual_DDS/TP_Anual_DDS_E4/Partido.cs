@@ -53,20 +53,21 @@ namespace TP_Anual_DDS_E4
         public Partido() { }
         public Partido(string lugar, DateTime fechaHora)
         {
+            //ojo, el orden es importante
+            this.FechaHora = fechaHora;
+            this.Lugar = lugar;
+            
             ObtenerInscriptos();
             ObtenerInfractores();
             this.ListaCalificaciones = new List<Calificacion>();
-            this.FechaHora = fechaHora;
-            this.Lugar = lugar;
+            
         }
 
         #endregion
 
         #region Métodos públicos
 
-
-
-        public bool AgregarInteresado(Usuario usuario)
+        public bool AgregarJugador(Usuario usuario)
         {
             if (usuario.Interesado.Tipo.PuedoJugarEn(this))
             {
@@ -103,19 +104,40 @@ namespace TP_Anual_DDS_E4
 
         public void DarBaja(Usuario usuarioBaja)
         {
-            this.ListaJugadores.Remove(usuarioBaja);
-            this.ListaInfractores.Add(usuarioBaja);//Se agrega a una lista de infractores.
+            RemoverJugador(usuarioBaja);
+            RegistrarInfraccion(usuarioBaja);
         }
 
         public void DarBaja(Usuario usuarioBaja, Usuario usuarioAlta)
         {
-            this.ListaJugadores.Remove(usuarioBaja);
-            this.ListaJugadores.Add(usuarioAlta);
+            RemoverJugador(usuarioBaja);
+            AgregarJugador(usuarioAlta);
         }
 
         #endregion
 
         #region Métodos privados
+
+        private void RegistrarInfraccion(Usuario usuarioInfractor)
+        {
+            this.ListaInfractores.Add(usuarioInfractor);//Se agrega a una lista de infractores.
+            List<Parametro> parametros = new List<Parametro>()
+            {
+                new Parametro("@Id_Usuario",SqlDbType.Int, usuarioInfractor.IdUsuario)
+            };
+            base.Guardar("Infraccion_I",parametros);
+        }
+
+        private void RemoverJugador(Usuario usuarioBaja)
+        {
+            this.ListaJugadores.Remove(usuarioBaja);
+            List<Parametro> parametros = new List<Parametro>()
+            {
+                new Parametro("@Id_Partido",SqlDbType.Int, this.IdPartido),
+                new Parametro("@Id_Interesado",SqlDbType.Int, usuarioBaja.Interesado.IdUsuario)
+            };
+            base.Actualizar("Partido_Interesado_D",parametros);
+        }
 
         private void ChequearCondicionales()
         {
@@ -124,7 +146,6 @@ namespace TP_Anual_DDS_E4
                 if (!usuario.Interesado.Tipo.PuedoJugarEn(this))
                 {
                     this.ListaJugadores.Remove(usuario);
-                    Console.WriteLine("Fue sacado de la lista: " + usuario.Interesado.Nombre + " por dejar de cumplir sus condiciones.");
                 }
             }
         }
@@ -174,12 +195,7 @@ namespace TP_Anual_DDS_E4
 
         private List<Usuario> ObtenerInfractores()
         {
-            List<Parametro> parametros = new List<Parametro>()
-            {
-                new Parametro("@Id_Partido", SqlDbType.Int, this.IdPartido)
-            };
-
-            DataTable dt = base.Obtener("Partido_ObtenerInfractores", parametros);
+            DataTable dt = base.Obtener("Infraccion_L");
 
             return ListaJugadores = (from x in dt.AsEnumerable()
                                      select new Usuario(x.Field<string>("Nombre_Usuario"), x.Field<string>("Password_Usuario"),
@@ -192,11 +208,6 @@ namespace TP_Anual_DDS_E4
                                         x.Field<int>("Handicap"),
                                         x.Field<int>("CantPartidosJugados"),
                                         x.Field<string>("Tipo_Jugador")))).ToList();
-        }
-
-        private void AgregarCalificacion(Calificacion calificacion)
-        {
-            ListaCalificaciones.Add(calificacion);
         }
 
         public void AgregarCriterio(char opcion)
