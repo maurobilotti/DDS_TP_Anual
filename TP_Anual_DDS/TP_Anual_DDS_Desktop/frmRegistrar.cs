@@ -28,6 +28,8 @@ namespace TP_Anual_DDS_E4
                 this.Usuario = new Usuario(txtUsuario.Text,txtContrasena.Text,
                     new Interesado(txtNombre.Text, txtApellido.Text, (int) numEdad.Value, txtMail.Text,
                         (int) numPosicion.Value, (int) numHandicap.Value, 0));
+                
+                this.Usuario.Guardar();
 
                 DialogResult = DialogResult.OK;
             }
@@ -42,9 +44,9 @@ namespace TP_Anual_DDS_E4
             return !string.IsNullOrEmpty(txtNombre.Text) &&
                    !string.IsNullOrEmpty(txtApellido.Text) &&
                    !string.IsNullOrEmpty(txtMail.Text) &&
-                   new DDSDataContext().DBInteresados.All(z => z.Apellido != txtApellido.Text &&
+                   new DDSDataContext().DBInteresado.All(z => z.Apellido != txtApellido.Text &&
                    z.Nombre != txtNombre.Text) && 
-                   new DDSDataContext().DBUsuarios.All(z=> z.Nombre_Usuario != txtUsuario.Text);
+                   new DDSDataContext().DBUsuario.All(z=> z.Nombre_Usuario != txtUsuario.Text);
         }
     }
 }

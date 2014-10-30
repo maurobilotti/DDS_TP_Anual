@@ -1,4 +1,4 @@
-CREATE TABLE Usuario(
+CREATE TABLE DBUsuario(
 	Id_Usuario int IDENTITY(1,1) NOT NULL,	
 	Nombre_Usuario nvarchar(50) NULL,
 	Password_Usuario nvarchar(50) NULL,
@@ -6,23 +6,22 @@ CREATE TABLE Usuario(
 	CONSTRAINT PK_Usuarios PRIMARY KEY (Id_Usuario)
 )
 
-CREATE TABLE Interesado(
+CREATE TABLE DBInteresado(
 	Id_Interesado int IDENTITY(1,1) NOT NULL,
 	Id_Usuario int NOT NULL,
 	Nombre nvarchar(50) NOT NULL,
 	Apellido nvarchar(50) NOT NULL,
 	Edad int NULL,
-	Mail nvarchar(50) NULL,
-	Tipo_Jugador nvarchar(50) NULL,
+	Mail nvarchar(50) NULL,	
 	Posicion int NULL,
 	Handicap int NULL,
 	Criterio nvarchar(50) NULL,	
 	CantPartidosJugados int NOT NULL,
 	PRIMARY KEY (Id_Interesado),
-	foreign key(Id_Usuario)references Usuario(Id_Usuario),
+	foreign key(Id_Usuario)references DBUsuario(Id_Usuario),
 )
 
-CREATE TABLE Partido(
+CREATE TABLE DBPartido(
 	Id_Partido int IDENTITY(1,1) NOT NULL,
 	Lugar nvarchar(50) NOT NULL,	
 	Confirmado bit NULL,
@@ -30,48 +29,49 @@ CREATE TABLE Partido(
 	PRIMARY KEY(Id_Partido)
 ) 
 
-CREATE TABLE Partido_Interesado(
+create TABLE DBPartido_Interesado(
 	Id_Partido int NOT NULL,
 	Id_Interesado int NOT NULL,
+	Tipo_Jugador nvarchar(50) NOT NULL DEFAULT 'Estandar',
 	Baja bit NULL,
 	CONSTRAINT Partido_Interesado_pk PRIMARY KEY(Id_Interesado,Id_Partido),
-	foreign key(Id_Interesado)references Interesado(Id_Interesado),
-	foreign key(Id_Partido)references Partido(Id_Partido)ON DELETE CASCADE 
+	foreign key(Id_Interesado)references DBInteresado(Id_Interesado),
+	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE 
 ) 
 
-CREATE TABLE Calificacion(
+CREATE TABLE DBCalificacion(
 	Id_Calificacion int IDENTITY(1,1) NOT NULL,
 	Id_Partido int NOT NULL,
 	Descripcion nvarchar(50) NULL,
 	Id_Jugador_Critico int NULL,
 	Id_Jugador_Criticado int NULL,
 	PRIMARY KEY (Id_Calificacion),
-	foreign key(Id_Partido)references Partido(Id_Partido)ON DELETE CASCADE 
+	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE 
 ) 
 
-CREATE TABLE Condicion(
+CREATE TABLE DBCondicion(
 	Id_Condicion int IDENTITY(1,1) NOT NULL,
 	Descripcion_Condicion nvarchar(50) NULL,
 	PRIMARY KEY(Id_Condicion)
 )
 
-CREATE TABLE Condicion_Interesado(
+CREATE TABLE DBCondicion_Interesado(
 	Id_Condicion int NOT NULL,
 	Id_interesado int NOT NULL,
 	CONSTRAINT [PK_Condicion_Interesado] PRIMARY KEY(Id_Condicion, Id_interesado),
-	foreign key(Id_Condicion)references Condicion(Id_Condicion),
-	foreign key(Id_Interesado)references Interesado(Id_Interesado)ON DELETE CASCADE 
+	foreign key(Id_Condicion)references DBCondicion(Id_Condicion),
+	foreign key(Id_Interesado)references DBInteresado(Id_Interesado)ON DELETE CASCADE 
 )
 
-CREATE TABLE Amigos(
+CREATE TABLE DBAmigos(
 	Id_Interesado int  NOT NULL,
 	Id_Amigo int IDENTITY(1,1) NOT NULL,
 	PRIMARY KEY (Id_Amigo, Id_Interesado),
-	foreign key(Id_Interesado)references Interesado(Id_Interesado)ON DELETE CASCADE 
+	foreign key(Id_Interesado)references DBInteresado(Id_Interesado)ON DELETE CASCADE 
 ) 
 
 
-CREATE TABLE Denegacion(
+CREATE TABLE DBDenegacion(
 	Id_Denegacion int IDENTITY(1,1) NOT NULL,
 	Id_Interesado int NOT NULL,
 	Id_Usuario int NOT NULL,
@@ -79,16 +79,16 @@ CREATE TABLE Denegacion(
 	Descripcion_motivo_Denegacion nvarchar(50) NULL,
 	Id_Admin int NULL,
 	CONSTRAINT [PK_Denegacion] PRIMARY KEY(Id_Denegacion, Id_Interesado, Id_Usuario),
-	foreign key(Id_Interesado)references Interesado(Id_Interesado),
-	foreign key(Id_Usuario)references Usuario(Id_Usuario) ON DELETE CASCADE 
+	foreign key(Id_Interesado)references DBInteresado(Id_Interesado),
+	foreign key(Id_Usuario)references DBUsuario(Id_Usuario) ON DELETE CASCADE 
 )
 
-CREATE TABLE Infraccion(
+CREATE TABLE DBInfraccion(
 	Id_Infraccion int IDENTITY(1,1) NOT NULL,
 	Descripcion_Infraccion nvarchar(50) NULL,
 	Id_Usuario int NULL,
 	CONSTRAINT [PK_Infracciones] PRIMARY KEY(Id_Infraccion),
-	foreign key(Id_Usuario)references Usuario(Id_Usuario)ON DELETE CASCADE
+	foreign key(Id_Usuario)references DBUsuario(Id_Usuario)ON DELETE CASCADE
 )
 GO
 
@@ -102,7 +102,7 @@ CREATE PROCEDURE [dbo].[Partido_UI](
 AS 
 BEGIN
 	SET NOCOUNT ON
-    INSERT INTO Partido VALUES  (@Lugar,@Confirmado,@Fecha_Hora)
+    INSERT INTO DBPartido VALUES  (@Lugar,@Confirmado,@Fecha_Hora)
 END
 GO
 
@@ -114,16 +114,16 @@ CREATE PROCEDURE [dbo].[Usuario_UI](
 AS
 BEGIN
 	SET NOCOUNT ON
-	IF(EXISTS(SELECT 1 FROM Usuario WHERE Nombre_Usuario = @Nombre_Usuario))
+	IF(EXISTS(SELECT 1 FROM DBUsuario WHERE Nombre_Usuario = @Nombre_Usuario))
 	BEGIN
-		UPDATE dbo.Usuario 
+		UPDATE dbo.DBUsuario 
 		SET Nombre_Usuario = @Nombre_Usuario,
 		Password_Usuario = @Password_Usuario,
 		Usuario_Administrador = @Usuario_Administrador
 	END
 	ELSE
 	BEGIN
-		INSERT INTO dbo.Usuario VALUES (@Nombre_Usuario,@Password_Usuario,@Usuario_Administrador)	
+		INSERT INTO dbo.DBUsuario VALUES (@Nombre_Usuario,@Password_Usuario,@Usuario_Administrador)	
 	END
 END
 GO
@@ -134,7 +134,6 @@ CREATE PROCEDURE [dbo].Interesado_UI(
     @Apellido nvarchar(50),
     @Edad int,
     @Mail nvarchar(50),
-    @Tipo_Jugador nvarchar(50),
     @Posicion int,
     @Handicap int,
     @Criterio nvarchar(50)
@@ -142,7 +141,7 @@ CREATE PROCEDURE [dbo].Interesado_UI(
 AS
 BEGIN
 	SET NOCOUNT ON
-	IF(EXISTS(SELECT 1 FROM Interesado WHERE @Id_Usuario = Id_Usuario))
+	IF(EXISTS(SELECT 1 FROM DBInteresado WHERE @Id_Usuario = Id_Usuario))
 	BEGIN
 		UPDATE Interesado
 		SET
@@ -151,7 +150,6 @@ BEGIN
 		Apellido = @Apellido,
 		Edad = @Edad,
 		Mail = @Mail,
-		Tipo_Jugador = @Tipo_Jugador,
 		Posicion = @Posicion,
 		Handicap = @Handicap,
 		Criterio = @Criterio,
@@ -159,14 +157,14 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		INSERT INTO dbo.Interesado 
-		VALUES (@Id_Usuario,@Nombre,@Apellido,@Edad,@Mail,@Tipo_Jugador,@Posicion,@Handicap,@Criterio, 0)	
+		INSERT INTO dbo.DBInteresado 
+		VALUES (@Id_Usuario,@Nombre,@Apellido,@Edad,@Mail,@Posicion,@Handicap,@Criterio, 0)	
 	END
 END
 GO
 
 
-CREATE PROCEDURE Usuario_L
+CREATE PROCEDURE dbo.Usuario_L
 AS
 BEGIN
 	SELECT 
@@ -179,10 +177,9 @@ BEGIN
 	I.Mail,
 	I.Posicion,
 	I.Handicap,
-	I.CantPartidosJugados,
-	I.Tipo_Jugador
-	FROM Usuario U
-	INNER JOIN Interesado I ON U.Id_Usuario = I.Id_Usuario
+	I.CantPartidosJugados
+	FROM DBUsuario U
+	INNER JOIN DBInteresado I ON U.Id_Usuario = I.Id_Usuario
 END
 GO
 
@@ -200,7 +197,7 @@ BEGIN
 		Mail,
 		Handicap,
 		CantPartidosJugados
-	FROM INTERESADO WHERE Handicap < 5
+	FROM DBINTERESADO WHERE Handicap < 5
 END
 GO
 
@@ -217,13 +214,12 @@ BEGIN
 		Apellido,
 		Edad,
 		Mail,
-		Tipo_Jugador,
 		Posicion,
 		Handicap,
 		Criterio,
 		CantPartidosJugados
-		FROM Usuario U
-		INNER JOIN Interesado I ON I.Id_Usuario = U.Id_Usuario
+		FROM DBUsuario U
+		INNER JOIN DBInteresado I ON I.Id_Usuario = U.Id_Usuario
 		WHERE Nombre_Usuario = @Nombre_Usuario AND
 			  Password_Usuario = @Password_Usuario 
 	
@@ -233,21 +229,22 @@ GO
 CREATE PROCEDURE Partido_Interesado_UI(
 	@Id_Partido int,
 	@Id_Interesado int,	
+	@Tipo_Jugador nvarchar(50),
 	@Baja bit = 0
 )
 AS
 BEGIN 
 	SET NOCOUNT ON
-	IF(EXISTS(SELECT 1 FROM Partido_Interesado WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado))
+	IF(EXISTS(SELECT 1 FROM DBPartido_Interesado WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado))
 	BEGIN
-		UPDATE Partido_Interesado
-		SET Baja = @Baja
+		UPDATE DBPartido_Interesado
+		SET Baja = @Baja, Tipo_Jugador = @Tipo_Jugador
 		WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado
 	END
 	ELSE
 	BEGIN
-		INSERT INTO Partido_Interesado
-		VALUES (@Id_Partido,@Id_Interesado, @Baja)		
+		INSERT INTO DBPartido_Interesado
+		VALUES (@Id_Partido,@Id_Interesado, @Tipo_Jugador, @Baja)		
 	END
 END 
 GO
@@ -256,7 +253,7 @@ CREATE PROCEDURE Partido_L
 AS
 BEGIN
 	SELECT Lugar,Fecha_Hora,Confirmado
-	FROM Partido		
+	FROM DBPartido		
 END
 GO
 
@@ -273,13 +270,12 @@ BEGIN
 		Apellido,
 		Edad,
 		Mail,
-		Tipo_Jugador,
 		Posicion,
 		Handicap,
 		CantPartidosJugados
-	FROM Usuario U
-	INNER JOIN Interesado I ON U.Id_Usuario = I.Id_Usuario
-	INNER JOIN Partido_Interesado PINT ON PiNT.Id_Interesado = I.Id_Interesado
+	FROM DBUsuario U
+	INNER JOIN DBInteresado I ON U.Id_Usuario = I.Id_Usuario
+	INNER JOIN DBPartido_Interesado PINT ON PiNT.Id_Interesado = I.Id_Interesado
 	WHERE Baja <> 1 AND PINT.Id_Partido = @Id_Partido
 END
 GO
@@ -294,13 +290,12 @@ BEGIN
 		Apellido,
 		Edad,
 		Mail,
-		Tipo_Jugador,
 		Posicion,
 		Handicap,
 		CantPartidosJugados
-	FROM Usuario U
-	INNER JOIN Interesado I ON U.Id_Usuario = I.Id_Usuario
-	INNER JOIN Infraccion INF ON U.Id_Usuario = INF.Id_Usuario
+	FROM DBUsuario U
+	INNER JOIN DBInteresado I ON U.Id_Usuario = I.Id_Usuario
+	INNER JOIN DBInfraccion INF ON U.Id_Usuario = INF.Id_Usuario
 END
 GO
 
@@ -310,32 +305,50 @@ CREATE PROCEDURE Partido_Interesado_D(
 )
 AS 
 BEGIN
-	UPDATE Partido_Interesado
+	UPDATE DBPartido_Interesado
 	SET Baja = 1
 	WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado
 
 END
 GO
 
-CREATE PROCEDURE ObtenerJugadoresTraicioneros
+CREATE PROCEDURE Partido_Interesado_L(
+@Id_Partido int
+)
 AS
 BEGIN
 	SELECT 
-		Id_Interesado,
-		Id_Usuario,
-		Nombre,		
+		Nombre,
 		Apellido,
 		Edad,
-		Posicion,
-		Mail,
+		Posicion,		
 		Handicap,
-		CantPartidosJugados
-	FROM INTERESADO I
-	WHERE
-		(SELECT Count(1) FROM Infracciones WHERE I.Id_Usuario = INF_IdUsuario) > 3
-		--FALTA CONDICION DE "EL ULTIMO MES". Agregar un campo fecha en la infracción		
+		P_I.Tipo_Jugador
+		FROM DBInteresado I
+		INNER JOIN DBPartido_Interesado P_I ON I.Id_Interesado = P_I.Id_Interesado
+		WHERE P_I.Id_Partido = @Id_Partido
 END
 GO
+
+--CREATE PROCEDURE ObtenerJugadoresTraicioneros
+--AS
+--BEGIN
+--	SELECT 
+--		Id_Interesado,
+--		Id_Usuario,
+--		Nombre,		
+--		Apellido,
+--		Edad,
+--		Posicion,
+--		Mail,
+--		Handicap,
+--		CantPartidosJugados
+--	FROM DBINTERESADO I
+--	WHERE
+--		(SELECT Count(1) FROM DBInfraccion WHERE I.Id_Usuario = INF_IdUsuario) > 3
+--		--FALTA CONDICION DE "EL ULTIMO MES". Agregar un campo fecha en la infracción		
+--END
+--GO
 
 
 CREATE PROCEDURE ObtenerJugadoresConFuturo
@@ -360,11 +373,11 @@ GO
 
 CREATE PROCEDURE Infraccion_I
 (
-	@Id_Usuario int	
+	@Id_Usuario int
 )
 AS
 BEGIN
-	INSERT INTO Infracciones (Descripcion,Id_Usuario) 
+	INSERT INTO DBInfraccion (Descripcion_Infraccion, Id_Usuario) 
 	VALUES ('No recomendó jugador tras baja.',@Id_Usuario)				
 END
 GO

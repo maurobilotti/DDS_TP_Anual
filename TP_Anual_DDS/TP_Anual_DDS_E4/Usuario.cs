@@ -17,7 +17,7 @@ namespace TP_Anual_DDS_E4
         {
             get
             {
-                return (from x in new DDSDataContext().DBUsuarios
+                return (from x in new DDSDataContext().DBUsuario
                     where x.Nombre_Usuario.Contains(this._Usuario)
                     select x.Id_Usuario).SingleOrDefault();
             }
@@ -28,20 +28,14 @@ namespace TP_Anual_DDS_E4
             this._Usuario = nombreUsuario;
             this.Password = contrasena;
             this.Interesado = interesado;
-            ActualizarYGuardar();
-            this.Interesado.Guardar(this.Id_Usuario);
         }
 
-        public void Actualizar()
-        {
-            ActualizarYGuardar();
-        }
-
-        private void ActualizarYGuardar()
+        public void Guardar()
         {
             DDSDataContext db = new DDSDataContext();
             db.Usuario_UI(_Usuario, Password, false);
             db.SubmitChanges();
+            this.Interesado.Guardar(this.Id_Usuario);
         }
     }
 }

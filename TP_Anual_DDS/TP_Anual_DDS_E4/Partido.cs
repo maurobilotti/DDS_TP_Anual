@@ -18,7 +18,7 @@ namespace TP_Anual_DDS_E4
         {
             get
             {
-                return (from x in new DDSDataContext().DBPartidos
+                return (from x in new DDSDataContext().DBPartido
                     where x.Lugar.Contains(this.Lugar)
                           && x.Fecha_Hora == Fecha_Hora
                     select x.Id_Partido).SingleOrDefault();
@@ -69,7 +69,8 @@ namespace TP_Anual_DDS_E4
 
         public bool AgregarJugador(Usuario usuario)
         {
-            if (usuario.Interesado.Tipo.PuedoJugarEn(this))
+            TipoJugador tipo = ObtenerTipoJugador(usuario);
+            if (tipo.PuedoJugarEn(this))
             {
                 if (ListaJugadores.Count < 10)
                 {
@@ -80,11 +81,11 @@ namespace TP_Anual_DDS_E4
                 }
                 else
                 {
-                    if (usuario.Interesado.Tipo.Prioridad == Interesado.EnumPrioridad.Solidario)//Si quiere ingresar un solidario
+                    if (tipo.Prioridad == Interesado.EnumPrioridad.Solidario)//Si quiere ingresar un solidario
                     {
                         BuscarYEliminar(usuario, Interesado.EnumPrioridad.Condicional);//Busca si hay condicional y los cambia.
                     }
-                    if (usuario.Interesado.Tipo.Prioridad == Interesado.EnumPrioridad.Estandar)//Si quiere ingresar un estandar
+                    if (tipo.Prioridad == Interesado.EnumPrioridad.Estandar)//Si quiere ingresar un estandar
                     {
                         //Si hay un condicional, lo saca. Si no, busca si hay un solidario para sacarlo.
                         if (!BuscarYEliminar(usuario, Interesado.EnumPrioridad.Condicional))//Busca si hay condicional.
@@ -92,9 +93,9 @@ namespace TP_Anual_DDS_E4
                     }
                 }
                 ChequearCondicionales();
-
+                
                 DDSDataContext db = new DDSDataContext();
-                db.Partido_Interesado_UI((int) this.Id_Partido, usuario.Interesado.Id_Interesado, false);
+                db.Partido_Interesado_UI((int)this.Id_Partido, usuario.Interesado.Id_Interesado, tipo.GetType().Name, false);
                 db.SubmitChanges();
             }
             return true;
@@ -115,6 +116,12 @@ namespace TP_Anual_DDS_E4
         #endregion
 
         #region Métodos privados
+
+        private TipoJugador ObtenerTipoJugador(Usuario usuario)
+        {
+            return new Estandar();
+        }
+
 
         private void RegistrarInfraccion(Usuario usuarioInfractor)
         {
@@ -139,7 +146,7 @@ namespace TP_Anual_DDS_E4
         {
             foreach (Usuario usuario in this.ListaJugadores)
             {
-                if (!usuario.Interesado.Tipo.PuedoJugarEn(this))
+                if (!ObtenerTipoJugador(usuario).PuedoJugarEn(this))
                 {
                     this.ListaJugadores.Remove(usuario);
                 }
@@ -154,7 +161,7 @@ namespace TP_Anual_DDS_E4
         {
             foreach (Usuario usuario in this.ListaJugadores)
             {
-                if (usuario.Interesado.Tipo.Prioridad == prioridadDeIngresanteAVolar)
+                if (ObtenerTipoJugador(usuario).Prioridad == prioridadDeIngresanteAVolar)
                 {
                     ListaJugadores.Remove(usuario);
                     ListaJugadores.Add(usuarioAIngresar);
@@ -167,22 +174,24 @@ namespace TP_Anual_DDS_E4
             return false;
         }
 
-        private List<Usuario> ObtenerInscriptos()
+        private void ObtenerInscriptos()
         {
+            this.ListaJugadores = new List<Usuario>();
             //ejecuta el SP Partido_ObtenerInteresados y lo mapea a los tipos de la solucion
-            return ListaJugadores = (from x in new DDSDataContext().Partido_ObtenerInteresados(this.Id_Partido)
+            this.ListaJugadores = (from x in new DDSDataContext().Partido_ObtenerInteresados(this.Id_Partido)
                 select new Usuario(x.Nombre_Usuario, x.Password_Usuario,
                     new Interesado(x.Nombre, x.Apellido, (int)x.Edad, x.Mail, (int)x.Posicion,
-                        (int)x.Handicap, x.CantPartidosJugados, x.Tipo_Jugador))).ToList();
+                        (int)x.Handicap, x.CantPartidosJugados))).ToList();
         }
 
-        private List<Usuario> ObtenerInfractores()
+        private void ObtenerInfractores()
         {
+            this.ListaInfractores = new List<Usuario>();
             //ejecuta el SP Infraccion_L y lo mapea a los tipos de la solucion
-            return ListaJugadores = (from x in new DDSDataContext().Infraccion_L()
+            this.ListaInfractores = (from x in new DDSDataContext().Infraccion_L()
                                      select new Usuario(x.Nombre_Usuario, x.Password_Usuario,
                                          new Interesado(x.Nombre, x.Apellido, (int)x.Edad, x.Mail, (int)x.Posicion,
-                                             (int)x.Handicap, x.CantPartidosJugados, x.Tipo_Jugador))).ToList();
+                                             (int)x.Handicap, x.CantPartidosJugados))).ToList();
         }
 
         public void AgregarCriterio(char opcion)
@@ -228,21 +237,15 @@ namespace TP_Anual_DDS_E4
 
         public void Guardar()
         {
-            ActualizarYGuardar();
-        }
-
-        public void Actualizar()
-        {
-            ActualizarYGuardar();
-        }
-
-        private void ActualizarYGuardar()
-        {
             DDSDataContext db = new DDSDataContext();
-            db.Partido_UI(this.Lugar, (bool) this.Confirmado,
+            db.Partido_UI(this.Lugar, (bool)this.Confirmado,
                 Convert.ToDateTime(this.Fecha_Hora.ToString("yyyy-MM-dd HH:mm")));
             db.SubmitChanges();
         }
 
+        public List<Partido_Interesado_LResult> ObtenerListaJugadoresInteresados()
+        {
+            return new DDSDataContext().Partido_Interesado_L(this.Id_Partido).AsEnumerable().ToList();
+        }
     }
 }

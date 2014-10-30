@@ -27,6 +27,9 @@ namespace TP_Anual_DDS_E4
         public frmPrincipal()
         {
             InitializeComponent();
+            //BaseDatos bd = new BaseDatos("SELECT * FROM dbo.Usuario");
+            //DataTable dt = bd.ObtenerDataTable();
+
             this.ListaUsuarios = Administrador.ObtenerInstancia().CargarUsuariosIniciales().Select(x => x.Interesado).ToList();
             DeshablitarControles();
         }
@@ -57,19 +60,6 @@ namespace TP_Anual_DDS_E4
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
             DeshablitarControles();
-            //-------------------
-            //Guid IdPartido1 = Administrador.ObtenerInstancia().CrearPartido(new Partido("Ciudad Jardin", DateTime.Now));
-            //Guid IdPartido2 = Administrador.ObtenerInstancia().CrearPartido(new Partido("Caballito", DateTime.Now));
-            //Administrador.ObtenerInstancia().CrearPartido(new Partido("Flores", DateTime.Now));
-            //Administrador.ObtenerInstancia().CrearPartido(new Partido("Parque Avellaneda", DateTime.Now));
-
-            //Administrador.ObtenerInstancia().CargarUsuariosIniciales();
-
-            //Partido partido1 = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido1);
-            //Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido1);
-            //Partido partido2 = Administrador.ObtenerInstancia().ObtenerPartido(IdPartido2);
-            //Administrador.ObtenerInstancia().CompletarJugadoresPartido(partido2);
-
             Actualizar();
         }
 
@@ -96,12 +86,12 @@ namespace TP_Anual_DDS_E4
 
                 if (!partido.EstaInscripto(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario).Interesado))
                 {
-                    var frmJugador = new frmInscribirseAPartido(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario));
+                    var frmJugador = new frmInscribirseAPartido(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario), partido);
                     if (frmJugador.ShowDialog() == DialogResult.OK)
                     {
                         partido.AgregarJugador(frmJugador.Usuario);
                         gridInteresados.DataSource = null;
-                        gridInteresados.DataSource = partido.ListaJugadores;
+                        gridInteresados.DataSource = partido.ObtenerListaJugadoresInteresados();
                         btnBaja.Enabled = true;
                         if (gridInteresados.Rows.Count >= 10)
                             btnFinalizarPartido.Enabled = EsAdministrador;
@@ -202,7 +192,7 @@ namespace TP_Anual_DDS_E4
                             .Interesado;
                     btnBaja.Enabled = partido.EstaInscripto(interesado);
                 }
-                gridInteresados.DataSource = partido.ListaJugadores;
+                gridInteresados.DataSource = partido.ObtenerListaJugadoresInteresados();
 
                 gridEquipo1.DataSource = partido.ArmadorPartido != null ? partido.ListaPrimerEquipo : null;
                 gridEquipo2.DataSource = partido.ArmadorPartido != null ? partido.ListaSegundoEquipo : null;
@@ -244,7 +234,6 @@ namespace TP_Anual_DDS_E4
                                 .ObtenerUsuario(Properties.Settings.Default.IdUsuario);
 
                         Usuario jugAlta = frmProponer.JugadorPropuesto;
-                        jugAlta.Interesado.Tipo = jugBaja.Interesado.Tipo;
                         partido.DarBaja(jugBaja, jugAlta);
                     }
                 }
