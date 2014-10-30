@@ -34,8 +34,7 @@ namespace TP_Anual_DDS_E4
         {
             return listaUsuarios = (from x in new DDSDataContext().Usuario_L()
                                     select new Usuario(x.Nombre_Usuario, x.Password_Usuario,
-                                        new Interesado(x.Nombre, x.Apellido, (int)x.Edad, x.Mail, (int)x.Posicion, (int)x.Handicap, x.CantPartidosJugados,
-                                            x.Tipo_Jugador))).ToList(); 
+                                        new Interesado(x.Nombre, x.Apellido, (int)x.Edad, x.Mail, (int)x.Posicion, (int)x.Handicap, x.CantPartidosJugados))).ToList(); 
         }
 
         public void CrearPartido(Partido partido)

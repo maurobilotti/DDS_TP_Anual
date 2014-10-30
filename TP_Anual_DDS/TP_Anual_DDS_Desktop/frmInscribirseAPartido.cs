@@ -13,13 +13,15 @@ namespace TP_Anual_DDS_E4
 {
     public partial class frmInscribirseAPartido : Form
     {
-        public frmInscribirseAPartido(Usuario usuario)
+        public frmInscribirseAPartido(Usuario usuario, Partido partido)
         {
             InitializeComponent();
             this.Usuario = usuario;
+            this.Partido = partido;
         }
 
         public Usuario Usuario { get; set; }
+        public Partido Partido { get; set; }
 
         private void frmInscribirseAPartido_Load(object sender, EventArgs e)
         {
@@ -36,21 +38,26 @@ namespace TP_Anual_DDS_E4
         {
             if (Validar())
             {
+                DDSDataContext db = new DDSDataContext();
                 switch ((int)cmbTipoJugador.SelectedValue)
                 {
                     case 0:
-                        Usuario.Interesado.Tipo = new Condicional();
+                        //Usuario.Interesado.Tipo = new Condicional();
 
-                        foreach (DataRowView condicion in chkCondiciones.CheckedItems)
-                        {
-                            Usuario.Interesado.Tipo.AgregarCondicion((ICondiciones)condicion[0]);
-                        }
+                        //foreach (DataRowView condicion in chkCondiciones.CheckedItems)
+                        //{
+                        //    Usuario.Interesado.Tipo.AgregarCondicion((ICondiciones)condicion[0]);
+                        //}
+                        db.Partido_Interesado_UI(Partido.Id_Partido, Usuario.Interesado.Id_Interesado,
+                            typeof(Condicional).Name, false);
                         break;
                     case 1:
-                        Usuario.Interesado.Tipo = new Solidario();
+                        db.Partido_Interesado_UI(Partido.Id_Partido, Usuario.Interesado.Id_Interesado,
+                            typeof (Solidario).Name, false);
                         break;
                     default:
-                        Usuario.Interesado.Tipo = new Estandar();
+                        db.Partido_Interesado_UI(Partido.Id_Partido, Usuario.Interesado.Id_Interesado,
+                            typeof(Estandar).Name, false);
                         break;
                 }
 
