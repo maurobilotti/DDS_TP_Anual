@@ -10,6 +10,7 @@ namespace TP_Anual_DDS_E4
     public abstract class TipoJugador
     {
         public Interesado.EnumPrioridad Prioridad { get; set; }
+        public int Id_TipoJugador { get; set; }
 
         public virtual bool PuedoJugarEn(Partido partido) 
         {

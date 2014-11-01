@@ -410,9 +410,10 @@ BEGIN
 		FechaNacimiento,
 		Posicion,		
 		Handicap,
-		P_I.Id_TipoJugador
+		TJ.Descripcion
 		FROM DBInteresado I
 		INNER JOIN DBPartido_Interesado P_I ON I.Id_Interesado = P_I.Id_Interesado
+		INNER JOIN DBTipoJugador		TJ  ON TJ.Id_TipoJugador = P_I.Id_TipoJugador
 		WHERE P_I.Id_Partido = @Id_Partido
 END
 GO

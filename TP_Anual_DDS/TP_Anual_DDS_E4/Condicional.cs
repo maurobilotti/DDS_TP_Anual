@@ -27,6 +27,7 @@ namespace TP_Anual_DDS_E4
 
         public Condicional()
         {
+            this.Id_TipoJugador = 1;
             this.Condiciones = new List<ICondiciones>();
             this.Prioridad =  Interesado.EnumPrioridad.Condicional;
         }

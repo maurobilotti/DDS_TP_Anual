@@ -61,11 +61,9 @@ namespace TP_Anual_DDS_E4
                             break;
                         case 1:
                             idTipo = (int)EnumTipo_Jugador.Solidario;
-                            descripcionTipo = typeof (Solidario).Name;
                             break;
                         case 2:
                             idTipo = (int)EnumTipo_Jugador.Estandar;
-                            descripcionTipo = typeof(Estandar).Name;
                             break;
                         default:
                             throw new Exception("Tipo jugador incorrecto");

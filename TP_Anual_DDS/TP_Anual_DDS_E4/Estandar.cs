@@ -10,8 +10,10 @@ namespace TP_Anual_DDS_E4
     {
         public string Descripcion { get { return typeof(Estandar).Name; } }
 
-        public Estandar() {
-            this.Prioridad =  Interesado.EnumPrioridad.Estandar;
+        public Estandar()
+        {
+            this.Id_TipoJugador = 2;
+            this.Prioridad = Interesado.EnumPrioridad.Estandar;
         }
     }
 }

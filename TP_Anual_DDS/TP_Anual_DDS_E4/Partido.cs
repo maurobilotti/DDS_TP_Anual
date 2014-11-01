@@ -95,7 +95,7 @@ namespace TP_Anual_DDS_E4
                 ChequearCondicionales();
                 
                 DDSDataContext db = new DDSDataContext();
-                db.Partido_Interesado_UI((int)this.Id_Partido, usuario.Interesado.Id_Interesado, tipo.GetType().Name, false);
+                db.Partido_Interesado_UI((int)this.Id_Partido, usuario.Interesado.Id_Interesado, tipo.Id_TipoJugador, false);
                 db.SubmitChanges();
             }
             return true;
