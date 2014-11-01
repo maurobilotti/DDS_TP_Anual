@@ -500,3 +500,19 @@ group by Inte.Nombre,Inte.Handicap,dbo.PromUltimoPartido(Inte.Id_Interesado),Int
 Return
 END
 GO
+
+
+
+CREATE PROCEDURE [dbo].[Interesado_Infracciones_L](
+@Id_Interesado int 
+)
+AS
+BEGIN
+SELECT	Infra.*
+FROM DBInfraccion Infra
+JOIN DBInteresado inte ON inte.Id_Usuario = Infra.Id_Usuario 
+where inte.Id_Interesado = @Id_Interesado
+
+Return
+END
+GO
