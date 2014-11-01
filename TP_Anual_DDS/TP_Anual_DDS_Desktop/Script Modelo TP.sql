@@ -40,18 +40,6 @@ create TABLE DBPartido_Interesado(
 ) 
 
 
-CREATE TABLE DBPartido_Interesado_Condicional(
-	Id_Partido int NOT NULL,
-	Id_Interesado int NOT NULL,
-	Id_Condicion int NOT NULL,
-	Baja bit NULL,
-	CONSTRAINT Partido_Interesado_Condicional_pk PRIMARY KEY(Id_Interesado,Id_Partido,Id_Condicion),
-	foreign key(Id_Interesado)references DBInteresado(Id_Interesado),
-	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE ,
-	foreign key(Id_Condicion)references DBCondicion(Id_Condicion)
-) 
- 
-
 CREATE TABLE DBCalificacion(
 	Id_Calificacion int IDENTITY(1,1) NOT NULL,
 	Id_Partido int NOT NULL,
@@ -68,6 +56,18 @@ CREATE TABLE DBCondicion(
 	Descripcion_Condicion nvarchar(50) NULL,
 	PRIMARY KEY(Id_Condicion)
 )
+
+CREATE TABLE DBPartido_Interesado_Condicional(
+	Id_Partido int NOT NULL,
+	Id_Interesado int NOT NULL,
+	Id_Condicion int NOT NULL,
+	Baja bit NULL,
+	CONSTRAINT Partido_Interesado_Condicional_pk PRIMARY KEY(Id_Interesado,Id_Partido,Id_Condicion),
+	foreign key(Id_Interesado)references DBInteresado(Id_Interesado),
+	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE ,
+	foreign key(Id_Condicion)references DBCondicion(Id_Condicion)
+) 
+ 
 
 CREATE TABLE DBCondicion_Interesado(
 	Id_Condicion int NOT NULL,
