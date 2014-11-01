@@ -242,6 +242,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmRegistrar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Load += new System.EventHandler(this.frmRegistrar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numPosicion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHandicap)).EndInit();
             this.ResumeLayout(false);

@@ -8,7 +8,7 @@ namespace TP_Anual_DDS_E4
 {
     public partial class DDSDataContext
     {
-        public DDSDataContext()
+        public DDSDataContext(string pepe = null)
             : base(Properties.Settings.Default.ConnectionString)
         {
             OnCreated();

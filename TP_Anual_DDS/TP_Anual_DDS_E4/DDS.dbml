@@ -1,41 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DDS" Class="DDSDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=MAURO-PC\SQLSERVER2008;Initial Catalog=DDS;Integrated Security=True" SettingsObjectName="TP_Anual_DDS_E4.Properties.Settings" SettingsPropertyName="DDSConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.DBAmigos" Member="DBAmigos">
-    <Type Name="DBAmigo">
+    <Type Name="DBAmigos">
       <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Id_Amigo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Association Name="DBInteresado_DBAmigo" Member="DBInteresado" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBInteresado" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="DBInteresado_DBAmigos" Member="DBInteresado" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBInteresado" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.DBUsuario" Member="DBUsuarios">
+  <Table Name="dbo.DBUsuario" Member="DBUsuario">
     <Type Name="DBUsuario">
       <Column Name="Id_Usuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nombre_Usuario" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Password_Usuario" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Usuario_Administrador" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="DBUsuario_DBDenegacion" Member="DBDenegacions" ThisKey="Id_Usuario" OtherKey="Id_Usuario" Type="DBDenegacion" />
-      <Association Name="DBUsuario_DBInfraccion" Member="DBInfraccions" ThisKey="Id_Usuario" OtherKey="Id_Usuario" Type="DBInfraccion" />
-      <Association Name="DBUsuario_DBInteresado" Member="DBInteresados" ThisKey="Id_Usuario" OtherKey="Id_Usuario" Type="DBInteresado" />
+      <Association Name="DBUsuario_DBDenegacion" Member="DBDenegacion" ThisKey="Id_Usuario" OtherKey="Id_Usuario" Type="DBDenegacion" />
+      <Association Name="DBUsuario_DBInfraccion" Member="DBInfraccion" ThisKey="Id_Usuario" OtherKey="Id_Usuario" Type="DBInfraccion" />
+      <Association Name="DBUsuario_DBInteresado" Member="DBInteresado" ThisKey="Id_Usuario" OtherKey="Id_Usuario" Type="DBInteresado" />
     </Type>
   </Table>
-  <Table Name="dbo.DBCalificacion" Member="DBCalificacions">
+  <Table Name="dbo.DBCalificacion" Member="DBCalificacion">
     <Type Name="DBCalificacion">
       <Column Name="Id_Calificacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Id_Partido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Descripcion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Id_Jugador_Critico" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Id_Jugador_Criticado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Calificacion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="DBPartido_DBCalificacion" Member="DBPartido" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBPartido" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.DBCondicion" Member="DBCondicions">
+  <Table Name="dbo.DBCondicion" Member="DBCondicion">
     <Type Name="DBCondicion">
       <Column Name="Id_Condicion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Descripcion_Condicion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="DBCondicion_DBCondicion_Interesado" Member="DBCondicion_Interesados" ThisKey="Id_Condicion" OtherKey="Id_Condicion" Type="DBCondicion_Interesado" />
+      <Association Name="DBCondicion_DBCondicion_Interesado" Member="DBCondicion_Interesado" ThisKey="Id_Condicion" OtherKey="Id_Condicion" Type="DBCondicion_Interesado" />
     </Type>
   </Table>
-  <Table Name="dbo.DBCondicion_Interesado" Member="DBCondicion_Interesados">
+  <Table Name="dbo.DBCondicion_Interesado" Member="DBCondicion_Interesado">
     <Type Name="DBCondicion_Interesado">
       <Column Name="Id_Condicion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Id_interesado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -43,7 +44,7 @@
       <Association Name="DBInteresado_DBCondicion_Interesado" Member="DBInteresado" ThisKey="Id_interesado" OtherKey="Id_Interesado" Type="DBInteresado" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.DBDenegacion" Member="DBDenegacions">
+  <Table Name="dbo.DBDenegacion" Member="DBDenegacion">
     <Type Name="DBDenegacion">
       <Column Name="Id_Denegacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -55,7 +56,7 @@
       <Association Name="DBInteresado_DBDenegacion" Member="DBInteresado" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBInteresado" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.DBInfraccion" Member="DBInfraccions">
+  <Table Name="dbo.DBInfraccion" Member="DBInfraccion">
     <Type Name="DBInfraccion">
       <Column Name="Id_Infraccion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Descripcion_Infraccion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -63,7 +64,7 @@
       <Association Name="DBUsuario_DBInfraccion" Member="DBUsuario" ThisKey="Id_Usuario" OtherKey="Id_Usuario" Type="DBUsuario" IsForeignKey="true" DeleteRule="CASCADE" />
     </Type>
   </Table>
-  <Table Name="dbo.DBInteresado" Member="DBInteresados">
+  <Table Name="dbo.DBInteresado" Member="DBInteresado">
     <Type Name="DBInteresado">
       <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Id_Usuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -75,24 +76,24 @@
       <Column Name="Handicap" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Criterio" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="CantPartidosJugados" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="DBInteresado_DBAmigo" Member="DBAmigos" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBAmigo" />
-      <Association Name="DBInteresado_DBCondicion_Interesado" Member="DBCondicion_Interesados" ThisKey="Id_Interesado" OtherKey="Id_interesado" Type="DBCondicion_Interesado" />
-      <Association Name="DBInteresado_DBDenegacion" Member="DBDenegacions" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBDenegacion" />
-      <Association Name="DBInteresado_DBPartido_Interesado" Member="DBPartido_Interesados" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBPartido_Interesado" />
+      <Association Name="DBInteresado_DBAmigos" Member="DBAmigos" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBAmigos" />
+      <Association Name="DBInteresado_DBCondicion_Interesado" Member="DBCondicion_Interesado" ThisKey="Id_Interesado" OtherKey="Id_interesado" Type="DBCondicion_Interesado" />
+      <Association Name="DBInteresado_DBDenegacion" Member="DBDenegacion" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBDenegacion" />
+      <Association Name="DBInteresado_DBPartido_Interesado" Member="DBPartido_Interesado" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBPartido_Interesado" />
       <Association Name="DBUsuario_DBInteresado" Member="DBUsuario" ThisKey="Id_Usuario" OtherKey="Id_Usuario" Type="DBUsuario" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.DBPartido" Member="DBPartidos">
+  <Table Name="dbo.DBPartido" Member="DBPartido">
     <Type Name="DBPartido">
       <Column Name="Id_Partido" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Lugar" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Confirmado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Fecha_Hora" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="DBPartido_DBCalificacion" Member="DBCalificacions" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBCalificacion" />
-      <Association Name="DBPartido_DBPartido_Interesado" Member="DBPartido_Interesados" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBPartido_Interesado" />
+      <Association Name="DBPartido_DBCalificacion" Member="DBCalificacion" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBCalificacion" />
+      <Association Name="DBPartido_DBPartido_Interesado" Member="DBPartido_Interesado" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBPartido_Interesado" />
     </Type>
   </Table>
-  <Table Name="dbo.DBPartido_Interesado" Member="DBPartido_Interesados">
+  <Table Name="dbo.DBPartido_Interesado" Member="DBPartido_Interesado">
     <Type Name="DBPartido_Interesado">
       <Column Name="Id_Partido" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -228,6 +229,13 @@
     <Parameter Name="Nombre_Usuario" Parameter="nombre_Usuario" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="Password_Usuario" Parameter="password_Usuario" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="Usuario_Administrador" Parameter="usuario_Administrador" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Partido_Interesado_Condicional_UI" Method="Partido_Interesado_Condicional_UI">
+    <Parameter Name="Id_Partido" Parameter="id_Partido" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Id_Interesado" Parameter="id_Interesado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Id_Condicion" Parameter="id_Condicion" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Baja" Parameter="baja" Type="System.Boolean" DbType="Bit" />
     <Return Type="System.Int32" />
   </Function>
 </Database>

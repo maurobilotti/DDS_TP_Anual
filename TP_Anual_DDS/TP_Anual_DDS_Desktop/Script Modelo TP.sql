@@ -68,7 +68,7 @@ CREATE TABLE DBCalificacion(
 ) 
 
 CREATE TABLE DBCondicion(
-	Id_Condicion int IDENTITY(1,1) NOT NULL,
+	Id_Condicion int NOT NULL,
 	Descripcion_Condicion nvarchar(50) NULL,
 	PRIMARY KEY(Id_Condicion)
 )
@@ -141,6 +141,7 @@ RETURN
 			AND inte.Id_Interesado = @Id_Partido
 )
 END
+GO
 
 --STORED PROCEDURES
 CREATE PROCEDURE [dbo].[Partido_UI](

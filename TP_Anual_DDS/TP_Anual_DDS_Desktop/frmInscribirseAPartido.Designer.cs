@@ -93,6 +93,7 @@
             this.Controls.Add(this.cmbTipoJugador);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmInscribirseAPartido";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modalidad de insripción";
             this.Load += new System.EventHandler(this.frmInscribirseAPartido_Load);
             this.ResumeLayout(false);

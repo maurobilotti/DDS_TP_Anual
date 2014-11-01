@@ -45,11 +45,20 @@ namespace TP_Anual_DDS_E4
         {
             DataTable tabla = new DataTable();
 
-            tabla.Columns.Add("Id", typeof(ICondiciones));
+            tabla.Columns.Add("Id", typeof(int));
             tabla.Columns.Add("Descripcion", typeof(string));
 
-            tabla.Rows.Add(new CondicionCantidadMayoresDe20(), typeof(CondicionCantidadMayoresDe20).Name);
-            tabla.Rows.Add(new CondicionLugar(), typeof(CondicionLugar).Name);
+            var nombreInterfaz = typeof(ICondiciones);
+            List<Type> tiposDerivados = (AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => nombreInterfaz.IsAssignableFrom(p) && p != nombreInterfaz)).ToList();
+
+            int i = 1;
+            foreach (Type tipo in tiposDerivados)
+            {
+                tabla.Rows.Add(i, tipo.Name);
+                i++;
+            }
 
             return tabla;
         }

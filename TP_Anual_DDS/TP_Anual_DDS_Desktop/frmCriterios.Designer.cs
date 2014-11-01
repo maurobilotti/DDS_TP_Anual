@@ -71,7 +71,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmCriterios";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Criterios de Armado de Equipos";
             this.Load += new System.EventHandler(this.frmCriterios_Load);
             this.ResumeLayout(false);

@@ -20,6 +20,11 @@ namespace TP_Anual_DDS_E4
             this.Partido = partido;
         }
 
+        private enum EnumTipo_Jugador
+        {
+            Condicional = 1, Estandar = 2, Solidario = 3
+        }
+
         public Usuario Usuario { get; set; }
         public Partido Partido { get; set; }
 
@@ -39,30 +44,42 @@ namespace TP_Anual_DDS_E4
             if (Validar())
             {
                 DDSDataContext db = new DDSDataContext();
-                switch ((int)cmbTipoJugador.SelectedValue)
+                try
                 {
-                    case 0:
-                        //Usuario.Interesado.Tipo = new Condicional();
-
-                        //foreach (DataRowView condicion in chkCondiciones.CheckedItems)
-                        //{
-                        //    Usuario.Interesado.Tipo.AgregarCondicion((ICondiciones)condicion[0]);
-                        //}
-                        db.Partido_Interesado_UI(Partido.Id_Partido, Usuario.Interesado.Id_Interesado,
-                            typeof(Condicional).Name, false);
-                        break;
-                    case 1:
-                        db.Partido_Interesado_UI(Partido.Id_Partido, Usuario.Interesado.Id_Interesado,
-                            typeof (Solidario).Name, false);
-                        break;
-                    default:
-                        db.Partido_Interesado_UI(Partido.Id_Partido, Usuario.Interesado.Id_Interesado,
-                            typeof(Estandar).Name, false);
-                        break;
+                    string descripcionTipo = string.Empty;
+                    int idTipo = 0;
+                    switch ((int)cmbTipoJugador.SelectedValue)
+                    {
+                        case 0:
+                            idTipo = (int) EnumTipo_Jugador.Condicional;
+                            foreach (DataRowView condicion in chkCondiciones.CheckedItems)
+                            {
+                                int idCondicion = (int)condicion[0];
+                                db.Partido_Interesado_Condicional_UI(Partido.Id_Partido, this.Usuario.Interesado.Id_Interesado,
+                                    idCondicion, false);
+                            }
+                            break;
+                        case 1:
+                            idTipo = (int)EnumTipo_Jugador.Solidario;
+                            descripcionTipo = typeof (Solidario).Name;
+                            break;
+                        case 2:
+                            idTipo = (int)EnumTipo_Jugador.Estandar;
+                            descripcionTipo = typeof(Estandar).Name;
+                            break;
+                        default:
+                            throw new Exception("Tipo jugador incorrecto");
+                    }
+                    //se inserta la persona para el partido en cuestion
+                    db.Partido_Interesado_UI(Partido.Id_Partido, this.Usuario.Interesado.Id_Interesado, idTipo, false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
 
                 DialogResult = DialogResult.OK;
-                
+
             }
             else
             {
@@ -80,6 +97,6 @@ namespace TP_Anual_DDS_E4
             chkCondiciones.Enabled = (Interesado.EnumPrioridad)cmbTipoJugador.SelectedValue == Interesado.EnumPrioridad.Condicional;
         }
 
-        
+
     }
 }
