@@ -32,7 +32,7 @@ CREATE TABLE DBPartido(
 create TABLE DBPartido_Interesado(
 	Id_Partido int NOT NULL,
 	Id_Interesado int NOT NULL,
-	Tipo_Jugador nvarchar(50) NOT NULL DEFAULT 'Estandar',
+	Tipo_Jugador nvarchar(50) NOT NULL,
 	Baja bit NULL,
 	CONSTRAINT Partido_Interesado_pk PRIMARY KEY(Id_Interesado,Id_Partido),
 	foreign key(Id_Interesado)references DBInteresado(Id_Interesado),
