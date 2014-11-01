@@ -13,18 +13,7 @@ namespace TP_Anual_DDS_E4
         public List<ICondiciones> Condiciones { get; set; }
 
         public string  Descripcion { get { return typeof (Condicional).Name; }}
-
-        public ICondiciones ICondiciones
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
-        }
-
+       
         public Condicional()
         {
             this.Id_TipoJugador = 1;
@@ -39,7 +28,8 @@ namespace TP_Anual_DDS_E4
 
         public override bool PuedoJugarEn(Partido partido)
         {
-            return Condiciones.All(z => z.EvaluarCondicion(partido));//Si cumple todas las condiciones, puede jugar.
+            //return Condiciones.All(z => z.EvaluarCondicion(partido));
+            return true; //no está aplicandose la lógica
         }
 
         public static DataTable ObtenerCondiciones()

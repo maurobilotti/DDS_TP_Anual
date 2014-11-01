@@ -22,11 +22,13 @@ namespace TP_Anual_DDS_E4
 
         private enum EnumTipo_Jugador
         {
-            Condicional = 1, Estandar = 2, Solidario = 3
+            Condicional = 1, Estandar = 3, Solidario = 2
         }
 
         public Usuario Usuario { get; set; }
         public Partido Partido { get; set; }
+        public int Id_TipoJugador { get; set; }
+        public List<int> Condiciones { get; set; }
 
         private void frmInscribirseAPartido_Load(object sender, EventArgs e)
         {
@@ -43,41 +45,24 @@ namespace TP_Anual_DDS_E4
         {
             if (Validar())
             {
-                DDSDataContext db = new DDSDataContext();
-                try
+                switch ((int)cmbTipoJugador.SelectedValue)
                 {
-                    string descripcionTipo = string.Empty;
-                    int idTipo = 0;
-                    switch ((int)cmbTipoJugador.SelectedValue)
-                    {
-                        case 0:
-                            idTipo = (int) EnumTipo_Jugador.Condicional;
-                            foreach (DataRowView condicion in chkCondiciones.CheckedItems)
-                            {
-                                int idCondicion = (int)condicion[0];
-                                db.Partido_Interesado_Condicional_UI(Partido.Id_Partido, this.Usuario.Interesado.Id_Interesado,
-                                    idCondicion, false);
-                            }
-                            break;
-                        case 1:
-                            idTipo = (int)EnumTipo_Jugador.Solidario;
-                            break;
-                        case 2:
-                            idTipo = (int)EnumTipo_Jugador.Estandar;
-                            break;
-                        default:
-                            throw new Exception("Tipo jugador incorrecto");
-                    }
-                    //se inserta la persona para el partido en cuestion
-                    db.Partido_Interesado_UI(Partido.Id_Partido, this.Usuario.Interesado.Id_Interesado, idTipo, false);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    case 0: //Condicional
+                        this.Id_TipoJugador = (int)EnumTipo_Jugador.Condicional;
+                        Condiciones = new List<int>();
+                        foreach (DataRowView condicion in chkCondiciones.CheckedItems)
+                            Condiciones.Add((int)condicion[0]);
+
+                        break;
+                    case 1: //Solidario
+                        this.Id_TipoJugador = (int)EnumTipo_Jugador.Solidario;
+                        break;
+                    case 2: //Estandar
+                        this.Id_TipoJugador = (int)EnumTipo_Jugador.Estandar;
+                        break;
                 }
 
                 DialogResult = DialogResult.OK;
-
             }
             else
             {

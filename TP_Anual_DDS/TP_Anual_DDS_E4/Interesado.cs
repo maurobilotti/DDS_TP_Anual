@@ -14,13 +14,12 @@ namespace TP_Anual_DDS_E4
             Condicional, Solidario, Estandar
         }
 
-        public int Id_Usuario { get; set; }
-
         public int Id_Interesado
         {
             get
             {
-                return (from x in new DDSDataContext().DBInteresado
+                DDSDataContext db = new DDSDataContext();
+                return (from x in db.DBInteresado
                         where x.Nombre == Nombre && x.Apellido == Apellido
                         select x.Id_Interesado).SingleOrDefault();
             }
@@ -95,32 +94,32 @@ namespace TP_Anual_DDS_E4
             return tabla;
         }
 
-        public void IncriptoEn(Partido partido)
-        {
-            Mail mail = new Mail();
-            mail.From = this.Mail;
-            mail.Cuerpo = "Cuerpo del mensaje.";
+        //public void IncriptoEn(Partido partido)
+        //{
+        //    Mail mail = new Mail();
+        //    mail.From = this.Mail;
+        //    mail.Cuerpo = "Cuerpo del mensaje.";
 
-            if (ListaAmigos.Count > 0)
-            {
-                foreach (Interesado amigo in ListaAmigos)
-                {
-                    mail.To += amigo.Mail + "; ";
-                }
+        //    if (ListaAmigos.Count > 0)
+        //    {
+        //        foreach (Interesado amigo in ListaAmigos)
+        //        {
+        //            mail.To += amigo.Mail + "; ";
+        //        }
 
-                if (mail.To != null)
-                {
-                    if (mail.EnviarMail())
-                    {
-                        Console.WriteLine("El interesado: " + this.Nombre + " le envió mail a: " + mail.To);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Ninguno de los amigos de " + this.Nombre + " tiene un mail configurado.");
-                }
-            }
-        }
+        //        if (mail.To != null)
+        //        {
+        //            if (mail.EnviarMail())
+        //            {
+        //                Console.WriteLine("El interesado: " + this.Nombre + " le envió mail a: " + mail.To);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Ninguno de los amigos de " + this.Nombre + " tiene un mail configurado.");
+        //        }
+        //    }
+        //}
 
         public void Guardar(int idUsuario)
         {

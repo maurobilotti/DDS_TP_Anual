@@ -36,13 +36,8 @@ CREATE TABLE DBTipoJugador(
 ) 
 /* Cargamos los tipos */
 INSERT INTO DBTipoJugador (Id_TipoJugador,Descripcion) values (1,'Condicional')
-INSERT INTO DBTipoJugador (Id_TipoJugador,Descripcion) values (2,'Estandar')
-INSERT INTO DBTipoJugador (Id_TipoJugador,Descripcion) values (3,'Solidario')
-
-
- 
-
-
+INSERT INTO DBTipoJugador (Id_TipoJugador,Descripcion) values (2,'Solidario')
+INSERT INTO DBTipoJugador (Id_TipoJugador,Descripcion) values (3,'Estandar')
 
 create TABLE DBPartido_Interesado(
 	Id_Partido int NOT NULL,
@@ -414,7 +409,7 @@ BEGIN
 		FROM DBInteresado I
 		INNER JOIN DBPartido_Interesado P_I ON I.Id_Interesado = P_I.Id_Interesado
 		INNER JOIN DBTipoJugador		TJ  ON TJ.Id_TipoJugador = P_I.Id_TipoJugador
-		WHERE P_I.Id_Partido = @Id_Partido
+		WHERE P_I.Id_Partido = @Id_Partido AND P_I.Baja <> 1
 END
 GO
 

@@ -55,12 +55,14 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnProponerAmigo = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnBuscarJugadores = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.btnVerCriticas = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRealizarCriticas = new System.Windows.Forms.ToolStripButton();
-            this.btnBuscarJugadores = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblCount = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPartidos)).BeginInit();
             this.panel2.SuspendLayout();
@@ -116,6 +118,8 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.IndianRed;
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.lblCount);
             this.panel2.Controls.Add(this.btnFinalizarPartido);
             this.panel2.Controls.Add(this.splitContainer1);
             this.panel2.Controls.Add(this.btnConfirmar);
@@ -298,7 +302,7 @@
             // btnNuevoPartido
             // 
             this.btnNuevoPartido.Name = "btnNuevoPartido";
-            this.btnNuevoPartido.Size = new System.Drawing.Size(83, 22);
+            this.btnNuevoPartido.Size = new System.Drawing.Size(75, 22);
             this.btnNuevoPartido.Text = "Nuevo Partido";
             this.btnNuevoPartido.Click += new System.EventHandler(this.btnAgregarPartido_Click);
             // 
@@ -314,7 +318,7 @@
             this.btnInscribirse.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.btnInscribirse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnInscribirse.Name = "btnInscribirse";
-            this.btnInscribirse.Size = new System.Drawing.Size(109, 22);
+            this.btnInscribirse.Size = new System.Drawing.Size(101, 22);
             this.btnInscribirse.Text = "Incribirse a partido";
             this.btnInscribirse.Click += new System.EventHandler(this.btnInscribirse_Click);
             // 
@@ -329,7 +333,7 @@
             this.btnBaja.Image = ((System.Drawing.Image)(resources.GetObject("btnBaja.Image")));
             this.btnBaja.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBaja.Name = "btnBaja";
-            this.btnBaja.Size = new System.Drawing.Size(81, 22);
+            this.btnBaja.Size = new System.Drawing.Size(78, 22);
             this.btnBaja.Text = "Darse de baja";
             this.btnBaja.Click += new System.EventHandler(this.btnBaja_Click);
             // 
@@ -344,7 +348,7 @@
             this.btnProponerAmigo.Image = ((System.Drawing.Image)(resources.GetObject("btnProponerAmigo.Image")));
             this.btnProponerAmigo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnProponerAmigo.Name = "btnProponerAmigo";
-            this.btnProponerAmigo.Size = new System.Drawing.Size(97, 22);
+            this.btnProponerAmigo.Size = new System.Drawing.Size(86, 22);
             this.btnProponerAmigo.Text = "Proponer amigo";
             this.btnProponerAmigo.Click += new System.EventHandler(this.btnProponerAmigo_Click);
             // 
@@ -370,6 +374,20 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // btnBuscarJugadores
+            // 
+            this.btnBuscarJugadores.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnBuscarJugadores.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarJugadores.Image")));
+            this.btnBuscarJugadores.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnBuscarJugadores.Name = "btnBuscarJugadores";
+            this.btnBuscarJugadores.Size = new System.Drawing.Size(23, 22);
+            this.btnBuscarJugadores.Click += new System.EventHandler(this.btnBuscarJugadores_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -381,7 +399,7 @@
             this.btnVerCriticas.Image = ((System.Drawing.Image)(resources.GetObject("btnVerCriticas.Image")));
             this.btnVerCriticas.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnVerCriticas.Name = "btnVerCriticas";
-            this.btnVerCriticas.Size = new System.Drawing.Size(70, 22);
+            this.btnVerCriticas.Size = new System.Drawing.Size(65, 22);
             this.btnVerCriticas.Text = "Ver Criticas";
             this.btnVerCriticas.Click += new System.EventHandler(this.btnVerCriticas_Click);
             // 
@@ -397,24 +415,34 @@
             this.btnRealizarCriticas.Image = ((System.Drawing.Image)(resources.GetObject("btnRealizarCriticas.Image")));
             this.btnRealizarCriticas.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRealizarCriticas.Name = "btnRealizarCriticas";
-            this.btnRealizarCriticas.Size = new System.Drawing.Size(93, 22);
+            this.btnRealizarCriticas.Size = new System.Drawing.Size(87, 22);
             this.btnRealizarCriticas.Text = "Realizar Criticas";
             this.btnRealizarCriticas.Visible = false;
             this.btnRealizarCriticas.Click += new System.EventHandler(this.btnRealizarCriticas_Click);
             // 
-            // btnBuscarJugadores
+            // lblCount
             // 
-            this.btnBuscarJugadores.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBuscarJugadores.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarJugadores.Image")));
-            this.btnBuscarJugadores.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnBuscarJugadores.Name = "btnBuscarJugadores";
-            this.btnBuscarJugadores.Size = new System.Drawing.Size(23, 22);
-            this.btnBuscarJugadores.Click += new System.EventHandler(this.btnBuscarJugadores_Click);
+            this.lblCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCount.AutoSize = true;
+            this.lblCount.ForeColor = System.Drawing.Color.Black;
+            this.lblCount.Location = new System.Drawing.Point(740, 231);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(13, 13);
+            this.lblCount.TabIndex = 11;
+            this.lblCount.Text = "0";
             // 
-            // toolStripSeparator6
+            // label3
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(670, 232);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "CANTIDAD:";
             // 
             // frmPrincipal
             // 
@@ -489,6 +517,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton btnBuscarJugadores;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblCount;
     }
 }
 

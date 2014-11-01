@@ -12,7 +12,7 @@ namespace TP_Anual_DDS_E4
 
         public Solidario()
         {
-            this.Id_TipoJugador = 3;
+            this.Id_TipoJugador = 2;
             this.Prioridad =  Interesado.EnumPrioridad.Solidario;
         }
     }

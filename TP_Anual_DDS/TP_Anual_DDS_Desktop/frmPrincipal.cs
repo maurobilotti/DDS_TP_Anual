@@ -89,7 +89,7 @@ namespace TP_Anual_DDS_E4
                     var frmJugador = new frmInscribirseAPartido(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario), partido);
                     if (frmJugador.ShowDialog() == DialogResult.OK)
                     {
-                        partido.AgregarJugador(frmJugador.Usuario);
+                        partido.AgregarJugador(frmJugador.Usuario, frmJugador.Id_TipoJugador,frmJugador.Condiciones);
                         gridInteresados.DataSource = null;
                         gridInteresados.DataSource = partido.ObtenerListaJugadoresInteresados();
                         btnBaja.Enabled = true;
@@ -193,6 +193,7 @@ namespace TP_Anual_DDS_E4
                     btnBaja.Enabled = partido.EstaInscripto(interesado);
                 }
                 gridInteresados.DataSource = partido.ObtenerListaJugadoresInteresados();
+                lblCount.Text = gridInteresados.RowCount.ToString();
 
                 gridEquipo1.DataSource = partido.ArmadorPartido != null ? partido.ListaPrimerEquipo : null;
                 gridEquipo2.DataSource = partido.ArmadorPartido != null ? partido.ListaSegundoEquipo : null;
