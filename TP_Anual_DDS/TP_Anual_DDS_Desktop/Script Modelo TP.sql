@@ -27,16 +27,32 @@ CREATE TABLE DBPartido(
 	Confirmado bit NULL,
 	Fecha_Hora datetime NULL,
 	PRIMARY KEY(Id_Partido)
+)
+
+CREATE TABLE DBTipoJugador(
+	Id_TipoJugador int NOT NULL,
+	Descripcion nvarchar(50) NOT NULL,	
+	PRIMARY KEY(Id_TipoJugador)
 ) 
+/* Cargamos los tipos */
+INSERT INTO DBTipoJugador (Id_TipoJugador,Descripcion) values (1,'Condicional')
+INSERT INTO DBTipoJugador (Id_TipoJugador,Descripcion) values (2,'Estandar')
+INSERT INTO DBTipoJugador (Id_TipoJugador,Descripcion) values (3,'Solidario')
+
+
+ 
+
+
 
 create TABLE DBPartido_Interesado(
 	Id_Partido int NOT NULL,
 	Id_Interesado int NOT NULL,
-	Tipo_Jugador nvarchar(50) NOT NULL,
+	Id_TipoJugador int NOT NULL,
 	Baja bit NULL,
 	CONSTRAINT Partido_Interesado_pk PRIMARY KEY(Id_Interesado,Id_Partido),
 	foreign key(Id_Interesado)references DBInteresado(Id_Interesado),
-	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE 
+	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE,
+	foreign key(Id_TipoJugador)references DBTipoJugador(ID_TipoJugador)
 ) 
 
 
@@ -262,7 +278,7 @@ GO
 CREATE PROCEDURE Partido_Interesado_UI(
 	@Id_Partido int,
 	@Id_Interesado int,	
-	@Tipo_Jugador nvarchar(50),
+	@Tipo_Jugador int,
 	@Baja bit = 0
 )
 AS
@@ -271,7 +287,7 @@ BEGIN
 	IF(EXISTS(SELECT 1 FROM DBPartido_Interesado WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado))
 	BEGIN
 		UPDATE DBPartido_Interesado
-		SET Baja = @Baja, Tipo_Jugador = @Tipo_Jugador
+		SET Baja = @Baja, Id_TipoJugador = @Tipo_Jugador
 		WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado
 	END
 	ELSE
@@ -393,7 +409,7 @@ BEGIN
 		FechaNacimiento,
 		Posicion,		
 		Handicap,
-		P_I.Tipo_Jugador
+		P_I.Id_TipoJugador
 		FROM DBInteresado I
 		INNER JOIN DBPartido_Interesado P_I ON I.Id_Interesado = P_I.Id_Interesado
 		WHERE P_I.Id_Partido = @Id_Partido
