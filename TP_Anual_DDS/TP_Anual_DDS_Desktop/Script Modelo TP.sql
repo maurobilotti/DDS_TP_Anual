@@ -39,6 +39,19 @@ create TABLE DBPartido_Interesado(
 	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE 
 ) 
 
+
+CREATE TABLE DBPartido_Interesado_Condicional(
+	Id_Partido int NOT NULL,
+	Id_Interesado int NOT NULL,
+	Id_Condicion int NOT NULL,
+	Baja bit NULL,
+	CONSTRAINT Partido_Interesado_Condicional_pk PRIMARY KEY(Id_Interesado,Id_Partido,Id_Condicion),
+	foreign key(Id_Interesado)references DBInteresado(Id_Interesado),
+	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE ,
+	foreign key(Id_Condicion)references DBCondicion(Id_Condicion)
+) 
+ 
+
 CREATE TABLE DBCalificacion(
 	Id_Calificacion int IDENTITY(1,1) NOT NULL,
 	Id_Partido int NOT NULL,
@@ -250,6 +263,30 @@ BEGIN
 END 
 GO
 
+CREATE PROCEDURE Partido_Interesado_Condicional_UI(
+	@Id_Partido int,
+	@Id_Interesado int,	
+	@Id_Condicion int,
+	@Baja bit = 0
+)
+AS
+BEGIN 
+	SET NOCOUNT ON
+	IF(EXISTS(SELECT 1 FROM DBPartido_Interesado_Condicional WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado AND Id_Condicion = @Id_Condicion))
+	BEGIN
+		UPDATE DBPartido_Interesado_Condicional
+		SET Baja = @Baja
+		WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado AND Id_Condicion = @Id_Condicion
+	END
+	ELSE
+	BEGIN
+		INSERT INTO DBPartido_Interesado_Condicional
+		VALUES (@Id_Partido,@Id_Interesado, @Id_Condicion, @Baja)		
+	END
+END 
+GO
+
+
 CREATE PROCEDURE Partido_L
 AS
 BEGIN
@@ -313,6 +350,19 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE Partido_Interesado_Condicional_D(
+	@Id_Partido int,
+	@Id_Interesado int,
+	@Id_Condicion int
+)
+AS 
+BEGIN
+	UPDATE DBPartido_Interesado_Condicional
+	SET Baja = 1
+	WHERE Id_Partido = @Id_Partido AND Id_Interesado = @Id_Interesado AND @Id_Condicion = Id_Condicion
+END
+GO
+
 CREATE PROCEDURE Partido_Interesado_L(
 @Id_Partido int
 )
@@ -330,6 +380,7 @@ BEGIN
 		WHERE P_I.Id_Partido = @Id_Partido
 END
 GO
+
 
 --CREATE PROCEDURE ObtenerJugadoresTraicioneros
 --AS
