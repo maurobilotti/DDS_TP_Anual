@@ -77,7 +77,7 @@ INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, P
 			
 INSERT INTO DBUSuario (Nombre_Usuario, Password_Usuario, Usuario_Administrador) Values('eperez', '1234', 0)
 INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, Posicion, Handicap, Criterio, CantPartidosJugados) 
-			Values((SELECT id_usuario from DBUsuario where Nombre_Usuario = 'eperez'), 'Martin', 'Demichelis', '19790307', 'eperez@mail.com', 8, 5, 'Estandar', 0)
+			Values((SELECT id_usuario from DBUsuario where Nombre_Usuario = 'eperez'), 'enzito', 'perez', '19790307', 'eperez@mail.com', 8, 5, 'Estandar', 0)
 			
 /* JUGADORES */			
 INSERT INTO [DBCalificacion] ([Id_Partido],[Descripcion],[Id_Jugador_Critico],[Id_Jugador_Criticado],[Calificacion]) values (1,'Jugó muy bien, buen compañero',1,2,8)
