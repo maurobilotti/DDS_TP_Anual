@@ -127,13 +127,20 @@ AS
 BEGIN	
 RETURN 
 (
-	SELECT AVG(CAST(c.Calificacion as decimal(18,2))) as promedio
+SELECT AVG(CAST(c.Calificacion as decimal(18,2))) as promedio
 	FROM DBCalificacion c 
 		JOIN DBPartido pa on pa.Id_Partido = c.Id_Partido
 		JOIN DBInteresado inte on inte.Id_Interesado = c.Id_Jugador_Criticado
-	WHERE CONVERT(datetime,pa.Fecha_Hora,103) = (SELECT TOP 1 CONVERT(datetime,part.Fecha_Hora,103)FROM DBPartido part 
-		JOIN DBCalificacion calif on calif.Id_Partido=part.Id_Partido order by CONVERT(datetime,part.Fecha_Hora,103) desc)
-			AND inte.Id_Interesado = @Id_Partido
+	WHERE CONVERT(datetime,pa.Fecha_Hora,103) = (
+	SELECT TOP 1 CONVERT(datetime,part.Fecha_Hora,103)FROM DBPartido part 
+		JOIN DBCalificacion calif on calif.Id_Partido=part.Id_Partido
+		
+		join DBPartido_Interesado partINT on pa.Id_Partido = partINT.Id_Partido and partINT.Id_interesado = inte.Id_Interesado
+		where partINT.Baja = 0
+		
+		 order by 
+		CONVERT(datetime,part.Fecha_Hora,103) desc)
+		AND inte.Id_Interesado = @Id_Partido
 )
 END
 GO
