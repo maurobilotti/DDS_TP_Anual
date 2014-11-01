@@ -478,3 +478,25 @@ BEGIN
 	INSERT INTO DBCalificacion VALUES(@Id_Partido, @Descripcion, @Id_Jugador_Critico, @Id_Jugador_Criticado, @Calificacion)
 END
 GO
+
+
+CREATE PROCEDURE [dbo].[Interesado_Detalle_L](
+@Id_Interesado int 
+)
+AS
+BEGIN
+SELECT	Inte.Nombre, 
+		Inte.Handicap,
+		dbo.PromUltimoPartido(Inte.Id_Interesado) as PromUltimo,
+		AVG(cal.Calificacion) PromTodos,
+		Inte.FechaNacimiento,
+	(SELECT COUNT(*) FROM  DBPartido_Interesado where Id_Interesado = Inte.Id_Interesado AND Baja = 0) as cantJugados
+FROM DBInteresado Inte
+JOIN DBCalificacion cal ON cal.Id_Jugador_Criticado = Inte.Id_Interesado
+where inte.Id_Interesado = @Id_Interesado
+group by Inte.Nombre,Inte.Handicap,dbo.PromUltimoPartido(Inte.Id_Interesado),Inte.FechaNacimiento,Inte.Id_Interesado
+
+
+Return
+END
+GO
