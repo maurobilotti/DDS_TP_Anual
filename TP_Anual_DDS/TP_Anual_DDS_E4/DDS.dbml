@@ -31,9 +31,10 @@
   </Table>
   <Table Name="dbo.DBCondicion" Member="DBCondicion">
     <Type Name="DBCondicion">
-      <Column Name="Id_Condicion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id_Condicion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Descripcion_Condicion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="DBCondicion_DBCondicion_Interesado" Member="DBCondicion_Interesado" ThisKey="Id_Condicion" OtherKey="Id_Condicion" Type="DBCondicion_Interesado" />
+      <Association Name="DBCondicion_DBPartido_Interesado_Condicional" Member="DBPartido_Interesado_Condicional" ThisKey="Id_Condicion" OtherKey="Id_Condicion" Type="DBPartido_Interesado_Condicional" />
     </Type>
   </Table>
   <Table Name="dbo.DBCondicion_Interesado" Member="DBCondicion_Interesado">
@@ -80,6 +81,7 @@
       <Association Name="DBInteresado_DBCondicion_Interesado" Member="DBCondicion_Interesado" ThisKey="Id_Interesado" OtherKey="Id_interesado" Type="DBCondicion_Interesado" />
       <Association Name="DBInteresado_DBDenegacion" Member="DBDenegacion" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBDenegacion" />
       <Association Name="DBInteresado_DBPartido_Interesado" Member="DBPartido_Interesado" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBPartido_Interesado" />
+      <Association Name="DBInteresado_DBPartido_Interesado_Condicional" Member="DBPartido_Interesado_Condicional" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBPartido_Interesado_Condicional" />
       <Association Name="DBUsuario_DBInteresado" Member="DBUsuario" ThisKey="Id_Usuario" OtherKey="Id_Usuario" Type="DBUsuario" IsForeignKey="true" />
     </Type>
   </Table>
@@ -91,20 +93,44 @@
       <Column Name="Fecha_Hora" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="DBPartido_DBCalificacion" Member="DBCalificacion" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBCalificacion" />
       <Association Name="DBPartido_DBPartido_Interesado" Member="DBPartido_Interesado" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBPartido_Interesado" />
+      <Association Name="DBPartido_DBPartido_Interesado_Condicional" Member="DBPartido_Interesado_Condicional" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBPartido_Interesado_Condicional" />
     </Type>
   </Table>
   <Table Name="dbo.DBPartido_Interesado" Member="DBPartido_Interesado">
     <Type Name="DBPartido_Interesado">
       <Column Name="Id_Partido" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Tipo_Jugador" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Id_TipoJugador" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Baja" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="DBInteresado_DBPartido_Interesado" Member="DBInteresado" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBInteresado" IsForeignKey="true" />
       <Association Name="DBPartido_DBPartido_Interesado" Member="DBPartido" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBPartido" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="DBTipoJugador_DBPartido_Interesado" Member="DBTipoJugador" ThisKey="Id_TipoJugador" OtherKey="Id_TipoJugador" Type="DBTipoJugador" IsForeignKey="true" />
     </Type>
   </Table>
-  <Function Name="dbo.Infraccion_I" Method="Infraccion_I">
-    <Parameter Name="Id_Usuario" Parameter="id_Usuario" Type="System.Int32" DbType="Int" />
+  <Table Name="dbo.DBPartido_Interesado_Condicional" Member="DBPartido_Interesado_Condicional">
+    <Type Name="DBPartido_Interesado_Condicional">
+      <Column Name="Id_Partido" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id_Condicion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Baja" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="DBCondicion_DBPartido_Interesado_Condicional" Member="DBCondicion" ThisKey="Id_Condicion" OtherKey="Id_Condicion" Type="DBCondicion" IsForeignKey="true" />
+      <Association Name="DBInteresado_DBPartido_Interesado_Condicional" Member="DBInteresado" ThisKey="Id_Interesado" OtherKey="Id_Interesado" Type="DBInteresado" IsForeignKey="true" />
+      <Association Name="DBPartido_DBPartido_Interesado_Condicional" Member="DBPartido" ThisKey="Id_Partido" OtherKey="Id_Partido" Type="DBPartido" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DBTipoJugador" Member="DBTipoJugador">
+    <Type Name="DBTipoJugador">
+      <Column Name="Id_TipoJugador" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="DBTipoJugador_DBPartido_Interesado" Member="DBPartido_Interesado" ThisKey="Id_TipoJugador" OtherKey="Id_TipoJugador" Type="DBPartido_Interesado" />
+    </Type>
+  </Table>
+  <Function Name="dbo.Calificacion_I" Method="Calificacion_I">
+    <Parameter Name="Id_Partido" Parameter="id_Partido" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Id_Jugador_Critico" Parameter="id_Jugador_Critico" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Id_Jugador_Criticado" Parameter="id_Jugador_Criticado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Calificacion" Parameter="calificacion" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
   <Function Name="dbo.UsuarioInteresado_Obtener" Method="UsuarioInteresado_Obtener">
@@ -123,6 +149,10 @@
       <Column Name="Criterio" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="CantPartidosJugados" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.Infraccion_I" Method="Infraccion_I">
+    <Parameter Name="Id_Usuario" Parameter="id_Usuario" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
   </Function>
   <Function Name="dbo.Infraccion_L" Method="Infraccion_L">
     <ElementType Name="Infraccion_LResult">
@@ -161,6 +191,19 @@
       <Column Name="CantPartidosJugados" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
+  <Function Name="dbo.Partido_Interesado_Condicional_D" Method="Partido_Interesado_Condicional_D">
+    <Parameter Name="Id_Partido" Parameter="id_Partido" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Id_Interesado" Parameter="id_Interesado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Id_Condicion" Parameter="id_Condicion" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Partido_Interesado_Condicional_UI" Method="Partido_Interesado_Condicional_UI">
+    <Parameter Name="Id_Partido" Parameter="id_Partido" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Id_Interesado" Parameter="id_Interesado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Id_Condicion" Parameter="id_Condicion" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Baja" Parameter="baja" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
   <Function Name="dbo.Partido_Interesado_D" Method="Partido_Interesado_D">
     <Parameter Name="Id_Partido" Parameter="id_Partido" Type="System.Int32" DbType="Int" />
     <Parameter Name="Id_Interesado" Parameter="id_Interesado" Type="System.Int32" DbType="Int" />
@@ -174,13 +217,13 @@
       <Column Name="FechaNacimiento" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="Posicion" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Handicap" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Tipo_Jugador" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.Partido_Interesado_UI" Method="Partido_Interesado_UI">
     <Parameter Name="Id_Partido" Parameter="id_Partido" Type="System.Int32" DbType="Int" />
     <Parameter Name="Id_Interesado" Parameter="id_Interesado" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Tipo_Jugador" Parameter="tipo_Jugador" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Tipo_Jugador" Parameter="tipo_Jugador" Type="System.Int32" DbType="Int" />
     <Parameter Name="Baja" Parameter="baja" Type="System.Boolean" DbType="Bit" />
     <Return Type="System.Int32" />
   </Function>
@@ -229,13 +272,6 @@
     <Parameter Name="Nombre_Usuario" Parameter="nombre_Usuario" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="Password_Usuario" Parameter="password_Usuario" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="Usuario_Administrador" Parameter="usuario_Administrador" Type="System.Boolean" DbType="Bit" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.Partido_Interesado_Condicional_UI" Method="Partido_Interesado_Condicional_UI">
-    <Parameter Name="Id_Partido" Parameter="id_Partido" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Id_Interesado" Parameter="id_Interesado" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Id_Condicion" Parameter="id_Condicion" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Baja" Parameter="baja" Type="System.Boolean" DbType="Bit" />
     <Return Type="System.Int32" />
   </Function>
 </Database>
