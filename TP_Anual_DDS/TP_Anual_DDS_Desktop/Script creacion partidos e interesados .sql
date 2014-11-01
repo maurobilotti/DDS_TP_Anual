@@ -125,3 +125,25 @@ INSERT INTO [DBCalificacion] ([Id_Partido],[Descripcion],[Id_Jugador_Critico],[I
 INSERT INTO [DBCalificacion] ([Id_Partido],[Descripcion],[Id_Jugador_Critico],[Id_Jugador_Criticado],[Calificacion]) values (3,'Gran compañero',2,7,8)
 INSERT INTO [DBCalificacion] ([Id_Partido],[Descripcion],[Id_Jugador_Critico],[Id_Jugador_Criticado],[Calificacion]) values (3,'Partido regular',2,8,4)									
 
+
+
+
+
+
+
+
+
+/**************************************************/
+/* Reset de datos */
+--TRUNCATE TABLE dbo.DBAmigos
+--TRUNCATE TABLE dbo.DBCalificacion
+--TRUNCATE TABLE dbo.DBCondicion
+--TRUNCATE TABLE dbo.DBCondicion_Interesado
+--TRUNCATE TABLE dbo.DBDenegacion
+--TRUNCATE TABLE dbo.DBInfraccion
+--TRUNCATE TABLE dbo.DBInteresado
+--TRUNCATE TABLE dbo.DBPartido
+--TRUNCATE TABLE dbo.DBPartido_Interesado
+--TRUNCATE TABLE dbo.DBPartido_Interesado_Condicional
+--TRUNCATE TABLE dbo.DBUsuario
+/**************************************************/
