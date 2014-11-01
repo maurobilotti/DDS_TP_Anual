@@ -544,14 +544,12 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 				 i.Id_Interesado,
 				 i.Nombre,
 				 i.Apellido,
-				 i.Handicap,
-				 dbo.PromUltimoPartido(i.Id_Interesado)
+				 i.Handicap				
 			FROM DBInteresado i
 			LEFT JOIN DBCalificacion ca on ca.Id_Jugador_Criticado = i.Id_Interesado
 			WHERE i.nombre LIKE (CASE WHEN @nombre_jugador = '' THEN  i.Nombre ELSE @nombre_jugador+'%' END) 
-			AND CONVERT(datetime,i.FechaNacimiento,103) < (CASE WHEN @fecha_nacimiento = '' THEN '9999-12-01' ELSE @fecha_nacimiento END)
-			AND (i.Handicap between @handicap_desde and @handicap_hasta)
-			AND (dbo.PromUltimoPartido(i.Id_Interesado) between @promedio_desde and @promedio_hasta) 
+			AND CONVERT(datetime,i.FechaNacimiento,103) < (CASE WHEN @fecha_nacimiento = '' THEN '2100-12-01' ELSE @fecha_nacimiento END)
+			AND (i.Handicap between @handicap_desde and @handicap_hasta)			
 			RETURN
 	END
 	ELSE 
@@ -563,14 +561,12 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 				i.Id_Interesado,
 				 i.Nombre,
 				 i.Apellido,
-				 i.Handicap,
-				 dbo.PromUltimoPartido(i.Id_Interesado)
+				 i.Handicap				
 			FROM DBInteresado i
 			LEFT JOIN DBCalificacion ca on ca.Id_Jugador_Criticado = i.Id_Interesado
 			WHERE i.nombre LIKE (CASE WHEN @nombre_jugador = '' THEN  i.Nombre ELSE @nombre_jugador+'%' END) 
 		AND CONVERT(datetime,i.FechaNacimiento,103) < (CASE WHEN @fecha_nacimiento = '' THEN '9999-12-01' ELSE @fecha_nacimiento END)
 		AND (i.Handicap between @handicap_desde and @handicap_hasta)
-		AND (dbo.PromUltimoPartido(i.Id_Interesado) between @promedio_desde and @promedio_hasta)
 		AND not exists (SELECT * FROM DBInfraccion inf where inf.Id_Usuario = i.Id_Usuario)
 		RETURN
 		END
@@ -581,19 +577,16 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 				 i.Id_Interesado,
 				  i.Nombre,
 				  i.Apellido,
-				 i.Handicap,
-				 dbo.PromUltimoPartido(i.Id_Interesado)
+				 i.Handicap
 			FROM DBInteresado i
 			LEFT JOIN DBCalificacion ca on ca.Id_Jugador_Criticado = i.Id_Interesado
 			WHERE i.nombre LIKE (CASE WHEN @nombre_jugador = '' THEN  i.Nombre ELSE @nombre_jugador+'%' END) 
 			AND CONVERT(datetime,i.FechaNacimiento,103) < (CASE WHEN @fecha_nacimiento = '' THEN '9999-12-01'ELSE @fecha_nacimiento END)
 		AND (i.Handicap between @handicap_desde and @handicap_hasta)
-		AND (dbo.PromUltimoPartido(i.Id_Interesado) between @promedio_desde and @promedio_hasta)
 		AND exists (SELECT * FROM DBInfraccion inf where inf.Id_Usuario = i.Id_Usuario)
 		RETURN
 		END
 	END
 END
-GO
 
 

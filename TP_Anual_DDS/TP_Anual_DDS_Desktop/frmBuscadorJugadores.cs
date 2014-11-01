@@ -35,22 +35,24 @@ namespace TP_Anual_DDS_E4
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            //if (validarDatos())
-            //{
-            //    var tabla = new DDSDataContext().Buscar_Jugadores_L(
-            //        !string.IsNullOrEmpty(txtNombre.Text) ? txtNombre.Text : null,
-            //        dtpFechaNacimiento.Value,
-            //        numHandicapDesde.Value != -1 ? numHandicapDesde.Value : null,
-            //        numHandicapHasta.Value != -1 ? numHandicapHasta.Value : null,
-            //        txtPromDesde.Text,
-            //        txtPromHasta.Text,
-            //        cmbInfrantores.SelectedValue
-            //        ).AsEnumerable().ToList();
+            if (validarDatos())
+            {
+                DDSDataContext db = new DDSDataContext();
+                var tabla = (from x in db.Buscar_Jugadores_L(txtNombre.Text, null, 
+                                 null, null, null, null,-1).AsEnumerable()
+                                 select new
+                                 {
+                                     x.Id_Interesado,
+                                     x.Handicap,
+                                     x.Nombre,
+                                     x.Apellido,
+                                     Promedio = db.PromUltimoPartido(x.Id_Interesado)
+                                 }).ToList();
 
-            //    gridJugadoresBuscados.DataSource = null;
-            //    gridJugadoresBuscados.DataSource = tabla;
+                gridJugadoresBuscados.DataSource = null;
+                gridJugadoresBuscados.DataSource = tabla;
 
-            //}
+            }
         }
 
         private bool validarDatos()
@@ -61,7 +63,14 @@ namespace TP_Anual_DDS_E4
                 Console.WriteLine("Debe seleccionar promedio desde y hasta.");
                 return false;
             }
-          
+            //if (!string.IsNullOrEmpty(txtPromDesde.Text))
+            //{
+            //    decimal s;
+            //    if (Decimal.TryParse(txtPromDesde.Text, out s))
+            //        return false;
+
+            //}
+
             return true;
         }
 
@@ -69,7 +78,7 @@ namespace TP_Anual_DDS_E4
         {
             if (gridJugadoresBuscados.SelectedRows.Count == 1)
             {
-                var idSeleccionado = (int) gridJugadoresBuscados.SelectedCells[0].Value;
+                var idSeleccionado = (int)gridJugadoresBuscados.SelectedCells[0].Value;
                 Usuario usuario = Administrador.ObtenerInstancia().ObtenerUsuario(idSeleccionado);
 
                 frmRegistrar frmRegistrar = new frmRegistrar(usuario);
