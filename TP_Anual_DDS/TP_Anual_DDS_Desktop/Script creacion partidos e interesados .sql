@@ -69,7 +69,7 @@ INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, P
 	
 INSERT INTO DBUSuario (Nombre_Usuario, Password_Usuario, Usuario_Administrador) Values('pzabaleta', '1234', 0)
 INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, Posicion, Handicap, Criterio, CantPartidosJugados) 
-			Values((SELECT id_usuario from DBUsuario where Nombre_Usuario = 'pzabaleta'), 'Pablo', 'Zabaleta', '19810819', 'pzabaleta@mail.com', 4, 6, 'Estandar', 0)
+			Values((SELECT id_usuario from DBUsuario where Nombre_Usuario = 'pzabaleta'), 'Pablito', 'Zabaleta', '19810819', 'pzabaleta@mail.com', 4, 6, 'Estandar', 0)
 			
 INSERT INTO DBUSuario (Nombre_Usuario, Password_Usuario, Usuario_Administrador) Values('mdemichelis', '1234', 0)
 INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, Posicion, Handicap, Criterio, CantPartidosJugados) 
