@@ -59,6 +59,8 @@
             this.btnVerCriticas = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRealizarCriticas = new System.Windows.Forms.ToolStripButton();
+            this.btnBuscarJugadores = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPartidos)).BeginInit();
             this.panel2.SuspendLayout();
@@ -125,13 +127,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(469, 25);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(453, 445);
+            this.panel2.Size = new System.Drawing.Size(765, 445);
             this.panel2.TabIndex = 3;
             // 
             // btnFinalizarPartido
             // 
             this.btnFinalizarPartido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFinalizarPartido.Location = new System.Drawing.Point(0, 419);
+            this.btnFinalizarPartido.Location = new System.Drawing.Point(312, 419);
             this.btnFinalizarPartido.Name = "btnFinalizarPartido";
             this.btnFinalizarPartido.Size = new System.Drawing.Size(125, 23);
             this.btnFinalizarPartido.TabIndex = 10;
@@ -154,8 +156,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gridEquipo2);
-            this.splitContainer1.Size = new System.Drawing.Size(447, 133);
-            this.splitContainer1.SplitterDistance = 225;
+            this.splitContainer1.Size = new System.Drawing.Size(759, 133);
+            this.splitContainer1.SplitterDistance = 382;
             this.splitContainer1.TabIndex = 9;
             // 
             // gridEquipo1
@@ -166,7 +168,7 @@
             this.gridEquipo1.Name = "gridEquipo1";
             this.gridEquipo1.ReadOnly = true;
             this.gridEquipo1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridEquipo1.Size = new System.Drawing.Size(225, 133);
+            this.gridEquipo1.Size = new System.Drawing.Size(382, 133);
             this.gridEquipo1.TabIndex = 2;
             this.gridEquipo1.DataSourceChanged += new System.EventHandler(this.gridEquipo1_DataSourceChanged);
             this.gridEquipo1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridEquipo1_MouseClick);
@@ -178,14 +180,14 @@
             this.gridEquipo2.Location = new System.Drawing.Point(0, 0);
             this.gridEquipo2.Name = "gridEquipo2";
             this.gridEquipo2.ReadOnly = true;
-            this.gridEquipo2.Size = new System.Drawing.Size(218, 133);
+            this.gridEquipo2.Size = new System.Drawing.Size(373, 133);
             this.gridEquipo2.TabIndex = 3;
             this.gridEquipo2.DataSourceChanged += new System.EventHandler(this.gridEquipo2_DataSourceChanged);
             // 
             // btnConfirmar
             // 
             this.btnConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConfirmar.Location = new System.Drawing.Point(364, 419);
+            this.btnConfirmar.Location = new System.Drawing.Point(676, 419);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(86, 23);
             this.btnConfirmar.TabIndex = 8;
@@ -208,7 +210,7 @@
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.Color.Yellow;
-            this.label5.Location = new System.Drawing.Point(240, 264);
+            this.label5.Location = new System.Drawing.Point(396, 264);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(49, 13);
             this.label5.TabIndex = 6;
@@ -233,7 +235,7 @@
             this.gridInteresados.Name = "gridInteresados";
             this.gridInteresados.ReadOnly = true;
             this.gridInteresados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridInteresados.Size = new System.Drawing.Size(447, 198);
+            this.gridInteresados.Size = new System.Drawing.Size(759, 198);
             this.gridInteresados.TabIndex = 1;
             // 
             // label2
@@ -249,7 +251,7 @@
             // btnLogout
             // 
             this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogout.Location = new System.Drawing.Point(847, 2);
+            this.btnLogout.Location = new System.Drawing.Point(1159, 2);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(75, 23);
             this.btnLogout.TabIndex = 5;
@@ -260,7 +262,7 @@
             // btnLogin
             // 
             this.btnLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogin.Location = new System.Drawing.Point(768, 2);
+            this.btnLogin.Location = new System.Drawing.Point(1080, 2);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
             this.btnLogin.TabIndex = 6;
@@ -271,7 +273,7 @@
             // btnRegistrarse
             // 
             this.btnRegistrarse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRegistrarse.Location = new System.Drawing.Point(687, 2);
+            this.btnRegistrarse.Location = new System.Drawing.Point(999, 2);
             this.btnRegistrarse.Name = "btnRegistrarse";
             this.btnRegistrarse.Size = new System.Drawing.Size(75, 23);
             this.btnRegistrarse.TabIndex = 8;
@@ -286,7 +288,7 @@
             this.lblUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblUsuario.Location = new System.Drawing.Point(562, 3);
+            this.lblUsuario.Location = new System.Drawing.Point(874, 3);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(57, 20);
             this.lblUsuario.TabIndex = 9;
@@ -296,7 +298,7 @@
             // btnNuevoPartido
             // 
             this.btnNuevoPartido.Name = "btnNuevoPartido";
-            this.btnNuevoPartido.Size = new System.Drawing.Size(75, 22);
+            this.btnNuevoPartido.Size = new System.Drawing.Size(83, 22);
             this.btnNuevoPartido.Text = "Nuevo Partido";
             this.btnNuevoPartido.Click += new System.EventHandler(this.btnAgregarPartido_Click);
             // 
@@ -312,7 +314,7 @@
             this.btnInscribirse.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.btnInscribirse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnInscribirse.Name = "btnInscribirse";
-            this.btnInscribirse.Size = new System.Drawing.Size(101, 22);
+            this.btnInscribirse.Size = new System.Drawing.Size(109, 22);
             this.btnInscribirse.Text = "Incribirse a partido";
             this.btnInscribirse.Click += new System.EventHandler(this.btnInscribirse_Click);
             // 
@@ -327,7 +329,7 @@
             this.btnBaja.Image = ((System.Drawing.Image)(resources.GetObject("btnBaja.Image")));
             this.btnBaja.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBaja.Name = "btnBaja";
-            this.btnBaja.Size = new System.Drawing.Size(78, 22);
+            this.btnBaja.Size = new System.Drawing.Size(81, 22);
             this.btnBaja.Text = "Darse de baja";
             this.btnBaja.Click += new System.EventHandler(this.btnBaja_Click);
             // 
@@ -342,13 +344,15 @@
             this.btnProponerAmigo.Image = ((System.Drawing.Image)(resources.GetObject("btnProponerAmigo.Image")));
             this.btnProponerAmigo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnProponerAmigo.Name = "btnProponerAmigo";
-            this.btnProponerAmigo.Size = new System.Drawing.Size(86, 22);
+            this.btnProponerAmigo.Size = new System.Drawing.Size(97, 22);
             this.btnProponerAmigo.Text = "Proponer amigo";
             this.btnProponerAmigo.Click += new System.EventHandler(this.btnProponerAmigo_Click);
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnBuscarJugadores,
+            this.toolStripSeparator6,
             this.btnNuevoPartido,
             this.toolStripSeparator1,
             this.btnInscribirse,
@@ -362,7 +366,7 @@
             this.btnRealizarCriticas});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(922, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1234, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -377,7 +381,7 @@
             this.btnVerCriticas.Image = ((System.Drawing.Image)(resources.GetObject("btnVerCriticas.Image")));
             this.btnVerCriticas.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnVerCriticas.Name = "btnVerCriticas";
-            this.btnVerCriticas.Size = new System.Drawing.Size(65, 22);
+            this.btnVerCriticas.Size = new System.Drawing.Size(70, 22);
             this.btnVerCriticas.Text = "Ver Criticas";
             this.btnVerCriticas.Click += new System.EventHandler(this.btnVerCriticas_Click);
             // 
@@ -393,17 +397,31 @@
             this.btnRealizarCriticas.Image = ((System.Drawing.Image)(resources.GetObject("btnRealizarCriticas.Image")));
             this.btnRealizarCriticas.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRealizarCriticas.Name = "btnRealizarCriticas";
-            this.btnRealizarCriticas.Size = new System.Drawing.Size(87, 22);
+            this.btnRealizarCriticas.Size = new System.Drawing.Size(93, 22);
             this.btnRealizarCriticas.Text = "Realizar Criticas";
             this.btnRealizarCriticas.Visible = false;
             this.btnRealizarCriticas.Click += new System.EventHandler(this.btnRealizarCriticas_Click);
+            // 
+            // btnBuscarJugadores
+            // 
+            this.btnBuscarJugadores.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnBuscarJugadores.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarJugadores.Image")));
+            this.btnBuscarJugadores.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnBuscarJugadores.Name = "btnBuscarJugadores";
+            this.btnBuscarJugadores.Size = new System.Drawing.Size(23, 22);
+            this.btnBuscarJugadores.Click += new System.EventHandler(this.btnBuscarJugadores_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(922, 470);
+            this.ClientSize = new System.Drawing.Size(1234, 470);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.btnRegistrarse);
             this.Controls.Add(this.btnLogin);
@@ -469,6 +487,8 @@
         private System.Windows.Forms.ToolStripButton btnRealizarCriticas;
         private System.Windows.Forms.ToolStripButton btnVerCriticas;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton btnBuscarJugadores;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 

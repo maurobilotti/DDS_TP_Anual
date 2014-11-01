@@ -338,5 +338,11 @@ namespace TP_Anual_DDS_E4
             frmCriticas frm = new frmCriticas(Administrador.ObtenerInstancia().ObtenerPartidos());
             frm.ShowDialog();
         }
+
+        private void btnBuscarJugadores_Click(object sender, EventArgs e)
+        {
+            frmBuscadorJugadores frm = new frmBuscadorJugadores();
+            frm.ShowDialog();
+        }
     }
 }
