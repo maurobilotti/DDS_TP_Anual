@@ -23,7 +23,7 @@ namespace TP_Anual_DDS_E4
 
         public bool EvaluarCondicion(Partido partido)
         {
-            return partido.ListaJugadores.Count(z => z.Interesado.Edad > 20) > cantidadDeJugadores;
+            return partido.ListaJugadores.Count(z => z.Interesado.FechaNacimiento.Year > 20) > cantidadDeJugadores;
         }
     }
 }

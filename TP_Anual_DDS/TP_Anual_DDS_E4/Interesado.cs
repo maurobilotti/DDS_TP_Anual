@@ -26,7 +26,7 @@ namespace TP_Anual_DDS_E4
             }
         }
 
-        public int Edad { get; set; }
+        public DateTime FechaNacimiento { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Mail { get; set; }
@@ -49,15 +49,15 @@ namespace TP_Anual_DDS_E4
         /// </summary>
         /// <param name="nombre"></param>
         /// <param name="apellido"></param>
-        /// <param name="edad"></param>
+        /// <param name="fechaNacimiento"></param>
         /// <param name="mail"></param>
-        public Interesado(string nombre, string apellido, int edad, string mail, int posicion, int handicap, int cantPartidosJugados)
+        public Interesado(string nombre, string apellido, DateTime fechaNacimiento, string mail, int posicion, int handicap, int cantPartidosJugados)
         {
             this.ListaAmigos = new List<Interesado>();
             this.ListaCalificaciones = new List<int>();
             this.ListaPartidosCriticados = new List<Partido>();
             this.ListaPartidosFinalizados = new List<Partido>();
-            this.Edad = edad;
+            this.FechaNacimiento = fechaNacimiento;
             this.Nombre = nombre;
             this.Apellido = apellido;
             this.Mail = mail;
@@ -125,7 +125,7 @@ namespace TP_Anual_DDS_E4
         public void Guardar(int idUsuario)
         {
             DDSDataContext db = new DDSDataContext();
-            db.Interesado_UI((int)idUsuario, this.Nombre, this.Apellido, this.Edad, this.Mail, this.Posicion, this.Handicap, new Handicap(this.Handicap).Descripcion);
+            db.Interesado_UI((int)idUsuario, this.Nombre, this.Apellido, this.FechaNacimiento, this.Mail, this.Posicion, this.Handicap, new Handicap(this.Handicap).Descripcion);
             db.SubmitChanges();
         }
     }

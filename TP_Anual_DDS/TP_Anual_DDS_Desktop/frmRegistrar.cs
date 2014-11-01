@@ -26,7 +26,7 @@ namespace TP_Anual_DDS_E4
             if (Validar())
             {
                 this.Usuario = new Usuario(txtUsuario.Text,txtContrasena.Text,
-                    new Interesado(txtNombre.Text, txtApellido.Text, (int) numEdad.Value, txtMail.Text,
+                    new Interesado(txtNombre.Text, txtApellido.Text, (DateTime) dpFechaNacimiento.Value, txtMail.Text,
                         (int) numPosicion.Value, (int) numHandicap.Value, 0));
                 
                 this.Usuario.Guardar();

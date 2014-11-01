@@ -31,7 +31,6 @@
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.txtApellido = new System.Windows.Forms.TextBox();
             this.txtMail = new System.Windows.Forms.TextBox();
-            this.numEdad = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -45,7 +44,7 @@
             this.txtContrasena = new System.Windows.Forms.TextBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numEdad)).BeginInit();
+            this.dpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.numPosicion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHandicap)).BeginInit();
             this.SuspendLayout();
@@ -71,31 +70,14 @@
             this.txtMail.Size = new System.Drawing.Size(131, 20);
             this.txtMail.TabIndex = 4;
             // 
-            // numEdad
-            // 
-            this.numEdad.Location = new System.Drawing.Point(292, 94);
-            this.numEdad.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numEdad.Name = "numEdad";
-            this.numEdad.Size = new System.Drawing.Size(46, 20);
-            this.numEdad.TabIndex = 11;
-            this.numEdad.Value = new decimal(new int[] {
-            12,
-            0,
-            0,
-            0});
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(222, 97);
+            this.label3.Location = new System.Drawing.Point(208, 97);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.Size = new System.Drawing.Size(78, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Edad";
+            this.label3.Text = "Fecha de Nac:";
             // 
             // label4
             // 
@@ -229,9 +211,18 @@
             this.label8.TabIndex = 18;
             this.label8.Text = "Contraseña";
             // 
+            // dpFechaNacimiento
+            // 
+            this.dpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dpFechaNacimiento.Location = new System.Drawing.Point(292, 94);
+            this.dpFechaNacimiento.Name = "dpFechaNacimiento";
+            this.dpFechaNacimiento.Size = new System.Drawing.Size(121, 20);
+            this.dpFechaNacimiento.TabIndex = 19;
+            // 
             // frmRegistrar
             // 
             this.ClientSize = new System.Drawing.Size(431, 236);
+            this.Controls.Add(this.dpFechaNacimiento);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtContrasena);
@@ -245,14 +236,12 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.numEdad);
             this.Controls.Add(this.txtMail);
             this.Controls.Add(this.txtApellido);
             this.Controls.Add(this.txtNombre);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmRegistrar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            ((System.ComponentModel.ISupportInitialize)(this.numEdad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosicion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHandicap)).EndInit();
             this.ResumeLayout(false);
@@ -265,7 +254,6 @@
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.TextBox txtMail;
-        private System.Windows.Forms.NumericUpDown numEdad;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -279,5 +267,6 @@
         private System.Windows.Forms.TextBox txtContrasena;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.DateTimePicker dpFechaNacimiento;
     }
 }

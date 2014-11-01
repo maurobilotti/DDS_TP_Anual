@@ -180,7 +180,7 @@ namespace TP_Anual_DDS_E4
             //ejecuta el SP Partido_ObtenerInteresados y lo mapea a los tipos de la solucion
             this.ListaJugadores = (from x in new DDSDataContext().Partido_ObtenerInteresados(this.Id_Partido)
                 select new Usuario(x.Nombre_Usuario, x.Password_Usuario,
-                    new Interesado(x.Nombre, x.Apellido, (int)x.Edad, x.Mail, (int)x.Posicion,
+                    new Interesado(x.Nombre, x.Apellido, (DateTime)x.FechaNacimiento, x.Mail, (int)x.Posicion,
                         (int)x.Handicap, x.CantPartidosJugados))).ToList();
         }
 
@@ -190,7 +190,7 @@ namespace TP_Anual_DDS_E4
             //ejecuta el SP Infraccion_L y lo mapea a los tipos de la solucion
             this.ListaInfractores = (from x in new DDSDataContext().Infraccion_L()
                                      select new Usuario(x.Nombre_Usuario, x.Password_Usuario,
-                                         new Interesado(x.Nombre, x.Apellido, (int)x.Edad, x.Mail, (int)x.Posicion,
+                                         new Interesado(x.Nombre, x.Apellido, x.FechaNacimiento, x.Mail, (int)x.Posicion,
                                              (int)x.Handicap, x.CantPartidosJugados))).ToList();
         }
 

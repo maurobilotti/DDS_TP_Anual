@@ -11,7 +11,7 @@ CREATE TABLE DBInteresado(
 	Id_Usuario int NOT NULL,
 	Nombre nvarchar(50) NOT NULL,
 	Apellido nvarchar(50) NOT NULL,
-	Edad int NULL,
+	FechaNacimiento date NOT NULL,
 	Mail nvarchar(50) NULL,	
 	Posicion int NULL,
 	Handicap int NULL,
@@ -132,7 +132,7 @@ CREATE PROCEDURE [dbo].Interesado_UI(
 	@Id_Usuario int,
     @Nombre nvarchar(50),
     @Apellido nvarchar(50),
-    @Edad int,
+    @FechaNacimiento date,
     @Mail nvarchar(50),
     @Posicion int,
     @Handicap int,
@@ -148,7 +148,7 @@ BEGIN
 		Id_Usuario = @Id_Usuario,
 		Nombre = @Nombre,
 		Apellido = @Apellido,
-		Edad = @Edad,
+		FechaNacimiento = @FechaNacimiento,
 		Mail = @Mail,
 		Posicion = @Posicion,
 		Handicap = @Handicap,
@@ -158,7 +158,7 @@ BEGIN
 	ELSE
 	BEGIN
 		INSERT INTO dbo.DBInteresado 
-		VALUES (@Id_Usuario,@Nombre,@Apellido,@Edad,@Mail,@Posicion,@Handicap,@Criterio, 0)	
+		VALUES (@Id_Usuario,@Nombre,@Apellido,@FechaNacimiento,@Mail,@Posicion,@Handicap,@Criterio, 0)	
 	END
 END
 GO
@@ -173,7 +173,7 @@ BEGIN
 	U.Password_Usuario,
 	I.Nombre,
 	I.Apellido,
-	I.Edad,
+	I.FechaNacimiento,
 	I.Mail,
 	I.Posicion,
 	I.Handicap,
@@ -192,7 +192,7 @@ BEGIN
 		Id_Usuario,
 		Nombre,		
 		Apellido,
-		Edad,
+		FechaNacimiento,
 		Posicion,
 		Mail,
 		Handicap,
@@ -212,7 +212,7 @@ BEGIN
 		U.Id_Usuario,
 		Nombre,
 		Apellido,
-		Edad,
+		FechaNacimiento,
 		Mail,
 		Posicion,
 		Handicap,
@@ -268,7 +268,7 @@ BEGIN
 		Password_Usuario,
 		Nombre,
 		Apellido,
-		Edad,
+		FechaNacimiento,
 		Mail,
 		Posicion,
 		Handicap,
@@ -288,7 +288,7 @@ BEGIN
 		Password_Usuario,
 		Nombre,
 		Apellido,
-		Edad,
+		FechaNacimiento,
 		Mail,
 		Posicion,
 		Handicap,
@@ -320,7 +320,7 @@ BEGIN
 	SELECT 
 		Nombre,
 		Apellido,
-		Edad,
+		FechaNacimiento,
 		Posicion,		
 		Handicap,
 		P_I.Tipo_Jugador
@@ -338,7 +338,7 @@ GO
 --		Id_Usuario,
 --		Nombre,		
 --		Apellido,
---		Edad,
+--		FechaNacimiento,
 --		Posicion,
 --		Mail,
 --		Handicap,
@@ -360,13 +360,13 @@ BEGIN
 		Nombre NVARCHAR(50),
 		Apellido NVARCHAR(50),
 		Handicap INT,
-		Edad INT
+		FechaNacimiento INT
 	)
 
 	INSERT INTO #TempJugadoresMalos
 	EXEC ObtenerJugadoresMalos 
 	
-	SELECT * FROM #TempJugadoresMalos WHERE Edad > 25
+	SELECT * FROM #TempJugadoresMalos WHERE (GETDATE() - YEAR(FechaNacimiento)) > 25
 END
 GO
 
