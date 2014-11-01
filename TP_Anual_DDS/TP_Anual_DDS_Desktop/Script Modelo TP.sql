@@ -45,6 +45,7 @@ CREATE TABLE DBCalificacion(
 	Descripcion nvarchar(50) NULL,
 	Id_Jugador_Critico int NULL,
 	Id_Jugador_Criticado int NULL,
+	Calificacion int NOT NULL,
 	PRIMARY KEY (Id_Calificacion),
 	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE 
 ) 
@@ -379,5 +380,18 @@ AS
 BEGIN
 	INSERT INTO DBInfraccion (Descripcion_Infraccion, Id_Usuario) 
 	VALUES ('No recomendó jugador tras baja.',@Id_Usuario)				
+END
+GO
+
+CREATE PROCEDURE Calificacion_I(
+	@Id_Partido int,
+	@Descripcion nvarchar(50),
+	@Id_Jugador_Critico int,
+	@Id_Jugador_Criticado int,
+	@Calificacion int
+)
+AS
+BEGIN
+	INSERT INTO DBCalificacion VALUES(@Id_Partido, @Descripcion, @Id_Jugador_Critico, @Id_Jugador_Criticado, @Calificacion)
 END
 GO
