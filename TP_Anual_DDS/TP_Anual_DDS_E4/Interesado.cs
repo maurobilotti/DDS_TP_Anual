@@ -11,7 +11,7 @@ namespace TP_Anual_DDS_E4
     {
         public enum EnumPrioridad
         {
-            Condicional, Solidario, Estandar
+            Condicional = 1, Solidario = 2, Estandar = 3
         }
 
         public int Id_Interesado

@@ -346,5 +346,19 @@ namespace TP_Anual_DDS_E4
             frmBuscadorJugadores frm = new frmBuscadorJugadores();
             frm.ShowDialog();
         }
+
+        private void gridInteresados_DataSourceChanged(object sender, EventArgs e)
+        {
+            if (gridInteresados.RowCount > 0)
+            {
+                foreach (DataGridViewRow row in gridInteresados.Rows)
+                {
+                    if ((int) row.Cells["Handicap"].Value >= 8)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.CadetBlue;
+                    }
+                }
+            }
+        }
     }
 }

@@ -77,8 +77,20 @@ INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, P
 			
 INSERT INTO DBUSuario (Nombre_Usuario, Password_Usuario, Usuario_Administrador) Values('eperez', '1234', 0)
 INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, Posicion, Handicap, Criterio, CantPartidosJugados) 
-			Values((SELECT id_usuario from DBUsuario where Nombre_Usuario = 'eperez'), 'enzito', 'perez', '19790307', 'eperez@mail.com', 8, 5, 'Estandar', 0)
+			Values((SELECT id_usuario from DBUsuario where Nombre_Usuario = 'eperez'), 'Enzo', 'Perez', '19790307', 'eperez@mail.com', 8, 5, 'Estandar', 0)
 			
+INSERT INTO DBUSuario (Nombre_Usuario, Password_Usuario, Usuario_Administrador) Values('aorion', '1234', 0)
+INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, Posicion, Handicap, Criterio, CantPartidosJugados) 
+			Values((SELECT id_usuario from DBUsuario where Nombre_Usuario = 'aorion'), 'Agustin', 'Orion', '19770617', 'aorion@mail.com', 1, 3, 'Estandar', 0)	
+
+INSERT INTO DBUSuario (Nombre_Usuario, Password_Usuario, Usuario_Administrador) Values('jbasanta', '1234', 0)
+INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, Posicion, Handicap, Criterio, CantPartidosJugados) 
+			Values((SELECT id_usuario from DBUsuario where Nombre_Usuario = 'jbasanta'), 'José', 'Basanta', '19760917', 'jbasanta@mail.com', 3, 4, 'Estandar', 0)	
+			
+INSERT INTO DBUSuario (Nombre_Usuario, Password_Usuario, Usuario_Administrador) Values('afernandez', '1234', 0)
+INSERT INTO DBInteresado (Id_Usuario, Nombre, Apellido, FechaNacimiento, Mail, Posicion, Handicap, Criterio, CantPartidosJugados) 
+			Values((SELECT id_usuario from DBUsuario where Nombre_Usuario = 'afernandez'), 'Augusto', 'Fernandez', '19831011', 'afernandez@mail.com', 8, 6, 'Estandar', 0)
+		
 /* JUGADORES */			
 INSERT INTO [DBCalificacion] ([Id_Partido],[Descripcion],[Id_Jugador_Critico],[Id_Jugador_Criticado],[Calificacion]) values (1,'Jugó muy bien, buen compañero',1,2,8)
 INSERT INTO [DBCalificacion] ([Id_Partido],[Descripcion],[Id_Jugador_Critico],[Id_Jugador_Criticado],[Calificacion]) values (1,'Llegó tarde y con resaca',1,3,3)
@@ -125,18 +137,39 @@ INSERT INTO [DBCalificacion] ([Id_Partido],[Descripcion],[Id_Jugador_Critico],[I
 INSERT INTO [DBCalificacion] ([Id_Partido],[Descripcion],[Id_Jugador_Critico],[Id_Jugador_Criticado],[Calificacion]) values (3,'Gran compañero',2,7,8)
 INSERT INTO [DBCalificacion] ([Id_Partido],[Descripcion],[Id_Jugador_Critico],[Id_Jugador_Criticado],[Calificacion]) values (3,'Partido regular',2,8,4)									
 
-/* CONDICIONES */
-INSERT INTO DBCondicion VALUES (1, 'CondicionCantidadMayoresDe20')
-INSERT INTO DBCondicion VALUES (2, 'CondicionLugar')
+/*INSCRIPTOS A PARTIDOS*/
+
+--RESET
+--DELETE FROM DBPartido_Interesado
+--DELETE FROM DBPartido_Interesado_Condicional
+
+INSERT INTO DBPartido_Interesado VALUES (1,1,3,null,0)
+INSERT INTO DBPartido_Interesado VALUES (1,2,1,null,0)
+	INSERT INTO DBPartido_Interesado_Condicional VALUES (1,2,1,0)
+	INSERT INTO DBPartido_Interesado_Condicional VALUES (1,2,2,0)
+INSERT INTO DBPartido_Interesado VALUES (1,3,2,null,0)
+INSERT INTO DBPartido_Interesado VALUES (1,4,3,null,0)
+INSERT INTO DBPartido_Interesado VALUES (1,5,2,null,0)
+INSERT INTO DBPartido_Interesado VALUES (1,6,3,null,0)
+INSERT INTO DBPartido_Interesado VALUES (1,7,2,null,0)
+INSERT INTO DBPartido_Interesado VALUES (1,8,2,null,0)
+INSERT INTO DBPartido_Interesado VALUES (1,9,3,null,0)
+INSERT INTO DBPartido_Interesado VALUES (1,10,3,null,0)
 
 
+INSERT INTO DBPartido_Interesado VALUES (2,1,3,null,0)
+INSERT INTO DBPartido_Interesado VALUES (2,2,1,null,0)
+	INSERT INTO DBPartido_Interesado_Condicional VALUES (2,2,1,0)
+	INSERT INTO DBPartido_Interesado_Condicional VALUES (2,2,2,0)
+INSERT INTO DBPartido_Interesado VALUES (2,13,2,null,0)
+INSERT INTO DBPartido_Interesado VALUES (2,18,1,null,0)
+	INSERT INTO DBPartido_Interesado_Condicional VALUES (2,18,1,0)
+	INSERT INTO DBPartido_Interesado_Condicional VALUES (2,18,2,0)
+INSERT INTO DBPartido_Interesado VALUES (2,9,2,null,0)
+INSERT INTO DBPartido_Interesado VALUES (2,11,3,null,0)
 
 
-
-
-
-
-	/**************************************************/
+/**************************************************/
 /* Reset de datos */
 --TRUNCATE TABLE dbo.DBAmigos
 --TRUNCATE TABLE dbo.DBCalificacion
@@ -149,4 +182,4 @@ INSERT INTO DBCondicion VALUES (2, 'CondicionLugar')
 --TRUNCATE TABLE dbo.DBPartido_Interesado
 --TRUNCATE TABLE dbo.DBPartido_Interesado_Condicional
 --TRUNCATE TABLE dbo.DBUsuario
-	/**************************************************/
+/**************************************************/

@@ -165,19 +165,18 @@ namespace TP_Anual_DDS_E4
                 if (ObtenerTipoJugador(usuario) == prioridadDeIngresanteAVolar)
                 {
                     DDSDataContext db = new DDSDataContext();
-                    //se elimina el jugador por prioridad
+                    //se elimina el jugador por prioridad de la lista y de la base
                     ListaJugadores.Remove(usuario);
                     db.Partido_Interesado_D(this.Id_Partido, usuario.Interesado.Id_Interesado);
 
-                    //se agrega un nuevo jugador por ganar en prioridad
+                    //se agrega un nuevo jugador por ganar en prioridad, también a la lista y a la base
 
                     db.Partido_Interesado_UI(this.Id_Partido, usuarioAIngresar.Interesado.Id_Interesado, tipo.Id_TipoJugador, false);
                     db.SubmitChanges();
                     ListaJugadores.Add(usuarioAIngresar);
 
                     if (ListaJugadores.Count == 10)
-                        return false;
-                    return true;
+                        return true;
                 }
             }
             return false;

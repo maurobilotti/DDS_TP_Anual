@@ -8,10 +8,10 @@ namespace TP_Anual_DDS_E4
 {
     public partial class DDSDataContext
     {
-        public DDSDataContext()
-            : base(Properties.Settings.Default.ConnectionString)
-        {
-            OnCreated();
-        }
+        //public DDSDataContext()
+        //    : base(Properties.Settings.Default.ConnectionString)
+        //{
+        //    OnCreated();
+        //}
     }
 }

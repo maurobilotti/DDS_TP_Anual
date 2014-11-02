@@ -33,6 +33,8 @@
             this.gridPartidos = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblCount = new System.Windows.Forms.Label();
             this.btnFinalizarPartido = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gridEquipo1 = new System.Windows.Forms.DataGridView();
@@ -61,8 +63,6 @@
             this.btnVerCriticas = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRealizarCriticas = new System.Windows.Forms.ToolStripButton();
-            this.lblCount = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPartidos)).BeginInit();
             this.panel2.SuspendLayout();
@@ -134,6 +134,30 @@
             this.panel2.Size = new System.Drawing.Size(765, 445);
             this.panel2.TabIndex = 3;
             // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(639, 232);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "CANTIDAD:";
+            // 
+            // lblCount
+            // 
+            this.lblCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCount.AutoSize = true;
+            this.lblCount.ForeColor = System.Drawing.Color.Black;
+            this.lblCount.Location = new System.Drawing.Point(709, 232);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(13, 13);
+            this.lblCount.TabIndex = 11;
+            this.lblCount.Text = "0";
+            // 
             // btnFinalizarPartido
             // 
             this.btnFinalizarPartido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -166,8 +190,11 @@
             // 
             // gridEquipo1
             // 
+            this.gridEquipo1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridEquipo1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridEquipo1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridEquipo1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridEquipo1.Location = new System.Drawing.Point(0, 0);
             this.gridEquipo1.Name = "gridEquipo1";
             this.gridEquipo1.ReadOnly = true;
@@ -179,8 +206,11 @@
             // 
             // gridEquipo2
             // 
+            this.gridEquipo2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridEquipo2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridEquipo2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridEquipo2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridEquipo2.Location = new System.Drawing.Point(0, 0);
             this.gridEquipo2.Name = "gridEquipo2";
             this.gridEquipo2.ReadOnly = true;
@@ -234,6 +264,7 @@
             // 
             this.gridInteresados.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridInteresados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridInteresados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridInteresados.Location = new System.Drawing.Point(3, 30);
             this.gridInteresados.Name = "gridInteresados";
@@ -241,6 +272,7 @@
             this.gridInteresados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridInteresados.Size = new System.Drawing.Size(759, 198);
             this.gridInteresados.TabIndex = 1;
+            this.gridInteresados.DataSourceChanged += new System.EventHandler(this.gridInteresados_DataSourceChanged);
             // 
             // label2
             // 
@@ -419,30 +451,6 @@
             this.btnRealizarCriticas.Text = "Realizar Criticas";
             this.btnRealizarCriticas.Visible = false;
             this.btnRealizarCriticas.Click += new System.EventHandler(this.btnRealizarCriticas_Click);
-            // 
-            // lblCount
-            // 
-            this.lblCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblCount.AutoSize = true;
-            this.lblCount.ForeColor = System.Drawing.Color.Black;
-            this.lblCount.Location = new System.Drawing.Point(740, 231);
-            this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(13, 13);
-            this.lblCount.TabIndex = 11;
-            this.lblCount.Text = "0";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(670, 232);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "CANTIDAD:";
             // 
             // frmPrincipal
             // 

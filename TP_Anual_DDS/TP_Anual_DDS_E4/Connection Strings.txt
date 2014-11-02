@@ -1,0 +1,7 @@
+Pablo:
+
+Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=DDS;Data Source=BANGHO\\SQLSERVER2008
+
+Mauro:
+
+Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=DDS;Data Source=MAURO-PC\SQLSERVER2008

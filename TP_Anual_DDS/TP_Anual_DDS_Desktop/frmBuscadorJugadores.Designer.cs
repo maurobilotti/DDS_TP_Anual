@@ -30,6 +30,12 @@
         {
             this.gridJugadoresBuscados = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmbInfrantores = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtPromHasta = new System.Windows.Forms.TextBox();
+            this.txtPromDesde = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numHandicapDesde = new System.Windows.Forms.NumericUpDown();
@@ -39,12 +45,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.txtPromDesde = new System.Windows.Forms.TextBox();
-            this.txtPromHasta = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cmbInfrantores = new System.Windows.Forms.ComboBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.gridJugadoresBuscados)).BeginInit();
             this.panel1.SuspendLayout();
@@ -61,7 +61,7 @@
             this.gridJugadoresBuscados.Name = "gridJugadoresBuscados";
             this.gridJugadoresBuscados.ReadOnly = true;
             this.gridJugadoresBuscados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridJugadoresBuscados.Size = new System.Drawing.Size(674, 351);
+            this.gridJugadoresBuscados.Size = new System.Drawing.Size(626, 351);
             this.gridJugadoresBuscados.TabIndex = 0;
             this.gridJugadoresBuscados.Click += new System.EventHandler(this.gridBuscadorJugadores_Click);
             // 
@@ -86,13 +86,63 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(674, 107);
+            this.panel1.Size = new System.Drawing.Size(626, 107);
             this.panel1.TabIndex = 1;
+            // 
+            // cmbInfrantores
+            // 
+            this.cmbInfrantores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbInfrantores.FormattingEnabled = true;
+            this.cmbInfrantores.Location = new System.Drawing.Point(311, 71);
+            this.cmbInfrantores.Name = "cmbInfrantores";
+            this.cmbInfrantores.Size = new System.Drawing.Size(163, 21);
+            this.cmbInfrantores.TabIndex = 14;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(308, 53);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(83, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Por infracciones";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 54);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(83, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Promedio desde";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(132, 55);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(80, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Promedio hasta";
+            // 
+            // txtPromHasta
+            // 
+            this.txtPromHasta.Location = new System.Drawing.Point(131, 72);
+            this.txtPromHasta.Name = "txtPromHasta";
+            this.txtPromHasta.Size = new System.Drawing.Size(100, 20);
+            this.txtPromHasta.TabIndex = 10;
+            // 
+            // txtPromDesde
+            // 
+            this.txtPromDesde.Location = new System.Drawing.Point(12, 72);
+            this.txtPromDesde.Name = "txtPromDesde";
+            this.txtPromDesde.Size = new System.Drawing.Size(100, 20);
+            this.txtPromDesde.TabIndex = 9;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(408, 10);
+            this.label5.Location = new System.Drawing.Point(408, 7);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 13);
             this.label5.TabIndex = 8;
@@ -101,7 +151,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(303, 9);
+            this.label3.Location = new System.Drawing.Point(303, 6);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 13);
             this.label3.TabIndex = 6;
@@ -109,7 +159,7 @@
             // 
             // numHandicapDesde
             // 
-            this.numHandicapDesde.Location = new System.Drawing.Point(315, 29);
+            this.numHandicapDesde.Location = new System.Drawing.Point(315, 26);
             this.numHandicapDesde.Maximum = new decimal(new int[] {
             10,
             0,
@@ -131,7 +181,7 @@
             // 
             // numHandicapHasta
             // 
-            this.numHandicapHasta.Location = new System.Drawing.Point(419, 29);
+            this.numHandicapHasta.Location = new System.Drawing.Point(419, 26);
             this.numHandicapHasta.Maximum = new decimal(new int[] {
             10,
             0,
@@ -154,7 +204,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(128, 9);
+            this.label2.Location = new System.Drawing.Point(128, 6);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(138, 13);
             this.label2.TabIndex = 3;
@@ -164,7 +214,7 @@
             // 
             this.dtpFechaNacimiento.CustomFormat = "yyyy-MM-dd";
             this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFechaNacimiento.Location = new System.Drawing.Point(131, 29);
+            this.dtpFechaNacimiento.Location = new System.Drawing.Point(131, 26);
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
             this.dtpFechaNacimiento.Size = new System.Drawing.Size(135, 20);
             this.dtpFechaNacimiento.TabIndex = 2;
@@ -172,7 +222,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 9);
+            this.label1.Location = new System.Drawing.Point(9, 6);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 2;
@@ -180,14 +230,14 @@
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(10, 29);
+            this.txtNombre.Location = new System.Drawing.Point(10, 26);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(100, 20);
             this.txtNombre.TabIndex = 1;
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(553, 33);
+            this.btnBuscar.Location = new System.Drawing.Point(517, 33);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(75, 46);
             this.btnBuscar.TabIndex = 0;
@@ -195,61 +245,11 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // txtPromDesde
-            // 
-            this.txtPromDesde.Location = new System.Drawing.Point(12, 81);
-            this.txtPromDesde.Name = "txtPromDesde";
-            this.txtPromDesde.Size = new System.Drawing.Size(100, 20);
-            this.txtPromDesde.TabIndex = 9;
-            // 
-            // txtPromHasta
-            // 
-            this.txtPromHasta.Location = new System.Drawing.Point(131, 81);
-            this.txtPromHasta.Name = "txtPromHasta";
-            this.txtPromHasta.Size = new System.Drawing.Size(100, 20);
-            this.txtPromHasta.TabIndex = 10;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(132, 64);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Promedio hasta";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 63);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(83, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Promedio desde";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(308, 62);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(83, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Por infracciones";
-            // 
-            // cmbInfrantores
-            // 
-            this.cmbInfrantores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbInfrantores.FormattingEnabled = true;
-            this.cmbInfrantores.Location = new System.Drawing.Point(311, 80);
-            this.cmbInfrantores.Name = "cmbInfrantores";
-            this.cmbInfrantores.Size = new System.Drawing.Size(163, 21);
-            this.cmbInfrantores.TabIndex = 14;
-            // 
             // frmBuscadorJugadores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(674, 458);
+            this.ClientSize = new System.Drawing.Size(626, 458);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.gridJugadoresBuscados);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;

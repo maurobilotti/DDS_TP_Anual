@@ -38,8 +38,14 @@ namespace TP_Anual_DDS_E4
             if (validarDatos())
             {
                 DDSDataContext db = new DDSDataContext();
-                var tabla = (from x in db.Buscar_Jugadores_L(txtNombre.Text, null, 
-                                 null, null, null, null,-1).AsEnumerable()
+                var tabla = (from x in db.Buscar_Jugadores_L(
+                                 txtNombre.Text, 
+                                 null, 
+                                 null, 
+                                 null, 
+                                 null, 
+                                 null,
+                                 -1).AsEnumerable()
                                  select new
                                  {
                                      x.Id_Interesado,

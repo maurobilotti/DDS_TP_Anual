@@ -43,6 +43,7 @@ create TABLE DBPartido_Interesado(
 	Id_Partido int NOT NULL,
 	Id_Interesado int NOT NULL,
 	Id_TipoJugador int NOT NULL,
+	EquipoDesignado int NULL,
 	Baja bit NULL,
 	CONSTRAINT Partido_Interesado_pk PRIMARY KEY(Id_Interesado,Id_Partido),
 	foreign key(Id_Interesado)references DBInteresado(Id_Interesado),
@@ -67,6 +68,10 @@ CREATE TABLE DBCondicion(
 	Descripcion_Condicion nvarchar(50) NULL,
 	PRIMARY KEY(Id_Condicion)
 )
+
+/*CREACION DE CONDICIONES */
+INSERT INTO DBCondicion VALUES (1, 'CondicionCantidadMayoresDe20')
+INSERT INTO DBCondicion VALUES (2, 'CondicionLugar')
 
 CREATE TABLE DBPartido_Interesado_Condicional(
 	Id_Partido int NOT NULL,
@@ -274,7 +279,7 @@ GO
 CREATE PROCEDURE Partido_Interesado_UI(
 	@Id_Partido int,
 	@Id_Interesado int,	
-	@Tipo_Jugador int,
+	@Tipo_Jugador int,	
 	@Baja bit = 0
 )
 AS
@@ -288,8 +293,11 @@ BEGIN
 	END
 	ELSE
 	BEGIN
+		--deben generarse los equipos nuevamente, por lo que primero se quita la designación de equipos
+		UPDATE DBPartido_Interesado SET EquipoDesignado = NULL WHERE Id_Partido = @Id_Partido
+		--se inserta el nuevo jugador al partido
 		INSERT INTO DBPartido_Interesado
-		VALUES (@Id_Partido,@Id_Interesado, @Tipo_Jugador, @Baja)		
+		VALUES (@Id_Partido,@Id_Interesado, @Tipo_Jugador, null, @Baja)		
 	END
 END 
 GO
