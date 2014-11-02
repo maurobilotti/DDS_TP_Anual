@@ -33,7 +33,7 @@ namespace TP_Anual_DDS_E4
             InitializeComponent();
             this.Usuario = usuario;
             this.ModoApertura = EnumModoApertura.Consulta;
-        } 
+        }
         #endregion
 
         #region Variables y miembros
@@ -43,7 +43,7 @@ namespace TP_Anual_DDS_E4
         }
 
         public Usuario Usuario { get; set; }
-        private EnumModoApertura ModoApertura { get; set; } 
+        private EnumModoApertura ModoApertura { get; set; }
         #endregion
 
         #region Eventos
@@ -76,7 +76,7 @@ namespace TP_Anual_DDS_E4
             {
                 MessageBox.Show("Los datos ingresados no son correctos.");
             }
-        } 
+        }
         #endregion
 
         #region Metodos
@@ -95,9 +95,9 @@ namespace TP_Anual_DDS_E4
         private void DeshabilitarControles()
         {
             //deshabilita los controles por estar en modo lectura
-            txtApellido.Enabled = txtContrasena.Enabled = txtMail.Enabled
-                = txtNombre.Enabled = txtUsuario.Enabled = numHandicap.Enabled =
-                numPosicion.Enabled = dpFechaNacimiento.Enabled = btnConfirmar.Enabled = false;
+            txtApellido.ReadOnly = txtContrasena.ReadOnly = txtMail.ReadOnly
+                = txtNombre.ReadOnly = txtUsuario.ReadOnly = numHandicap.ReadOnly =
+                numPosicion.ReadOnly = dpFechaNacimiento.Enabled = btnConfirmar.Enabled = false;
         }
 
         private bool Validar()
@@ -108,7 +108,7 @@ namespace TP_Anual_DDS_E4
                    new DDSDataContext().DBInteresado.All(z => z.Apellido != txtApellido.Text &&
                    z.Nombre != txtNombre.Text) &&
                    new DDSDataContext().DBUsuario.All(z => z.Nombre_Usuario != txtUsuario.Text);
-        } 
+        }
         #endregion
     }
 }

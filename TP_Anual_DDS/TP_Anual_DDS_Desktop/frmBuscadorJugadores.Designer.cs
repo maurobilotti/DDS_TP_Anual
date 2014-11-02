@@ -63,7 +63,8 @@
             this.gridJugadoresBuscados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridJugadoresBuscados.Size = new System.Drawing.Size(626, 351);
             this.gridJugadoresBuscados.TabIndex = 0;
-            this.gridJugadoresBuscados.Click += new System.EventHandler(this.gridBuscadorJugadores_Click);
+            this.gridJugadoresBuscados.DataSourceChanged += new System.EventHandler(this.gridJugadoresBuscados_DataSourceChanged);
+            this.gridJugadoresBuscados.DoubleClick += new System.EventHandler(this.gridJugadoresBuscados_DoubleClick);
             // 
             // panel1
             // 
@@ -254,6 +255,7 @@
             this.Controls.Add(this.gridJugadoresBuscados);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmBuscadorJugadores";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmBuscadorJugadores";
             this.Load += new System.EventHandler(this.frmBuscadorJugadores_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridJugadoresBuscados)).EndInit();

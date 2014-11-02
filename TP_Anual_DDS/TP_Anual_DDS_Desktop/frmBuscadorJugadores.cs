@@ -80,7 +80,7 @@ namespace TP_Anual_DDS_E4
             return true;
         }
 
-        private void gridBuscadorJugadores_Click(object sender, EventArgs e)
+        private void gridJugadoresBuscados_DoubleClick(object sender, EventArgs e)
         {
             if (gridJugadoresBuscados.SelectedRows.Count == 1)
             {
@@ -89,6 +89,27 @@ namespace TP_Anual_DDS_E4
 
                 frmRegistrar frmRegistrar = new frmRegistrar(usuario);
                 frmRegistrar.ShowDialog();
+            }
+        }
+
+        private void gridJugadoresBuscados_DataSourceChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (gridJugadoresBuscados.RowCount > 0)
+                {
+                    foreach (DataGridViewRow row in gridJugadoresBuscados.Rows)
+                    {
+                        if ((int)row.Cells["Handicap"].Value >= 8)
+                        {
+                            row.DefaultCellStyle.BackColor = Color.CadetBlue;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return;
             }
         }
     }

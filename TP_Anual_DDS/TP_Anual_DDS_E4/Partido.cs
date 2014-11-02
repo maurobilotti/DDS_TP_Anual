@@ -240,9 +240,9 @@ namespace TP_Anual_DDS_E4
         private Interesado.EnumPrioridad ObtenerTipoJugador(Usuario usuario)
         {
             int idTipoJugador = (from x in new DDSDataContext().DBPartido_Interesado
-                where x.Id_Partido == this.Id_Partido && x.Id_Interesado == usuario.Interesado.Id_Interesado
-                select x.Id_TipoJugador).SingleOrDefault();
-            return (Interesado.EnumPrioridad) idTipoJugador;
+                                 where x.Id_Partido == this.Id_Partido && x.Id_Interesado == usuario.Interesado.Id_Interesado
+                                 select x.Id_TipoJugador).SingleOrDefault();
+            return (Interesado.EnumPrioridad)idTipoJugador;
         }
 
         public void AgregarCalificacion(Interesado critico, Interesado criticado, int puntaje, string critica)
@@ -261,6 +261,50 @@ namespace TP_Anual_DDS_E4
         public List<Partido_Interesado_LResult> ObtenerListaJugadoresInteresados()
         {
             return new DDSDataContext().Partido_Interesado_L(this.Id_Partido).AsEnumerable().ToList();
+        }
+
+        public void RegistrarPrimerEquipo()
+        {
+            foreach (Usuario usuario in ListaPrimerEquipo)
+            {
+                try
+                {
+                    DDSDataContext db = new DDSDataContext();
+
+                    DBPartido_Interesado interesado = (from x in db.DBPartido_Interesado
+                                                       where x.Id_Interesado == usuario.Interesado.Id_Interesado && x.Id_Partido == this.Id_Partido
+                                                       select x).Single();
+                    interesado.EquipoDesignado = 1;
+                    db.SubmitChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+            }
+        }
+
+        public void RegistrarSegundoEquipo()
+        {
+            foreach (Usuario usuario in ListaSegundoEquipo)
+            {
+                try
+                {
+                    DDSDataContext db = new DDSDataContext();
+
+                    DBPartido_Interesado interesado = (from x in db.DBPartido_Interesado
+                                                       where x.Id_Interesado == usuario.Interesado.Id_Interesado && x.Id_Partido == this.Id_Partido
+                                                       select x).Single();
+                    interesado.EquipoDesignado = 2;
+                    db.SubmitChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+            }
         }
     }
 }

@@ -35,18 +35,7 @@ namespace TP_Anual_DDS_E4
         }
         #endregion
 
-        private void DeshablitarControles()
-        {
-            // se deshablitan todos los controles que no van al principio.
-            btnProponerAmigo.Enabled =
-            btnFinalizarPartido.Visible =
-            btnNuevoPartido.Enabled =
-            btnConfirmar.Enabled =
-            btnCriterios.Enabled =
-            btnBaja.Enabled =
-            btnInscribirse.Enabled = false;
-        }
-
+        #region Eventos
         private void btnAgregarPartido_Click(object sender, EventArgs e)
         {
             var frm = new frmNuevoPartido();
@@ -61,18 +50,7 @@ namespace TP_Anual_DDS_E4
         {
             DeshablitarControles();
             Actualizar();
-        }
-
-        private void HabilitarControles()
-        {
-            btnNuevoPartido.Enabled = btnCriterios.Enabled = btnConfirmar.Enabled = EsAdministrador;
-            btnInscribirse.Enabled = btnProponerAmigo.Enabled = !EsAdministrador;
-        }
-
-        public void Actualizar()
-        {
-            gridPartidos.DataSource = null;
-            gridPartidos.DataSource = Administrador.ObtenerInstancia().ObtenerPartidos();
+            EvaluarEstadoGrilla();
         }
 
         private void btnInscribirse_Click(object sender, EventArgs e)
@@ -89,13 +67,17 @@ namespace TP_Anual_DDS_E4
                     var frmJugador = new frmInscribirseAPartido(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario), partido);
                     if (frmJugador.ShowDialog() == DialogResult.OK)
                     {
-                        partido.AgregarJugador(frmJugador.Usuario, frmJugador.Id_TipoJugador,frmJugador.Condiciones);
+                        partido.AgregarJugador(frmJugador.Usuario, frmJugador.Id_TipoJugador, frmJugador.Condiciones);
                         gridInteresados.DataSource = null;
                         gridInteresados.DataSource = partido.ObtenerListaJugadoresInteresados();
                         lblCount.Text = gridInteresados.RowCount.ToString();
                         btnBaja.Enabled = true;
                         if (gridInteresados.Rows.Count >= 10)
+                        {
                             btnFinalizarPartido.Enabled = EsAdministrador;
+                            btnCriterios.Enabled = true;
+                        }
+
                     }
                 }
                 else
@@ -138,38 +120,6 @@ namespace TP_Anual_DDS_E4
             }
         }
 
-        private void VerificarUsuariosPropuestos()
-        {
-            if (this.EsAdministrador)
-            {
-                for (int i = Administrador.ObtenerInstancia().ObtenerUsuariosPropuestos().Count - 1; i >= 0; i--)
-                {
-                    Usuario usuarioProp = Administrador.ObtenerInstancia().ObtenerUsuariosPropuestos()[i];
-
-                    DialogResult resp =
-                        MessageBox.Show(
-                            string.Format("Desea aceptar al usuario {0} {1} ?", usuarioProp.Interesado.Nombre,
-                                usuarioProp.Interesado.Apellido), "Advertencia", MessageBoxButtons.YesNo);
-
-                    if (resp == DialogResult.Yes)
-                    {
-                        Administrador.ObtenerInstancia().CrearUsuario(usuarioProp);
-
-                    }
-                    else
-                    {
-                        frmDenegacion frm = new frmDenegacion();
-                        if (frm.ShowDialog() == DialogResult.OK)
-                        {
-                            Administrador.ObtenerInstancia().RegistrarMotivoRechazo(usuarioProp, frm.MotivoRechazo);
-                        }
-                    }
-
-                    Administrador.ObtenerInstancia().QuitarUsuarioPropuesto(usuarioProp);
-                }
-            }
-        }
-
         private void gridEquipo1_MouseClick(object sender, MouseEventArgs e)
         {
         }
@@ -177,28 +127,6 @@ namespace TP_Anual_DDS_E4
         private void gridPartidos_Click(object sender, EventArgs e)
         {
             EvaluarEstadoGrilla();
-        }
-
-        private void EvaluarEstadoGrilla()
-        {
-            if (gridPartidos.SelectedRows.Count == 1)
-            {
-                var idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
-                Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(idSeleccionado);
-                if (!EsAdministrador && EstaLogueado)
-                {
-                    Interesado interesado =
-                        Administrador.ObtenerInstancia()
-                            .ObtenerUsuario(Properties.Settings.Default.IdUsuario)
-                            .Interesado;
-                    btnBaja.Enabled = partido.EstaInscripto(interesado);
-                }
-                gridInteresados.DataSource = partido.ObtenerListaJugadoresInteresados();
-                lblCount.Text = gridInteresados.RowCount.ToString();
-
-                gridEquipo1.DataSource = partido.ArmadorPartido != null ? partido.ListaPrimerEquipo : null;
-                gridEquipo2.DataSource = partido.ArmadorPartido != null ? partido.ListaSegundoEquipo : null;
-            }
         }
 
         private void btnRegistrarse_Click(object sender, EventArgs e)
@@ -260,12 +188,17 @@ namespace TP_Anual_DDS_E4
             {
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido((int)gridPartidos.SelectedCells[0].Value);
                 frmCriterios frm = new frmCriterios(partido);
+                
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     gridEquipo1.DataSource = gridEquipo2.DataSource = null;
 
-                    gridEquipo1.DataSource = frm.Partido.ListaPrimerEquipo;
-                    gridEquipo2.DataSource = frm.Partido.ListaSegundoEquipo;
+                    gridEquipo1.DataSource = (from x in frm.Partido.ListaPrimerEquipo
+                                              select new { x.Interesado.NombreYApellido, x.Interesado.FechaNacimiento, x.Interesado.Posicion, x.Interesado.Handicap }).ToList();
+                    frm.Partido.RegistrarPrimerEquipo();
+                    gridEquipo2.DataSource = (from x in frm.Partido.ListaSegundoEquipo
+                                              select new { x.Interesado.NombreYApellido, x.Interesado.FechaNacimiento, x.Interesado.Posicion, x.Interesado.Handicap }).ToList();
+                    frm.Partido.RegistrarSegundoEquipo();
                     btnFinalizarPartido.Visible = gridEquipo1.RowCount >= 5 && gridEquipo2.RowCount >= 5;
                 }
             }
@@ -315,24 +248,16 @@ namespace TP_Anual_DDS_E4
 
         private void gridEquipo1_DataSourceChanged(object sender, EventArgs e)
         {
-            if (gridEquipo1.RowCount >= 5)
-            {
-                for (int i = 0; i < 5 && i <= gridEquipo1.RowCount; i++)
-                {
-                    gridEquipo1.Rows[i].DefaultCellStyle.BackColor = Color.LimeGreen;
-                }
-            }
+            MarcarJugadoresExcluidos(gridEquipo1);
+            MarcarJugadoresConAltoHandicap(gridEquipo1);
         }
+
+       
 
         private void gridEquipo2_DataSourceChanged(object sender, EventArgs e)
         {
-            if (gridEquipo2.RowCount >= 5)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    gridEquipo2.Rows[i].DefaultCellStyle.BackColor = Color.LimeGreen;
-                }
-            }
+            MarcarJugadoresExcluidos(gridEquipo2);
+            MarcarJugadoresConAltoHandicap(gridEquipo2);
         }
 
         private void btnVerCriticas_Click(object sender, EventArgs e)
@@ -349,16 +274,128 @@ namespace TP_Anual_DDS_E4
 
         private void gridInteresados_DataSourceChanged(object sender, EventArgs e)
         {
-            if (gridInteresados.RowCount > 0)
+            MarcarJugadoresConAltoHandicap(gridInteresados);
+        }
+        #endregion
+
+        #region Metodos
+
+        private void MarcarJugadoresExcluidos(DataGridView grid)
+        {
+            if (grid.RowCount >= 5)
             {
-                foreach (DataGridViewRow row in gridInteresados.Rows)
+                for (int i = 0; i < grid.RowCount; i++)
                 {
-                    if ((int) row.Cells["Handicap"].Value >= 8)
-                    {
-                        row.DefaultCellStyle.BackColor = Color.CadetBlue;
-                    }
+                    if (i > 4)
+                        grid.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                 }
             }
         }
+
+        private void MarcarJugadoresConAltoHandicap(DataGridView grid)
+        {
+            try
+            {
+                if (grid.RowCount > 0)
+                {
+                    foreach (DataGridViewRow row in grid.Rows)
+                    {
+                        if ((int)row.Cells["Handicap"].Value >= 8)
+                        {
+                            row.DefaultCellStyle.BackColor = Color.CadetBlue;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void DeshablitarControles()
+        {
+            // se deshablitan todos los controles que no van al principio.
+            btnProponerAmigo.Enabled =
+            btnFinalizarPartido.Visible =
+            btnNuevoPartido.Enabled =
+            btnConfirmar.Enabled =
+            btnCriterios.Enabled =
+            btnBaja.Enabled =
+            btnInscribirse.Enabled = false;
+        }
+
+        private void HabilitarControles()
+        {
+            btnNuevoPartido.Enabled = btnCriterios.Enabled = btnConfirmar.Enabled = EsAdministrador;
+            btnInscribirse.Enabled = btnProponerAmigo.Enabled = !EsAdministrador;
+        }
+
+        public void Actualizar()
+        {
+            gridPartidos.DataSource = null;
+            gridPartidos.DataSource = Administrador.ObtenerInstancia().ObtenerPartidos();
+        }
+
+        private void EvaluarEstadoGrilla()
+        {
+            if (gridPartidos.SelectedRows.Count == 1)
+            {
+                var idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
+                Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(idSeleccionado);
+                if (!EsAdministrador && EstaLogueado)
+                {
+                    Interesado interesado =
+                        Administrador.ObtenerInstancia()
+                            .ObtenerUsuario(Properties.Settings.Default.IdUsuario)
+                            .Interesado;
+                    btnBaja.Enabled = partido.EstaInscripto(interesado);
+                }
+                gridInteresados.DataSource = partido.ObtenerListaJugadoresInteresados();
+                lblCount.Text = gridInteresados.RowCount.ToString();
+
+                gridEquipo1.DataSource = partido.ArmadorPartido != null ? partido.ListaPrimerEquipo : null;
+                gridEquipo2.DataSource = partido.ArmadorPartido != null ? partido.ListaSegundoEquipo : null;
+
+                if (gridInteresados.RowCount >= 10)
+                {
+                    btnCriterios.Enabled = true;
+                }
+
+            }
+        }
+
+        private void VerificarUsuariosPropuestos()
+        {
+            if (this.EsAdministrador)
+            {
+                for (int i = Administrador.ObtenerInstancia().ObtenerUsuariosPropuestos().Count - 1; i >= 0; i--)
+                {
+                    Usuario usuarioProp = Administrador.ObtenerInstancia().ObtenerUsuariosPropuestos()[i];
+
+                    DialogResult resp =
+                        MessageBox.Show(
+                            string.Format("Desea aceptar al usuario {0} {1} ?", usuarioProp.Interesado.Nombre,
+                                usuarioProp.Interesado.Apellido), "Advertencia", MessageBoxButtons.YesNo);
+
+                    if (resp == DialogResult.Yes)
+                    {
+                        Administrador.ObtenerInstancia().CrearUsuario(usuarioProp);
+
+                    }
+                    else
+                    {
+                        frmDenegacion frm = new frmDenegacion();
+                        if (frm.ShowDialog() == DialogResult.OK)
+                        {
+                            Administrador.ObtenerInstancia().RegistrarMotivoRechazo(usuarioProp, frm.MotivoRechazo);
+                        }
+                    }
+
+                    Administrador.ObtenerInstancia().QuitarUsuarioPropuesto(usuarioProp);
+                }
+            }
+        }
+        #endregion
     }
 }

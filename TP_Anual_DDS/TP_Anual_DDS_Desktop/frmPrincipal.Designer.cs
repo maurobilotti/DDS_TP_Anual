@@ -214,6 +214,7 @@
             this.gridEquipo2.Location = new System.Drawing.Point(0, 0);
             this.gridEquipo2.Name = "gridEquipo2";
             this.gridEquipo2.ReadOnly = true;
+            this.gridEquipo2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridEquipo2.Size = new System.Drawing.Size(373, 133);
             this.gridEquipo2.TabIndex = 3;
             this.gridEquipo2.DataSourceChanged += new System.EventHandler(this.gridEquipo2_DataSourceChanged);
