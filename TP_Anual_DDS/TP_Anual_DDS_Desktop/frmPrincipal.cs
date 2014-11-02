@@ -92,6 +92,7 @@ namespace TP_Anual_DDS_E4
                         partido.AgregarJugador(frmJugador.Usuario, frmJugador.Id_TipoJugador,frmJugador.Condiciones);
                         gridInteresados.DataSource = null;
                         gridInteresados.DataSource = partido.ObtenerListaJugadoresInteresados();
+                        lblCount.Text = gridInteresados.RowCount.ToString();
                         btnBaja.Enabled = true;
                         if (gridInteresados.Rows.Count >= 10)
                             btnFinalizarPartido.Enabled = EsAdministrador;

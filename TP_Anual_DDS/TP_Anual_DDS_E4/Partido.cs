@@ -162,7 +162,7 @@ namespace TP_Anual_DDS_E4
         {
             foreach (Usuario usuario in this.ListaJugadores)
             {
-                if (tipo.Prioridad == prioridadDeIngresanteAVolar)
+                if (ObtenerTipoJugador(usuario) == prioridadDeIngresanteAVolar)
                 {
                     DDSDataContext db = new DDSDataContext();
                     //se elimina el jugador por prioridad
@@ -171,11 +171,9 @@ namespace TP_Anual_DDS_E4
 
                     //se agrega un nuevo jugador por ganar en prioridad
 
-                    db.Partido_Interesado_UI(this.Id_Partido, usuario.Interesado.Id_Interesado, tipo.Id_TipoJugador, false);
+                    db.Partido_Interesado_UI(this.Id_Partido, usuarioAIngresar.Interesado.Id_Interesado, tipo.Id_TipoJugador, false);
                     db.SubmitChanges();
                     ListaJugadores.Add(usuarioAIngresar);
-
-
 
                     if (ListaJugadores.Count == 10)
                         return false;
@@ -240,6 +238,13 @@ namespace TP_Anual_DDS_E4
             return this.ListaJugadores.Any(x => x.Interesado.Nombre == interesado.Nombre && x.Interesado.Apellido == interesado.Apellido);
         }
 
+        private Interesado.EnumPrioridad ObtenerTipoJugador(Usuario usuario)
+        {
+            int idTipoJugador = (from x in new DDSDataContext().DBPartido_Interesado
+                where x.Id_Partido == this.Id_Partido && x.Id_Interesado == usuario.Interesado.Id_Interesado
+                select x.Id_TipoJugador).SingleOrDefault();
+            return (Interesado.EnumPrioridad) idTipoJugador;
+        }
 
         public void AgregarCalificacion(Interesado critico, Interesado criticado, int puntaje, string critica)
         {
