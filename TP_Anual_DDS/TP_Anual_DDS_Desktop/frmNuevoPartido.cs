@@ -29,7 +29,7 @@ namespace TP_Anual_DDS_E4
             if (string.IsNullOrEmpty(txtLugar.Text))
                 return;
 
-            this.Partido = new Partido(txtLugar.Text, dateFecha.Value);
+            this.Partido = new Partido(txtLugar.Text, dateFecha.Value, false, false);
             this.Partido.Guardar();
             DialogResult = DialogResult.OK;
         }

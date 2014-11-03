@@ -13,7 +13,7 @@ namespace TP_Anual_DDS_E4
 {
     public partial class Critica : UserControl
     {
-        public Critica(Interesado jugadorCritico,Interesado jugadorCriticado, Partido partido, frmCriticas.Modo modo, int puntaje = 5 ,string critica = "")
+        public Critica(Interesado jugadorCritico, Interesado jugadorCriticado, Partido partido, frmCriticas.Modo modo, int puntaje = 5, string critica = "")
         {
             InitializeComponent();
             JugadorCriticado = jugadorCriticado;
@@ -44,10 +44,9 @@ namespace TP_Anual_DDS_E4
         {
             BackColor = Color.LawnGreen;
             btnOK.Enabled = false;
-            Partido.AgregarCalificacion(JugadorCritico,JugadorCriticado,(int)numPuntaje.Value,txtCritica.Text);
-            if(Partido.ListaCalificaciones.Count(z => z.JugadorCritico == JugadorCritico) == Partido.ListaJugadores.Count - 1)
+            Partido.AgregarCalificacion(JugadorCritico, JugadorCriticado, (int)numPuntaje.Value, txtCritica.Text);
+            if (Partido.ListaCalificaciones.Count(z => z.JugadorCritico == JugadorCritico) == Partido.ListaJugadores.Count - 1)
                 this.JugadorCritico.ListaPartidosCriticados.Add(Partido);
         }
-
     }
 }

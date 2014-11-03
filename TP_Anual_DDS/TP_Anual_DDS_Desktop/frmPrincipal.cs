@@ -59,20 +59,43 @@ namespace TP_Anual_DDS_E4
             {
                 int idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartidos().Single(z => z.Id_Partido == idSeleccionado);
-                if (partido.Confirmado)
+
+                //si no se cumplean las validaciones del partido, no se puede inscribir
+                if (!ValidacionesPartido(partido))
                     return;
 
-                if (!partido.EstaInscripto(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario).Interesado))
+                Usuario usuario =
+                    Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario);
+
+                if (!partido.EstaInscripto(usuario.Interesado))
                 {
-                    var frmJugador = new frmInscribirseAPartido(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario), partido);
-                    if (frmJugador.ShowDialog() == DialogResult.OK)
+                    DDSDataContext db = new DDSDataContext();
+                    DBPartido_Interesado partidoInteresado = (from x in db.DBPartido_Interesado
+                                                              where x.Id_Partido == partido.Id_Partido && x.Id_Interesado == usuario.Interesado.Id_Interesado
+                                                              select x).SingleOrDefault();
+                    if (partidoInteresado != null)
                     {
-                        partido.AgregarJugador(frmJugador.Usuario, frmJugador.Id_TipoJugador, frmJugador.Condiciones);
+                        partidoInteresado.Baja = false;
+                        partido.ListaJugadores.Add(usuario);
+                        db.SubmitChanges();
+                        EvaluarEstadoGrilla();
+                        return;
+                    }
+
+                    var frmInscribirJugador = new frmInscribirseAPartido(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario), partido);
+                    if (frmInscribirJugador.ShowDialog() == DialogResult.OK)
+                    {
+                        if (!partido.AgregarJugador(frmInscribirJugador.Usuario, frmInscribirJugador.Id_TipoJugador,
+                            frmInscribirJugador.Condiciones))
+                        {
+                            MessageBox.Show("No es posible incluir al jugador en el partido seleccionado.");
+                            return;
+                        }
                         gridInteresados.DataSource = null;
                         gridInteresados.DataSource = partido.ObtenerListaJugadoresInteresados();
                         lblCount.Text = gridInteresados.RowCount.ToString();
                         btnBaja.Enabled = true;
-                        if (gridInteresados.Rows.Count >= 10)
+                        if (gridInteresados.Rows.Count >= 10 && EsAdministrador)
                         {
                             btnFinalizarPartido.Enabled = EsAdministrador;
                             btnCriterios.Enabled = true;
@@ -85,6 +108,17 @@ namespace TP_Anual_DDS_E4
                     MessageBox.Show("El jugador está inscripto.");
                 }
             }
+        }
+
+        private bool ValidacionesPartido(Partido partido)
+        {
+            if (partido.Confirmado)
+            {
+                MessageBox.Show("El partido ya fue confirmado, por lo que no es posible inscribirse");
+                return false;
+            }
+
+            return true;
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -115,7 +149,11 @@ namespace TP_Anual_DDS_E4
                     VerificarUsuariosPropuestos();
                     lblUsuario.Text = "Admin";
                     if (gridInteresados.Rows.Count >= 10)
-                        btnFinalizarPartido.Visible = true;
+                    {
+                        btnCriterios.Visible = true;
+                        EvaluarEstadoGrilla();
+                    }
+
                 }
             }
         }
@@ -188,7 +226,7 @@ namespace TP_Anual_DDS_E4
             {
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido((int)gridPartidos.SelectedCells[0].Value);
                 frmCriterios frm = new frmCriterios(partido);
-                
+
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     gridEquipo1.DataSource = gridEquipo2.DataSource = null;
@@ -199,18 +237,24 @@ namespace TP_Anual_DDS_E4
                     gridEquipo2.DataSource = (from x in frm.Partido.ListaSegundoEquipo
                                               select new { x.Interesado.NombreYApellido, x.Interesado.FechaNacimiento, x.Interesado.Posicion, x.Interesado.Handicap }).ToList();
                     frm.Partido.RegistrarSegundoEquipo();
-                    btnFinalizarPartido.Visible = gridEquipo1.RowCount >= 5 && gridEquipo2.RowCount >= 5;
+                    //se habilita el botón confirmar si los equipos están completos y es el admin
+                    btnConfirmar.Enabled = btnConfirmar.Visible = gridEquipo1.RowCount >= 5 && gridEquipo2.RowCount >= 5 && EsAdministrador;
                 }
             }
         }
 
         private void btnConfirmar_Click(object sender, EventArgs e)
         {
-            if (gridInteresados.RowCount >= 10 && gridEquipo1.RowCount > 0 && gridEquipo2.RowCount > 0)
+            if (gridInteresados.RowCount >= 10 && gridEquipo1.RowCount == 5 && gridEquipo2.RowCount == 5)
             {
-                Administrador.ObtenerInstancia()
-                    .ObtenerPartido((int)gridPartidos.SelectedCells[0].Value)
-                    .Confirmado = true;
+                Partido partido = Administrador.ObtenerInstancia()
+                    .ObtenerPartido((int)gridPartidos.SelectedCells[0].Value);
+                partido.Confirmado = true;
+
+                //confirma el partido en la base de datos
+                partido.Confirmar();
+
+                btnFinalizarPartido.Enabled = btnFinalizarPartido.Visible = true;
             }
         }
 
@@ -219,12 +263,8 @@ namespace TP_Anual_DDS_E4
             if (gridEquipo1.RowCount >= 5 && gridEquipo2.RowCount >= 5 && gridPartidos.SelectedRows.Count == 1)
             {
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido((int)gridPartidos.SelectedCells[0].Value);
-
-                if (!partido.Finalizado)
-                {
-                    partido.Finalizado = true;
-                    partido.ListaJugadores.ForEach(z => z.Interesado.ListaPartidosFinalizados.Add(partido));
-                }
+                //finaliza el partido en la base de datos
+                partido.Finalizar();
 
                 MessageBox.Show(
                     "El partido se ha finalizado correctamente. Los jugadores realizarán las criticas al conectarse al sistema.",
@@ -252,7 +292,7 @@ namespace TP_Anual_DDS_E4
             MarcarJugadoresConAltoHandicap(gridEquipo1);
         }
 
-       
+
 
         private void gridEquipo2_DataSourceChanged(object sender, EventArgs e)
         {
@@ -319,15 +359,15 @@ namespace TP_Anual_DDS_E4
             btnProponerAmigo.Enabled =
             btnFinalizarPartido.Visible =
             btnNuevoPartido.Enabled =
-            btnConfirmar.Enabled =
-            btnCriterios.Enabled =
+            btnConfirmar.Enabled = btnConfirmar.Visible =
+            btnCriterios.Visible = btnCriterios.Enabled =
             btnBaja.Enabled =
             btnInscribirse.Enabled = false;
         }
 
         private void HabilitarControles()
         {
-            btnNuevoPartido.Enabled = btnCriterios.Enabled = btnConfirmar.Enabled = EsAdministrador;
+            btnNuevoPartido.Enabled = btnConfirmar.Enabled = EsAdministrador;
             btnInscribirse.Enabled = btnProponerAmigo.Enabled = !EsAdministrador;
         }
 
@@ -341,6 +381,7 @@ namespace TP_Anual_DDS_E4
         {
             if (gridPartidos.SelectedRows.Count == 1)
             {
+                btnCriterios.Enabled = false;
                 var idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido(idSeleccionado);
                 if (!EsAdministrador && EstaLogueado)
@@ -357,7 +398,7 @@ namespace TP_Anual_DDS_E4
                 gridEquipo1.DataSource = partido.ArmadorPartido != null ? partido.ListaPrimerEquipo : null;
                 gridEquipo2.DataSource = partido.ArmadorPartido != null ? partido.ListaSegundoEquipo : null;
 
-                if (gridInteresados.RowCount >= 10)
+                if (gridInteresados.RowCount == 10 && EsAdministrador)
                 {
                     btnCriterios.Enabled = true;
                 }

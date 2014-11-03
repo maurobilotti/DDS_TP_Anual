@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Administrador.cs" />
+    <Compile Include="ArmadorEstandar.cs" />
     <Compile Include="ArmadorPartido.cs" />
     <Compile Include="ArmarPorOrdenAleatorio.cs" />
     <Compile Include="ArmarPorParidad.cs" />

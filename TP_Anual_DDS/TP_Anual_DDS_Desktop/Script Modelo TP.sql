@@ -26,6 +26,7 @@ CREATE TABLE DBPartido(
 	Lugar nvarchar(50) NOT NULL,	
 	Confirmado bit NULL,
 	Fecha_Hora datetime NULL,
+	Finalizado bit default 0,
 	PRIMARY KEY(Id_Partido)
 )
 
@@ -152,7 +153,7 @@ CREATE PROCEDURE [dbo].[Partido_UI](
 AS 
 BEGIN
 	SET NOCOUNT ON
-    INSERT INTO DBPartido VALUES  (@Lugar,@Confirmado,@Fecha_Hora)
+    INSERT INTO DBPartido VALUES  (@Lugar,@Confirmado,@Fecha_Hora,0)
 END
 GO
 
@@ -329,7 +330,7 @@ GO
 CREATE PROCEDURE Partido_L
 AS
 BEGIN
-	SELECT Lugar,Fecha_Hora,Confirmado
+	SELECT Lugar,Fecha_Hora,Confirmado, Finalizado
 	FROM DBPartido		
 END
 GO
@@ -552,7 +553,8 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 				 i.Id_Interesado,
 				 i.Nombre,
 				 i.Apellido,
-				 i.Handicap				
+				 i.FechaNacimiento,
+				 i.Handicap			
 			FROM DBInteresado i
 			LEFT JOIN DBCalificacion ca on ca.Id_Jugador_Criticado = i.Id_Interesado
 			WHERE i.nombre LIKE (CASE WHEN @nombre_jugador = '' THEN  i.Nombre ELSE @nombre_jugador+'%' END) 
@@ -569,6 +571,7 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 				i.Id_Interesado,
 				 i.Nombre,
 				 i.Apellido,
+				 i.FechaNacimiento,
 				 i.Handicap				
 			FROM DBInteresado i
 			LEFT JOIN DBCalificacion ca on ca.Id_Jugador_Criticado = i.Id_Interesado
@@ -583,8 +586,9 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 			SELECT 
 			DISTINCT
 				 i.Id_Interesado,
-				  i.Nombre,
-				  i.Apellido,
+				 i.Nombre,
+				 i.Apellido,
+				 i.FechaNacimiento,
 				 i.Handicap
 			FROM DBInteresado i
 			LEFT JOIN DBCalificacion ca on ca.Id_Jugador_Criticado = i.Id_Interesado
@@ -596,5 +600,22 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 		END
 	END
 END
+GO
 
-
+CREATE PROCEDURE Interesado_ObtenerPartidosFinalizados(
+@Id_Interesado int
+)
+AS 
+BEGIN
+	SELECT 
+	P.Id_Partido,
+	P.Lugar,
+	P.Confirmado,
+	P.Fecha_Hora,
+	P.Finalizado
+	FROM DBPartido_Interesado P_I
+	INNER JOIN DBPartido P ON P.Id_Partido = P_I.Id_Partido
+	WHERE P_I.Id_Interesado = @Id_Interesado AND P.Finalizado = 1 AND P.Confirmado = 1
+	AND P_I.Baja = 0
+END 
+GO

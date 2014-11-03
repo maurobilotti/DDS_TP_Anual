@@ -34,8 +34,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtPromHasta = new System.Windows.Forms.TextBox();
-            this.txtPromDesde = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numHandicapDesde = new System.Windows.Forms.NumericUpDown();
@@ -46,14 +44,23 @@
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.numPromedioDesde = new System.Windows.Forms.NumericUpDown();
+            this.numPromedioHasta = new System.Windows.Forms.NumericUpDown();
+            this.chkHandicapDesde = new System.Windows.Forms.CheckBox();
+            this.chkHandicapHasta = new System.Windows.Forms.CheckBox();
+            this.chkPromedioHasta = new System.Windows.Forms.CheckBox();
+            this.chkPromedioDesde = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.gridJugadoresBuscados)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHandicapDesde)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHandicapHasta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPromedioDesde)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPromedioHasta)).BeginInit();
             this.SuspendLayout();
             // 
             // gridJugadoresBuscados
             // 
+            this.gridJugadoresBuscados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridJugadoresBuscados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridJugadoresBuscados.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.gridJugadoresBuscados.Location = new System.Drawing.Point(0, 107);
@@ -69,12 +76,16 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.IndianRed;
+            this.panel1.Controls.Add(this.chkPromedioDesde);
+            this.panel1.Controls.Add(this.chkPromedioHasta);
+            this.panel1.Controls.Add(this.chkHandicapHasta);
+            this.panel1.Controls.Add(this.chkHandicapDesde);
+            this.panel1.Controls.Add(this.numPromedioHasta);
+            this.panel1.Controls.Add(this.numPromedioDesde);
             this.panel1.Controls.Add(this.cmbInfrantores);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.txtPromHasta);
-            this.panel1.Controls.Add(this.txtPromDesde);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.numHandicapDesde);
@@ -126,20 +137,6 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Promedio hasta";
             // 
-            // txtPromHasta
-            // 
-            this.txtPromHasta.Location = new System.Drawing.Point(131, 72);
-            this.txtPromHasta.Name = "txtPromHasta";
-            this.txtPromHasta.Size = new System.Drawing.Size(100, 20);
-            this.txtPromHasta.TabIndex = 10;
-            // 
-            // txtPromDesde
-            // 
-            this.txtPromDesde.Location = new System.Drawing.Point(12, 72);
-            this.txtPromDesde.Name = "txtPromDesde";
-            this.txtPromDesde.Size = new System.Drawing.Size(100, 20);
-            this.txtPromDesde.TabIndex = 9;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -160,47 +157,37 @@
             // 
             // numHandicapDesde
             // 
-            this.numHandicapDesde.Location = new System.Drawing.Point(315, 26);
+            this.numHandicapDesde.Location = new System.Drawing.Point(333, 26);
             this.numHandicapDesde.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numHandicapDesde.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
             this.numHandicapDesde.Name = "numHandicapDesde";
             this.numHandicapDesde.Size = new System.Drawing.Size(55, 20);
             this.numHandicapDesde.TabIndex = 5;
-            this.numHandicapDesde.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
             // 
             // numHandicapHasta
             // 
-            this.numHandicapHasta.Location = new System.Drawing.Point(419, 26);
+            this.numHandicapHasta.Location = new System.Drawing.Point(435, 27);
             this.numHandicapHasta.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
             this.numHandicapHasta.Minimum = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
-            -2147483648});
+            0});
             this.numHandicapHasta.Name = "numHandicapHasta";
             this.numHandicapHasta.Size = new System.Drawing.Size(55, 20);
             this.numHandicapHasta.TabIndex = 4;
             this.numHandicapHasta.Value = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
-            -2147483648});
+            0});
             // 
             // label2
             // 
@@ -246,6 +233,85 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
+            // numPromedioDesde
+            // 
+            this.numPromedioDesde.DecimalPlaces = 2;
+            this.numPromedioDesde.Location = new System.Drawing.Point(30, 71);
+            this.numPromedioDesde.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numPromedioDesde.Name = "numPromedioDesde";
+            this.numPromedioDesde.Size = new System.Drawing.Size(65, 20);
+            this.numPromedioDesde.TabIndex = 15;
+            // 
+            // numPromedioHasta
+            // 
+            this.numPromedioHasta.DecimalPlaces = 2;
+            this.numPromedioHasta.Location = new System.Drawing.Point(156, 71);
+            this.numPromedioHasta.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numPromedioHasta.Name = "numPromedioHasta";
+            this.numPromedioHasta.Size = new System.Drawing.Size(64, 20);
+            this.numPromedioHasta.TabIndex = 16;
+            this.numPromedioHasta.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // chkHandicapDesde
+            // 
+            this.chkHandicapDesde.AutoSize = true;
+            this.chkHandicapDesde.Checked = true;
+            this.chkHandicapDesde.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkHandicapDesde.Location = new System.Drawing.Point(311, 29);
+            this.chkHandicapDesde.Name = "chkHandicapDesde";
+            this.chkHandicapDesde.Size = new System.Drawing.Size(15, 14);
+            this.chkHandicapDesde.TabIndex = 17;
+            this.chkHandicapDesde.UseVisualStyleBackColor = true;
+            this.chkHandicapDesde.CheckedChanged += new System.EventHandler(this.chkHandicapDesde_CheckedChanged);
+            // 
+            // chkHandicapHasta
+            // 
+            this.chkHandicapHasta.AutoSize = true;
+            this.chkHandicapHasta.Checked = true;
+            this.chkHandicapHasta.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkHandicapHasta.Location = new System.Drawing.Point(414, 29);
+            this.chkHandicapHasta.Name = "chkHandicapHasta";
+            this.chkHandicapHasta.Size = new System.Drawing.Size(15, 14);
+            this.chkHandicapHasta.TabIndex = 18;
+            this.chkHandicapHasta.UseVisualStyleBackColor = true;
+            this.chkHandicapHasta.CheckedChanged += new System.EventHandler(this.chkHandicapHasta_CheckedChanged);
+            // 
+            // chkPromedioHasta
+            // 
+            this.chkPromedioHasta.AutoSize = true;
+            this.chkPromedioHasta.Checked = true;
+            this.chkPromedioHasta.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPromedioHasta.Location = new System.Drawing.Point(135, 74);
+            this.chkPromedioHasta.Name = "chkPromedioHasta";
+            this.chkPromedioHasta.Size = new System.Drawing.Size(15, 14);
+            this.chkPromedioHasta.TabIndex = 19;
+            this.chkPromedioHasta.UseVisualStyleBackColor = true;
+            this.chkPromedioHasta.CheckedChanged += new System.EventHandler(this.chkPromedioHasta_CheckedChanged);
+            // 
+            // chkPromedioDesde
+            // 
+            this.chkPromedioDesde.AutoSize = true;
+            this.chkPromedioDesde.Checked = true;
+            this.chkPromedioDesde.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPromedioDesde.Location = new System.Drawing.Point(12, 74);
+            this.chkPromedioDesde.Name = "chkPromedioDesde";
+            this.chkPromedioDesde.Size = new System.Drawing.Size(15, 14);
+            this.chkPromedioDesde.TabIndex = 20;
+            this.chkPromedioDesde.UseVisualStyleBackColor = true;
+            this.chkPromedioDesde.CheckedChanged += new System.EventHandler(this.chkPromedioDesde_CheckedChanged);
+            // 
             // frmBuscadorJugadores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -263,6 +329,8 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHandicapDesde)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHandicapHasta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPromedioDesde)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPromedioHasta)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -284,8 +352,12 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtPromHasta;
-        private System.Windows.Forms.TextBox txtPromDesde;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.NumericUpDown numPromedioHasta;
+        private System.Windows.Forms.NumericUpDown numPromedioDesde;
+        private System.Windows.Forms.CheckBox chkPromedioDesde;
+        private System.Windows.Forms.CheckBox chkPromedioHasta;
+        private System.Windows.Forms.CheckBox chkHandicapHasta;
+        private System.Windows.Forms.CheckBox chkHandicapDesde;
     }
 }

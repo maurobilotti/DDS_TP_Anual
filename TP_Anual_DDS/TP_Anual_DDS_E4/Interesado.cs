@@ -55,7 +55,7 @@ namespace TP_Anual_DDS_E4
             this.ListaAmigos = new List<Interesado>();
             this.ListaCalificaciones = new List<int>();
             this.ListaPartidosCriticados = new List<Partido>();
-            this.ListaPartidosFinalizados = new List<Partido>();
+            CargarPartidosFinalizados();
             this.FechaNacimiento = fechaNacimiento;
             this.Nombre = nombre;
             this.Apellido = apellido;
@@ -63,6 +63,14 @@ namespace TP_Anual_DDS_E4
             this.Posicion = posicion;
             this.CantPartidosJugados = cantPartidosJugados;
             this.Handicap = handicap;
+        }
+
+        private void CargarPartidosFinalizados()
+        {
+            this.ListaPartidosFinalizados = new List<Partido>();
+            DDSDataContext db = new DDSDataContext();
+            this.ListaPartidosFinalizados = (from x in db.Interesado_ObtenerPartidosFinalizados(this.Id_Interesado)
+                select new Partido(x.Lugar, (DateTime) x.Fecha_Hora, x.Confirmado.Value, x.Finalizado.Value)).ToList();
         }
 
         public bool EstasInscriptoEn(Partido partido)

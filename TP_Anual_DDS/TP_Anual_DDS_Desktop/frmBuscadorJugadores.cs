@@ -31,53 +31,38 @@ namespace TP_Anual_DDS_E4
             cmbInfrantores.DataSource = tabla;
             cmbInfrantores.DisplayMember = "Descripcion";
             cmbInfrantores.ValueMember = "Id";
+
+            //se ejecuta la primera búsqueda
+            FiltrarJugadores();
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (validarDatos())
-            {
-                DDSDataContext db = new DDSDataContext();
-                var tabla = (from x in db.Buscar_Jugadores_L(
-                                 txtNombre.Text, 
-                                 null, 
-                                 null, 
-                                 null, 
-                                 null, 
-                                 null,
-                                 -1).AsEnumerable()
-                                 select new
-                                 {
-                                     x.Id_Interesado,
-                                     x.Handicap,
-                                     x.Nombre,
-                                     x.Apellido,
-                                     Promedio = db.PromUltimoPartido(x.Id_Interesado)
-                                 }).ToList();
-
-                gridJugadoresBuscados.DataSource = null;
-                gridJugadoresBuscados.DataSource = tabla;
-
-            }
+            FiltrarJugadores();
         }
 
-        private bool validarDatos()
+        private void FiltrarJugadores()
         {
-            if ((!string.IsNullOrEmpty(txtPromDesde.Text) && string.IsNullOrEmpty(txtPromHasta.Text)) ||
-                string.IsNullOrEmpty(txtPromDesde.Text) && !string.IsNullOrEmpty(txtPromHasta.Text))
-            {
-                Console.WriteLine("Debe seleccionar promedio desde y hasta.");
-                return false;
-            }
-            //if (!string.IsNullOrEmpty(txtPromDesde.Text))
-            //{
-            //    decimal s;
-            //    if (Decimal.TryParse(txtPromDesde.Text, out s))
-            //        return false;
+            DDSDataContext db = new DDSDataContext();
+            var tabla = (from x in db.Buscar_Jugadores_L(
+                             txtNombre.Text,
+                             dtpFechaNacimiento.Value.Date,
+                             chkHandicapDesde.Checked ? (int?)numHandicapDesde.Value : null,
+                             chkHandicapHasta.Checked ? (int?)numHandicapHasta.Value : null,
+                             chkPromedioDesde.Checked ? (int?)numPromedioDesde.Value : null,
+                             chkPromedioHasta.Checked ? (int?)numPromedioHasta.Value : null,
+                             (int?)cmbInfrantores.SelectedValue).AsEnumerable()
+                         select new
+                         {
+                             x.Nombre,
+                             x.Apellido,
+                             x.FechaNacimiento,
+                             x.Handicap,
+                             Promedio = db.PromUltimoPartido(x.Id_Interesado)
+                         }).ToList();
 
-            //}
-
-            return true;
+            gridJugadoresBuscados.DataSource = null;
+            gridJugadoresBuscados.DataSource = tabla;
         }
 
         private void gridJugadoresBuscados_DoubleClick(object sender, EventArgs e)
@@ -112,5 +97,26 @@ namespace TP_Anual_DDS_E4
                 return;
             }
         }
+
+        private void chkHandicapDesde_CheckedChanged(object sender, EventArgs e)
+        {
+            numHandicapDesde.Enabled = chkHandicapDesde.Checked;
+        }
+
+        private void chkHandicapHasta_CheckedChanged(object sender, EventArgs e)
+        {
+            numHandicapHasta.Enabled = chkHandicapHasta.Checked;
+        }
+
+        private void chkPromedioHasta_CheckedChanged(object sender, EventArgs e)
+        {
+            numPromedioHasta.Enabled = chkPromedioHasta.Checked;
+        }
+
+        private void chkPromedioDesde_CheckedChanged(object sender, EventArgs e)
+        {
+            numPromedioDesde.Enabled = chkPromedioDesde.Checked;
+        }
+
     }
 }

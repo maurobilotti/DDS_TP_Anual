@@ -30,12 +30,12 @@ namespace TP_Anual_DDS_E4
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertDBUsuario(DBUsuario instance);
-    partial void UpdateDBUsuario(DBUsuario instance);
-    partial void DeleteDBUsuario(DBUsuario instance);
     partial void InsertDBAmigos(DBAmigos instance);
     partial void UpdateDBAmigos(DBAmigos instance);
     partial void DeleteDBAmigos(DBAmigos instance);
+    partial void InsertDBUsuario(DBUsuario instance);
+    partial void UpdateDBUsuario(DBUsuario instance);
+    partial void DeleteDBUsuario(DBUsuario instance);
     partial void InsertDBCalificacion(DBCalificacion instance);
     partial void UpdateDBCalificacion(DBCalificacion instance);
     partial void DeleteDBCalificacion(DBCalificacion instance);
@@ -51,6 +51,9 @@ namespace TP_Anual_DDS_E4
     partial void InsertDBInfraccion(DBInfraccion instance);
     partial void UpdateDBInfraccion(DBInfraccion instance);
     partial void DeleteDBInfraccion(DBInfraccion instance);
+    partial void InsertDBInteresado(DBInteresado instance);
+    partial void UpdateDBInteresado(DBInteresado instance);
+    partial void DeleteDBInteresado(DBInteresado instance);
     partial void InsertDBPartido(DBPartido instance);
     partial void UpdateDBPartido(DBPartido instance);
     partial void DeleteDBPartido(DBPartido instance);
@@ -63,9 +66,6 @@ namespace TP_Anual_DDS_E4
     partial void InsertDBTipoJugador(DBTipoJugador instance);
     partial void UpdateDBTipoJugador(DBTipoJugador instance);
     partial void DeleteDBTipoJugador(DBTipoJugador instance);
-    partial void InsertDBInteresado(DBInteresado instance);
-    partial void UpdateDBInteresado(DBInteresado instance);
-    partial void DeleteDBInteresado(DBInteresado instance);
     #endregion
 		
 		public DDSDataContext() : 
@@ -98,19 +98,19 @@ namespace TP_Anual_DDS_E4
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<DBUsuario> DBUsuario
-		{
-			get
-			{
-				return this.GetTable<DBUsuario>();
-			}
-		}
-		
 		public System.Data.Linq.Table<DBAmigos> DBAmigos
 		{
 			get
 			{
 				return this.GetTable<DBAmigos>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DBUsuario> DBUsuario
+		{
+			get
+			{
+				return this.GetTable<DBUsuario>();
 			}
 		}
 		
@@ -154,6 +154,14 @@ namespace TP_Anual_DDS_E4
 			}
 		}
 		
+		public System.Data.Linq.Table<DBInteresado> DBInteresado
+		{
+			get
+			{
+				return this.GetTable<DBInteresado>();
+			}
+		}
+		
 		public System.Data.Linq.Table<DBPartido> DBPartido
 		{
 			get
@@ -183,14 +191,6 @@ namespace TP_Anual_DDS_E4
 			get
 			{
 				return this.GetTable<DBTipoJugador>();
-			}
-		}
-		
-		public System.Data.Linq.Table<DBInteresado> DBInteresado
-		{
-			get
-			{
-				return this.GetTable<DBInteresado>();
 			}
 		}
 		
@@ -297,13 +297,6 @@ namespace TP_Anual_DDS_E4
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Partido_L")]
-		public ISingleResult<Partido_LResult> Partido_L()
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
-			return ((ISingleResult<Partido_LResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Partido_ObtenerInteresados")]
 		public ISingleResult<Partido_ObtenerInteresadosResult> Partido_ObtenerInteresados([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Partido", DbType="Int")] System.Nullable<int> id_Partido)
 		{
@@ -336,6 +329,147 @@ namespace TP_Anual_DDS_E4
 		public System.Nullable<decimal> PromUltimoPartido([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Partido", DbType="Int")] System.Nullable<int> id_Partido)
 		{
 			return ((System.Nullable<decimal>)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Partido).ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Partido_L")]
+		public ISingleResult<Partido_LResult> Partido_L()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<Partido_LResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Interesado_ObtenerPartidosFinalizados")]
+		public ISingleResult<Interesado_ObtenerPartidosFinalizadosResult> Interesado_ObtenerPartidosFinalizados([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Interesado", DbType="Int")] System.Nullable<int> id_Interesado)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Interesado);
+			return ((ISingleResult<Interesado_ObtenerPartidosFinalizadosResult>)(result.ReturnValue));
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBAmigos")]
+	public partial class DBAmigos : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id_Interesado;
+		
+		private int _Id_Amigo;
+		
+		private EntityRef<DBInteresado> _DBInteresado;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_InteresadoChanging(int value);
+    partial void OnId_InteresadoChanged();
+    partial void OnId_AmigoChanging(int value);
+    partial void OnId_AmigoChanged();
+    #endregion
+		
+		public DBAmigos()
+		{
+			this._DBInteresado = default(EntityRef<DBInteresado>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id_Interesado
+		{
+			get
+			{
+				return this._Id_Interesado;
+			}
+			set
+			{
+				if ((this._Id_Interesado != value))
+				{
+					if (this._DBInteresado.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_InteresadoChanging(value);
+					this.SendPropertyChanging();
+					this._Id_Interesado = value;
+					this.SendPropertyChanged("Id_Interesado");
+					this.OnId_InteresadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Amigo", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id_Amigo
+		{
+			get
+			{
+				return this._Id_Amigo;
+			}
+			set
+			{
+				if ((this._Id_Amigo != value))
+				{
+					this.OnId_AmigoChanging(value);
+					this.SendPropertyChanging();
+					this._Id_Amigo = value;
+					this.SendPropertyChanged("Id_Amigo");
+					this.OnId_AmigoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBInteresado_DBAmigos", Storage="_DBInteresado", ThisKey="Id_Interesado", OtherKey="Id_Interesado", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public DBInteresado DBInteresado
+		{
+			get
+			{
+				return this._DBInteresado.Entity;
+			}
+			set
+			{
+				DBInteresado previousValue = this._DBInteresado.Entity;
+				if (((previousValue != value) 
+							|| (this._DBInteresado.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DBInteresado.Entity = null;
+						previousValue.DBAmigos.Remove(this);
+					}
+					this._DBInteresado.Entity = value;
+					if ((value != null))
+					{
+						value.DBAmigos.Add(this);
+						this._Id_Interesado = value.Id_Interesado;
+					}
+					else
+					{
+						this._Id_Interesado = default(int);
+					}
+					this.SendPropertyChanged("DBInteresado");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -554,133 +688,6 @@ namespace TP_Anual_DDS_E4
 		{
 			this.SendPropertyChanging();
 			entity.DBUsuario = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBAmigos")]
-	public partial class DBAmigos : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_Interesado;
-		
-		private int _Id_Amigo;
-		
-		private EntityRef<DBInteresado> _DBInteresado;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_InteresadoChanging(int value);
-    partial void OnId_InteresadoChanged();
-    partial void OnId_AmigoChanging(int value);
-    partial void OnId_AmigoChanged();
-    #endregion
-		
-		public DBAmigos()
-		{
-			this._DBInteresado = default(EntityRef<DBInteresado>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id_Interesado
-		{
-			get
-			{
-				return this._Id_Interesado;
-			}
-			set
-			{
-				if ((this._Id_Interesado != value))
-				{
-					if (this._DBInteresado.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_InteresadoChanging(value);
-					this.SendPropertyChanging();
-					this._Id_Interesado = value;
-					this.SendPropertyChanged("Id_Interesado");
-					this.OnId_InteresadoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Amigo", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id_Amigo
-		{
-			get
-			{
-				return this._Id_Amigo;
-			}
-			set
-			{
-				if ((this._Id_Amigo != value))
-				{
-					this.OnId_AmigoChanging(value);
-					this.SendPropertyChanging();
-					this._Id_Amigo = value;
-					this.SendPropertyChanged("Id_Amigo");
-					this.OnId_AmigoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBInteresado_DBAmigos", Storage="_DBInteresado", ThisKey="Id_Interesado", OtherKey="Id_Interesado", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public DBInteresado DBInteresado
-		{
-			get
-			{
-				return this._DBInteresado.Entity;
-			}
-			set
-			{
-				DBInteresado previousValue = this._DBInteresado.Entity;
-				if (((previousValue != value) 
-							|| (this._DBInteresado.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DBInteresado.Entity = null;
-						previousValue.DBAmigos.Remove(this);
-					}
-					this._DBInteresado.Entity = value;
-					if ((value != null))
-					{
-						value.DBAmigos.Add(this);
-						this._Id_Interesado = value.Id_Interesado;
-					}
-					else
-					{
-						this._Id_Interesado = default(int);
-					}
-					this.SendPropertyChanged("DBInteresado");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -1632,876 +1639,6 @@ namespace TP_Anual_DDS_E4
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBPartido")]
-	public partial class DBPartido : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_Partido;
-		
-		private string _Lugar;
-		
-		private System.Nullable<bool> _Confirmado;
-		
-		private System.Nullable<System.DateTime> _Fecha_Hora;
-		
-		private EntitySet<DBCalificacion> _DBCalificacion;
-		
-		private EntitySet<DBPartido_Interesado> _DBPartido_Interesado;
-		
-		private EntitySet<DBPartido_Interesado_Condicional> _DBPartido_Interesado_Condicional;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_PartidoChanging(int value);
-    partial void OnId_PartidoChanged();
-    partial void OnLugarChanging(string value);
-    partial void OnLugarChanged();
-    partial void OnConfirmadoChanging(System.Nullable<bool> value);
-    partial void OnConfirmadoChanged();
-    partial void OnFecha_HoraChanging(System.Nullable<System.DateTime> value);
-    partial void OnFecha_HoraChanged();
-    #endregion
-		
-		public DBPartido()
-		{
-			this._DBCalificacion = new EntitySet<DBCalificacion>(new Action<DBCalificacion>(this.attach_DBCalificacion), new Action<DBCalificacion>(this.detach_DBCalificacion));
-			this._DBPartido_Interesado = new EntitySet<DBPartido_Interesado>(new Action<DBPartido_Interesado>(this.attach_DBPartido_Interesado), new Action<DBPartido_Interesado>(this.detach_DBPartido_Interesado));
-			this._DBPartido_Interesado_Condicional = new EntitySet<DBPartido_Interesado_Condicional>(new Action<DBPartido_Interesado_Condicional>(this.attach_DBPartido_Interesado_Condicional), new Action<DBPartido_Interesado_Condicional>(this.detach_DBPartido_Interesado_Condicional));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Partido", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id_Partido
-		{
-			get
-			{
-				return this._Id_Partido;
-			}
-			set
-			{
-				if ((this._Id_Partido != value))
-				{
-					this.OnId_PartidoChanging(value);
-					this.SendPropertyChanging();
-					this._Id_Partido = value;
-					this.SendPropertyChanged("Id_Partido");
-					this.OnId_PartidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lugar", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Lugar
-		{
-			get
-			{
-				return this._Lugar;
-			}
-			set
-			{
-				if ((this._Lugar != value))
-				{
-					this.OnLugarChanging(value);
-					this.SendPropertyChanging();
-					this._Lugar = value;
-					this.SendPropertyChanged("Lugar");
-					this.OnLugarChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Confirmado", DbType="Bit")]
-		public System.Nullable<bool> Confirmado
-		{
-			get
-			{
-				return this._Confirmado;
-			}
-			set
-			{
-				if ((this._Confirmado != value))
-				{
-					this.OnConfirmadoChanging(value);
-					this.SendPropertyChanging();
-					this._Confirmado = value;
-					this.SendPropertyChanged("Confirmado");
-					this.OnConfirmadoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha_Hora", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Fecha_Hora
-		{
-			get
-			{
-				return this._Fecha_Hora;
-			}
-			set
-			{
-				if ((this._Fecha_Hora != value))
-				{
-					this.OnFecha_HoraChanging(value);
-					this.SendPropertyChanging();
-					this._Fecha_Hora = value;
-					this.SendPropertyChanged("Fecha_Hora");
-					this.OnFecha_HoraChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBCalificacion", Storage="_DBCalificacion", ThisKey="Id_Partido", OtherKey="Id_Partido")]
-		public EntitySet<DBCalificacion> DBCalificacion
-		{
-			get
-			{
-				return this._DBCalificacion;
-			}
-			set
-			{
-				this._DBCalificacion.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBPartido_Interesado", Storage="_DBPartido_Interesado", ThisKey="Id_Partido", OtherKey="Id_Partido")]
-		public EntitySet<DBPartido_Interesado> DBPartido_Interesado
-		{
-			get
-			{
-				return this._DBPartido_Interesado;
-			}
-			set
-			{
-				this._DBPartido_Interesado.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBPartido_Interesado_Condicional", Storage="_DBPartido_Interesado_Condicional", ThisKey="Id_Partido", OtherKey="Id_Partido")]
-		public EntitySet<DBPartido_Interesado_Condicional> DBPartido_Interesado_Condicional
-		{
-			get
-			{
-				return this._DBPartido_Interesado_Condicional;
-			}
-			set
-			{
-				this._DBPartido_Interesado_Condicional.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_DBCalificacion(DBCalificacion entity)
-		{
-			this.SendPropertyChanging();
-			entity.DBPartido = this;
-		}
-		
-		private void detach_DBCalificacion(DBCalificacion entity)
-		{
-			this.SendPropertyChanging();
-			entity.DBPartido = null;
-		}
-		
-		private void attach_DBPartido_Interesado(DBPartido_Interesado entity)
-		{
-			this.SendPropertyChanging();
-			entity.DBPartido = this;
-		}
-		
-		private void detach_DBPartido_Interesado(DBPartido_Interesado entity)
-		{
-			this.SendPropertyChanging();
-			entity.DBPartido = null;
-		}
-		
-		private void attach_DBPartido_Interesado_Condicional(DBPartido_Interesado_Condicional entity)
-		{
-			this.SendPropertyChanging();
-			entity.DBPartido = this;
-		}
-		
-		private void detach_DBPartido_Interesado_Condicional(DBPartido_Interesado_Condicional entity)
-		{
-			this.SendPropertyChanging();
-			entity.DBPartido = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBPartido_Interesado")]
-	public partial class DBPartido_Interesado : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_Partido;
-		
-		private int _Id_Interesado;
-		
-		private int _Id_TipoJugador;
-		
-		private System.Nullable<int> _EquipoDesignado;
-		
-		private System.Nullable<bool> _Baja;
-		
-		private EntityRef<DBPartido> _DBPartido;
-		
-		private EntityRef<DBTipoJugador> _DBTipoJugador;
-		
-		private EntityRef<DBInteresado> _DBInteresado;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_PartidoChanging(int value);
-    partial void OnId_PartidoChanged();
-    partial void OnId_InteresadoChanging(int value);
-    partial void OnId_InteresadoChanged();
-    partial void OnId_TipoJugadorChanging(int value);
-    partial void OnId_TipoJugadorChanged();
-    partial void OnEquipoDesignadoChanging(System.Nullable<int> value);
-    partial void OnEquipoDesignadoChanged();
-    partial void OnBajaChanging(System.Nullable<bool> value);
-    partial void OnBajaChanged();
-    #endregion
-		
-		public DBPartido_Interesado()
-		{
-			this._DBPartido = default(EntityRef<DBPartido>);
-			this._DBTipoJugador = default(EntityRef<DBTipoJugador>);
-			this._DBInteresado = default(EntityRef<DBInteresado>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Partido", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id_Partido
-		{
-			get
-			{
-				return this._Id_Partido;
-			}
-			set
-			{
-				if ((this._Id_Partido != value))
-				{
-					if (this._DBPartido.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_PartidoChanging(value);
-					this.SendPropertyChanging();
-					this._Id_Partido = value;
-					this.SendPropertyChanged("Id_Partido");
-					this.OnId_PartidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id_Interesado
-		{
-			get
-			{
-				return this._Id_Interesado;
-			}
-			set
-			{
-				if ((this._Id_Interesado != value))
-				{
-					if (this._DBInteresado.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_InteresadoChanging(value);
-					this.SendPropertyChanging();
-					this._Id_Interesado = value;
-					this.SendPropertyChanged("Id_Interesado");
-					this.OnId_InteresadoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_TipoJugador", DbType="Int NOT NULL")]
-		public int Id_TipoJugador
-		{
-			get
-			{
-				return this._Id_TipoJugador;
-			}
-			set
-			{
-				if ((this._Id_TipoJugador != value))
-				{
-					if (this._DBTipoJugador.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_TipoJugadorChanging(value);
-					this.SendPropertyChanging();
-					this._Id_TipoJugador = value;
-					this.SendPropertyChanged("Id_TipoJugador");
-					this.OnId_TipoJugadorChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquipoDesignado", DbType="Int")]
-		public System.Nullable<int> EquipoDesignado
-		{
-			get
-			{
-				return this._EquipoDesignado;
-			}
-			set
-			{
-				if ((this._EquipoDesignado != value))
-				{
-					this.OnEquipoDesignadoChanging(value);
-					this.SendPropertyChanging();
-					this._EquipoDesignado = value;
-					this.SendPropertyChanged("EquipoDesignado");
-					this.OnEquipoDesignadoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Baja", DbType="Bit")]
-		public System.Nullable<bool> Baja
-		{
-			get
-			{
-				return this._Baja;
-			}
-			set
-			{
-				if ((this._Baja != value))
-				{
-					this.OnBajaChanging(value);
-					this.SendPropertyChanging();
-					this._Baja = value;
-					this.SendPropertyChanged("Baja");
-					this.OnBajaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBPartido_Interesado", Storage="_DBPartido", ThisKey="Id_Partido", OtherKey="Id_Partido", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public DBPartido DBPartido
-		{
-			get
-			{
-				return this._DBPartido.Entity;
-			}
-			set
-			{
-				DBPartido previousValue = this._DBPartido.Entity;
-				if (((previousValue != value) 
-							|| (this._DBPartido.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DBPartido.Entity = null;
-						previousValue.DBPartido_Interesado.Remove(this);
-					}
-					this._DBPartido.Entity = value;
-					if ((value != null))
-					{
-						value.DBPartido_Interesado.Add(this);
-						this._Id_Partido = value.Id_Partido;
-					}
-					else
-					{
-						this._Id_Partido = default(int);
-					}
-					this.SendPropertyChanged("DBPartido");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBTipoJugador_DBPartido_Interesado", Storage="_DBTipoJugador", ThisKey="Id_TipoJugador", OtherKey="Id_TipoJugador", IsForeignKey=true)]
-		public DBTipoJugador DBTipoJugador
-		{
-			get
-			{
-				return this._DBTipoJugador.Entity;
-			}
-			set
-			{
-				DBTipoJugador previousValue = this._DBTipoJugador.Entity;
-				if (((previousValue != value) 
-							|| (this._DBTipoJugador.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DBTipoJugador.Entity = null;
-						previousValue.DBPartido_Interesado.Remove(this);
-					}
-					this._DBTipoJugador.Entity = value;
-					if ((value != null))
-					{
-						value.DBPartido_Interesado.Add(this);
-						this._Id_TipoJugador = value.Id_TipoJugador;
-					}
-					else
-					{
-						this._Id_TipoJugador = default(int);
-					}
-					this.SendPropertyChanged("DBTipoJugador");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBInteresado_DBPartido_Interesado", Storage="_DBInteresado", ThisKey="Id_Interesado", OtherKey="Id_Interesado", IsForeignKey=true)]
-		public DBInteresado DBInteresado
-		{
-			get
-			{
-				return this._DBInteresado.Entity;
-			}
-			set
-			{
-				DBInteresado previousValue = this._DBInteresado.Entity;
-				if (((previousValue != value) 
-							|| (this._DBInteresado.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DBInteresado.Entity = null;
-						previousValue.DBPartido_Interesado.Remove(this);
-					}
-					this._DBInteresado.Entity = value;
-					if ((value != null))
-					{
-						value.DBPartido_Interesado.Add(this);
-						this._Id_Interesado = value.Id_Interesado;
-					}
-					else
-					{
-						this._Id_Interesado = default(int);
-					}
-					this.SendPropertyChanged("DBInteresado");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBPartido_Interesado_Condicional")]
-	public partial class DBPartido_Interesado_Condicional : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_Partido;
-		
-		private int _Id_Interesado;
-		
-		private int _Id_Condicion;
-		
-		private System.Nullable<bool> _Baja;
-		
-		private EntityRef<DBCondicion> _DBCondicion;
-		
-		private EntityRef<DBPartido> _DBPartido;
-		
-		private EntityRef<DBInteresado> _DBInteresado;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_PartidoChanging(int value);
-    partial void OnId_PartidoChanged();
-    partial void OnId_InteresadoChanging(int value);
-    partial void OnId_InteresadoChanged();
-    partial void OnId_CondicionChanging(int value);
-    partial void OnId_CondicionChanged();
-    partial void OnBajaChanging(System.Nullable<bool> value);
-    partial void OnBajaChanged();
-    #endregion
-		
-		public DBPartido_Interesado_Condicional()
-		{
-			this._DBCondicion = default(EntityRef<DBCondicion>);
-			this._DBPartido = default(EntityRef<DBPartido>);
-			this._DBInteresado = default(EntityRef<DBInteresado>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Partido", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id_Partido
-		{
-			get
-			{
-				return this._Id_Partido;
-			}
-			set
-			{
-				if ((this._Id_Partido != value))
-				{
-					if (this._DBPartido.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_PartidoChanging(value);
-					this.SendPropertyChanging();
-					this._Id_Partido = value;
-					this.SendPropertyChanged("Id_Partido");
-					this.OnId_PartidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id_Interesado
-		{
-			get
-			{
-				return this._Id_Interesado;
-			}
-			set
-			{
-				if ((this._Id_Interesado != value))
-				{
-					if (this._DBInteresado.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_InteresadoChanging(value);
-					this.SendPropertyChanging();
-					this._Id_Interesado = value;
-					this.SendPropertyChanged("Id_Interesado");
-					this.OnId_InteresadoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Condicion", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id_Condicion
-		{
-			get
-			{
-				return this._Id_Condicion;
-			}
-			set
-			{
-				if ((this._Id_Condicion != value))
-				{
-					if (this._DBCondicion.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_CondicionChanging(value);
-					this.SendPropertyChanging();
-					this._Id_Condicion = value;
-					this.SendPropertyChanged("Id_Condicion");
-					this.OnId_CondicionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Baja", DbType="Bit")]
-		public System.Nullable<bool> Baja
-		{
-			get
-			{
-				return this._Baja;
-			}
-			set
-			{
-				if ((this._Baja != value))
-				{
-					this.OnBajaChanging(value);
-					this.SendPropertyChanging();
-					this._Baja = value;
-					this.SendPropertyChanged("Baja");
-					this.OnBajaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBCondicion_DBPartido_Interesado_Condicional", Storage="_DBCondicion", ThisKey="Id_Condicion", OtherKey="Id_Condicion", IsForeignKey=true)]
-		public DBCondicion DBCondicion
-		{
-			get
-			{
-				return this._DBCondicion.Entity;
-			}
-			set
-			{
-				DBCondicion previousValue = this._DBCondicion.Entity;
-				if (((previousValue != value) 
-							|| (this._DBCondicion.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DBCondicion.Entity = null;
-						previousValue.DBPartido_Interesado_Condicional.Remove(this);
-					}
-					this._DBCondicion.Entity = value;
-					if ((value != null))
-					{
-						value.DBPartido_Interesado_Condicional.Add(this);
-						this._Id_Condicion = value.Id_Condicion;
-					}
-					else
-					{
-						this._Id_Condicion = default(int);
-					}
-					this.SendPropertyChanged("DBCondicion");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBPartido_Interesado_Condicional", Storage="_DBPartido", ThisKey="Id_Partido", OtherKey="Id_Partido", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public DBPartido DBPartido
-		{
-			get
-			{
-				return this._DBPartido.Entity;
-			}
-			set
-			{
-				DBPartido previousValue = this._DBPartido.Entity;
-				if (((previousValue != value) 
-							|| (this._DBPartido.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DBPartido.Entity = null;
-						previousValue.DBPartido_Interesado_Condicional.Remove(this);
-					}
-					this._DBPartido.Entity = value;
-					if ((value != null))
-					{
-						value.DBPartido_Interesado_Condicional.Add(this);
-						this._Id_Partido = value.Id_Partido;
-					}
-					else
-					{
-						this._Id_Partido = default(int);
-					}
-					this.SendPropertyChanged("DBPartido");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBInteresado_DBPartido_Interesado_Condicional", Storage="_DBInteresado", ThisKey="Id_Interesado", OtherKey="Id_Interesado", IsForeignKey=true)]
-		public DBInteresado DBInteresado
-		{
-			get
-			{
-				return this._DBInteresado.Entity;
-			}
-			set
-			{
-				DBInteresado previousValue = this._DBInteresado.Entity;
-				if (((previousValue != value) 
-							|| (this._DBInteresado.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DBInteresado.Entity = null;
-						previousValue.DBPartido_Interesado_Condicional.Remove(this);
-					}
-					this._DBInteresado.Entity = value;
-					if ((value != null))
-					{
-						value.DBPartido_Interesado_Condicional.Add(this);
-						this._Id_Interesado = value.Id_Interesado;
-					}
-					else
-					{
-						this._Id_Interesado = default(int);
-					}
-					this.SendPropertyChanged("DBInteresado");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBTipoJugador")]
-	public partial class DBTipoJugador : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_TipoJugador;
-		
-		private string _Descripcion;
-		
-		private EntitySet<DBPartido_Interesado> _DBPartido_Interesado;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_TipoJugadorChanging(int value);
-    partial void OnId_TipoJugadorChanged();
-    partial void OnDescripcionChanging(string value);
-    partial void OnDescripcionChanged();
-    #endregion
-		
-		public DBTipoJugador()
-		{
-			this._DBPartido_Interesado = new EntitySet<DBPartido_Interesado>(new Action<DBPartido_Interesado>(this.attach_DBPartido_Interesado), new Action<DBPartido_Interesado>(this.detach_DBPartido_Interesado));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_TipoJugador", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id_TipoJugador
-		{
-			get
-			{
-				return this._Id_TipoJugador;
-			}
-			set
-			{
-				if ((this._Id_TipoJugador != value))
-				{
-					this.OnId_TipoJugadorChanging(value);
-					this.SendPropertyChanging();
-					this._Id_TipoJugador = value;
-					this.SendPropertyChanged("Id_TipoJugador");
-					this.OnId_TipoJugadorChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Descripcion", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Descripcion
-		{
-			get
-			{
-				return this._Descripcion;
-			}
-			set
-			{
-				if ((this._Descripcion != value))
-				{
-					this.OnDescripcionChanging(value);
-					this.SendPropertyChanging();
-					this._Descripcion = value;
-					this.SendPropertyChanged("Descripcion");
-					this.OnDescripcionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBTipoJugador_DBPartido_Interesado", Storage="_DBPartido_Interesado", ThisKey="Id_TipoJugador", OtherKey="Id_TipoJugador")]
-		public EntitySet<DBPartido_Interesado> DBPartido_Interesado
-		{
-			get
-			{
-				return this._DBPartido_Interesado;
-			}
-			set
-			{
-				this._DBPartido_Interesado.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_DBPartido_Interesado(DBPartido_Interesado entity)
-		{
-			this.SendPropertyChanging();
-			entity.DBTipoJugador = this;
-		}
-		
-		private void detach_DBPartido_Interesado(DBPartido_Interesado entity)
-		{
-			this.SendPropertyChanging();
-			entity.DBTipoJugador = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBInteresado")]
 	public partial class DBInteresado : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2961,6 +2098,900 @@ namespace TP_Anual_DDS_E4
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBPartido")]
+	public partial class DBPartido : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id_Partido;
+		
+		private string _Lugar;
+		
+		private System.Nullable<bool> _Confirmado;
+		
+		private System.Nullable<System.DateTime> _Fecha_Hora;
+		
+		private System.Nullable<bool> _Finalizado;
+		
+		private EntitySet<DBCalificacion> _DBCalificacion;
+		
+		private EntitySet<DBPartido_Interesado> _DBPartido_Interesado;
+		
+		private EntitySet<DBPartido_Interesado_Condicional> _DBPartido_Interesado_Condicional;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_PartidoChanging(int value);
+    partial void OnId_PartidoChanged();
+    partial void OnLugarChanging(string value);
+    partial void OnLugarChanged();
+    partial void OnConfirmadoChanging(System.Nullable<bool> value);
+    partial void OnConfirmadoChanged();
+    partial void OnFecha_HoraChanging(System.Nullable<System.DateTime> value);
+    partial void OnFecha_HoraChanged();
+    partial void OnFinalizadoChanging(System.Nullable<bool> value);
+    partial void OnFinalizadoChanged();
+    #endregion
+		
+		public DBPartido()
+		{
+			this._DBCalificacion = new EntitySet<DBCalificacion>(new Action<DBCalificacion>(this.attach_DBCalificacion), new Action<DBCalificacion>(this.detach_DBCalificacion));
+			this._DBPartido_Interesado = new EntitySet<DBPartido_Interesado>(new Action<DBPartido_Interesado>(this.attach_DBPartido_Interesado), new Action<DBPartido_Interesado>(this.detach_DBPartido_Interesado));
+			this._DBPartido_Interesado_Condicional = new EntitySet<DBPartido_Interesado_Condicional>(new Action<DBPartido_Interesado_Condicional>(this.attach_DBPartido_Interesado_Condicional), new Action<DBPartido_Interesado_Condicional>(this.detach_DBPartido_Interesado_Condicional));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Partido", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id_Partido
+		{
+			get
+			{
+				return this._Id_Partido;
+			}
+			set
+			{
+				if ((this._Id_Partido != value))
+				{
+					this.OnId_PartidoChanging(value);
+					this.SendPropertyChanging();
+					this._Id_Partido = value;
+					this.SendPropertyChanged("Id_Partido");
+					this.OnId_PartidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lugar", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Lugar
+		{
+			get
+			{
+				return this._Lugar;
+			}
+			set
+			{
+				if ((this._Lugar != value))
+				{
+					this.OnLugarChanging(value);
+					this.SendPropertyChanging();
+					this._Lugar = value;
+					this.SendPropertyChanged("Lugar");
+					this.OnLugarChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Confirmado", DbType="Bit")]
+		public System.Nullable<bool> Confirmado
+		{
+			get
+			{
+				return this._Confirmado;
+			}
+			set
+			{
+				if ((this._Confirmado != value))
+				{
+					this.OnConfirmadoChanging(value);
+					this.SendPropertyChanging();
+					this._Confirmado = value;
+					this.SendPropertyChanged("Confirmado");
+					this.OnConfirmadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha_Hora", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Fecha_Hora
+		{
+			get
+			{
+				return this._Fecha_Hora;
+			}
+			set
+			{
+				if ((this._Fecha_Hora != value))
+				{
+					this.OnFecha_HoraChanging(value);
+					this.SendPropertyChanging();
+					this._Fecha_Hora = value;
+					this.SendPropertyChanged("Fecha_Hora");
+					this.OnFecha_HoraChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Finalizado", DbType="Bit")]
+		public System.Nullable<bool> Finalizado
+		{
+			get
+			{
+				return this._Finalizado;
+			}
+			set
+			{
+				if ((this._Finalizado != value))
+				{
+					this.OnFinalizadoChanging(value);
+					this.SendPropertyChanging();
+					this._Finalizado = value;
+					this.SendPropertyChanged("Finalizado");
+					this.OnFinalizadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBCalificacion", Storage="_DBCalificacion", ThisKey="Id_Partido", OtherKey="Id_Partido")]
+		public EntitySet<DBCalificacion> DBCalificacion
+		{
+			get
+			{
+				return this._DBCalificacion;
+			}
+			set
+			{
+				this._DBCalificacion.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBPartido_Interesado", Storage="_DBPartido_Interesado", ThisKey="Id_Partido", OtherKey="Id_Partido")]
+		public EntitySet<DBPartido_Interesado> DBPartido_Interesado
+		{
+			get
+			{
+				return this._DBPartido_Interesado;
+			}
+			set
+			{
+				this._DBPartido_Interesado.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBPartido_Interesado_Condicional", Storage="_DBPartido_Interesado_Condicional", ThisKey="Id_Partido", OtherKey="Id_Partido")]
+		public EntitySet<DBPartido_Interesado_Condicional> DBPartido_Interesado_Condicional
+		{
+			get
+			{
+				return this._DBPartido_Interesado_Condicional;
+			}
+			set
+			{
+				this._DBPartido_Interesado_Condicional.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_DBCalificacion(DBCalificacion entity)
+		{
+			this.SendPropertyChanging();
+			entity.DBPartido = this;
+		}
+		
+		private void detach_DBCalificacion(DBCalificacion entity)
+		{
+			this.SendPropertyChanging();
+			entity.DBPartido = null;
+		}
+		
+		private void attach_DBPartido_Interesado(DBPartido_Interesado entity)
+		{
+			this.SendPropertyChanging();
+			entity.DBPartido = this;
+		}
+		
+		private void detach_DBPartido_Interesado(DBPartido_Interesado entity)
+		{
+			this.SendPropertyChanging();
+			entity.DBPartido = null;
+		}
+		
+		private void attach_DBPartido_Interesado_Condicional(DBPartido_Interesado_Condicional entity)
+		{
+			this.SendPropertyChanging();
+			entity.DBPartido = this;
+		}
+		
+		private void detach_DBPartido_Interesado_Condicional(DBPartido_Interesado_Condicional entity)
+		{
+			this.SendPropertyChanging();
+			entity.DBPartido = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBPartido_Interesado")]
+	public partial class DBPartido_Interesado : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id_Partido;
+		
+		private int _Id_Interesado;
+		
+		private int _Id_TipoJugador;
+		
+		private System.Nullable<int> _EquipoDesignado;
+		
+		private System.Nullable<bool> _Baja;
+		
+		private EntityRef<DBInteresado> _DBInteresado;
+		
+		private EntityRef<DBPartido> _DBPartido;
+		
+		private EntityRef<DBTipoJugador> _DBTipoJugador;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_PartidoChanging(int value);
+    partial void OnId_PartidoChanged();
+    partial void OnId_InteresadoChanging(int value);
+    partial void OnId_InteresadoChanged();
+    partial void OnId_TipoJugadorChanging(int value);
+    partial void OnId_TipoJugadorChanged();
+    partial void OnEquipoDesignadoChanging(System.Nullable<int> value);
+    partial void OnEquipoDesignadoChanged();
+    partial void OnBajaChanging(System.Nullable<bool> value);
+    partial void OnBajaChanged();
+    #endregion
+		
+		public DBPartido_Interesado()
+		{
+			this._DBInteresado = default(EntityRef<DBInteresado>);
+			this._DBPartido = default(EntityRef<DBPartido>);
+			this._DBTipoJugador = default(EntityRef<DBTipoJugador>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Partido", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id_Partido
+		{
+			get
+			{
+				return this._Id_Partido;
+			}
+			set
+			{
+				if ((this._Id_Partido != value))
+				{
+					if (this._DBPartido.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_PartidoChanging(value);
+					this.SendPropertyChanging();
+					this._Id_Partido = value;
+					this.SendPropertyChanged("Id_Partido");
+					this.OnId_PartidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id_Interesado
+		{
+			get
+			{
+				return this._Id_Interesado;
+			}
+			set
+			{
+				if ((this._Id_Interesado != value))
+				{
+					if (this._DBInteresado.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_InteresadoChanging(value);
+					this.SendPropertyChanging();
+					this._Id_Interesado = value;
+					this.SendPropertyChanged("Id_Interesado");
+					this.OnId_InteresadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_TipoJugador", DbType="Int NOT NULL")]
+		public int Id_TipoJugador
+		{
+			get
+			{
+				return this._Id_TipoJugador;
+			}
+			set
+			{
+				if ((this._Id_TipoJugador != value))
+				{
+					if (this._DBTipoJugador.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_TipoJugadorChanging(value);
+					this.SendPropertyChanging();
+					this._Id_TipoJugador = value;
+					this.SendPropertyChanged("Id_TipoJugador");
+					this.OnId_TipoJugadorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquipoDesignado", DbType="Int")]
+		public System.Nullable<int> EquipoDesignado
+		{
+			get
+			{
+				return this._EquipoDesignado;
+			}
+			set
+			{
+				if ((this._EquipoDesignado != value))
+				{
+					this.OnEquipoDesignadoChanging(value);
+					this.SendPropertyChanging();
+					this._EquipoDesignado = value;
+					this.SendPropertyChanged("EquipoDesignado");
+					this.OnEquipoDesignadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Baja", DbType="Bit")]
+		public System.Nullable<bool> Baja
+		{
+			get
+			{
+				return this._Baja;
+			}
+			set
+			{
+				if ((this._Baja != value))
+				{
+					this.OnBajaChanging(value);
+					this.SendPropertyChanging();
+					this._Baja = value;
+					this.SendPropertyChanged("Baja");
+					this.OnBajaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBInteresado_DBPartido_Interesado", Storage="_DBInteresado", ThisKey="Id_Interesado", OtherKey="Id_Interesado", IsForeignKey=true)]
+		public DBInteresado DBInteresado
+		{
+			get
+			{
+				return this._DBInteresado.Entity;
+			}
+			set
+			{
+				DBInteresado previousValue = this._DBInteresado.Entity;
+				if (((previousValue != value) 
+							|| (this._DBInteresado.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DBInteresado.Entity = null;
+						previousValue.DBPartido_Interesado.Remove(this);
+					}
+					this._DBInteresado.Entity = value;
+					if ((value != null))
+					{
+						value.DBPartido_Interesado.Add(this);
+						this._Id_Interesado = value.Id_Interesado;
+					}
+					else
+					{
+						this._Id_Interesado = default(int);
+					}
+					this.SendPropertyChanged("DBInteresado");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBPartido_Interesado", Storage="_DBPartido", ThisKey="Id_Partido", OtherKey="Id_Partido", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public DBPartido DBPartido
+		{
+			get
+			{
+				return this._DBPartido.Entity;
+			}
+			set
+			{
+				DBPartido previousValue = this._DBPartido.Entity;
+				if (((previousValue != value) 
+							|| (this._DBPartido.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DBPartido.Entity = null;
+						previousValue.DBPartido_Interesado.Remove(this);
+					}
+					this._DBPartido.Entity = value;
+					if ((value != null))
+					{
+						value.DBPartido_Interesado.Add(this);
+						this._Id_Partido = value.Id_Partido;
+					}
+					else
+					{
+						this._Id_Partido = default(int);
+					}
+					this.SendPropertyChanged("DBPartido");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBTipoJugador_DBPartido_Interesado", Storage="_DBTipoJugador", ThisKey="Id_TipoJugador", OtherKey="Id_TipoJugador", IsForeignKey=true)]
+		public DBTipoJugador DBTipoJugador
+		{
+			get
+			{
+				return this._DBTipoJugador.Entity;
+			}
+			set
+			{
+				DBTipoJugador previousValue = this._DBTipoJugador.Entity;
+				if (((previousValue != value) 
+							|| (this._DBTipoJugador.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DBTipoJugador.Entity = null;
+						previousValue.DBPartido_Interesado.Remove(this);
+					}
+					this._DBTipoJugador.Entity = value;
+					if ((value != null))
+					{
+						value.DBPartido_Interesado.Add(this);
+						this._Id_TipoJugador = value.Id_TipoJugador;
+					}
+					else
+					{
+						this._Id_TipoJugador = default(int);
+					}
+					this.SendPropertyChanged("DBTipoJugador");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBPartido_Interesado_Condicional")]
+	public partial class DBPartido_Interesado_Condicional : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id_Partido;
+		
+		private int _Id_Interesado;
+		
+		private int _Id_Condicion;
+		
+		private System.Nullable<bool> _Baja;
+		
+		private EntityRef<DBCondicion> _DBCondicion;
+		
+		private EntityRef<DBInteresado> _DBInteresado;
+		
+		private EntityRef<DBPartido> _DBPartido;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_PartidoChanging(int value);
+    partial void OnId_PartidoChanged();
+    partial void OnId_InteresadoChanging(int value);
+    partial void OnId_InteresadoChanged();
+    partial void OnId_CondicionChanging(int value);
+    partial void OnId_CondicionChanged();
+    partial void OnBajaChanging(System.Nullable<bool> value);
+    partial void OnBajaChanged();
+    #endregion
+		
+		public DBPartido_Interesado_Condicional()
+		{
+			this._DBCondicion = default(EntityRef<DBCondicion>);
+			this._DBInteresado = default(EntityRef<DBInteresado>);
+			this._DBPartido = default(EntityRef<DBPartido>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Partido", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id_Partido
+		{
+			get
+			{
+				return this._Id_Partido;
+			}
+			set
+			{
+				if ((this._Id_Partido != value))
+				{
+					if (this._DBPartido.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_PartidoChanging(value);
+					this.SendPropertyChanging();
+					this._Id_Partido = value;
+					this.SendPropertyChanged("Id_Partido");
+					this.OnId_PartidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id_Interesado
+		{
+			get
+			{
+				return this._Id_Interesado;
+			}
+			set
+			{
+				if ((this._Id_Interesado != value))
+				{
+					if (this._DBInteresado.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_InteresadoChanging(value);
+					this.SendPropertyChanging();
+					this._Id_Interesado = value;
+					this.SendPropertyChanged("Id_Interesado");
+					this.OnId_InteresadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Condicion", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id_Condicion
+		{
+			get
+			{
+				return this._Id_Condicion;
+			}
+			set
+			{
+				if ((this._Id_Condicion != value))
+				{
+					if (this._DBCondicion.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnId_CondicionChanging(value);
+					this.SendPropertyChanging();
+					this._Id_Condicion = value;
+					this.SendPropertyChanged("Id_Condicion");
+					this.OnId_CondicionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Baja", DbType="Bit")]
+		public System.Nullable<bool> Baja
+		{
+			get
+			{
+				return this._Baja;
+			}
+			set
+			{
+				if ((this._Baja != value))
+				{
+					this.OnBajaChanging(value);
+					this.SendPropertyChanging();
+					this._Baja = value;
+					this.SendPropertyChanged("Baja");
+					this.OnBajaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBCondicion_DBPartido_Interesado_Condicional", Storage="_DBCondicion", ThisKey="Id_Condicion", OtherKey="Id_Condicion", IsForeignKey=true)]
+		public DBCondicion DBCondicion
+		{
+			get
+			{
+				return this._DBCondicion.Entity;
+			}
+			set
+			{
+				DBCondicion previousValue = this._DBCondicion.Entity;
+				if (((previousValue != value) 
+							|| (this._DBCondicion.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DBCondicion.Entity = null;
+						previousValue.DBPartido_Interesado_Condicional.Remove(this);
+					}
+					this._DBCondicion.Entity = value;
+					if ((value != null))
+					{
+						value.DBPartido_Interesado_Condicional.Add(this);
+						this._Id_Condicion = value.Id_Condicion;
+					}
+					else
+					{
+						this._Id_Condicion = default(int);
+					}
+					this.SendPropertyChanged("DBCondicion");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBInteresado_DBPartido_Interesado_Condicional", Storage="_DBInteresado", ThisKey="Id_Interesado", OtherKey="Id_Interesado", IsForeignKey=true)]
+		public DBInteresado DBInteresado
+		{
+			get
+			{
+				return this._DBInteresado.Entity;
+			}
+			set
+			{
+				DBInteresado previousValue = this._DBInteresado.Entity;
+				if (((previousValue != value) 
+							|| (this._DBInteresado.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DBInteresado.Entity = null;
+						previousValue.DBPartido_Interesado_Condicional.Remove(this);
+					}
+					this._DBInteresado.Entity = value;
+					if ((value != null))
+					{
+						value.DBPartido_Interesado_Condicional.Add(this);
+						this._Id_Interesado = value.Id_Interesado;
+					}
+					else
+					{
+						this._Id_Interesado = default(int);
+					}
+					this.SendPropertyChanged("DBInteresado");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBPartido_DBPartido_Interesado_Condicional", Storage="_DBPartido", ThisKey="Id_Partido", OtherKey="Id_Partido", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public DBPartido DBPartido
+		{
+			get
+			{
+				return this._DBPartido.Entity;
+			}
+			set
+			{
+				DBPartido previousValue = this._DBPartido.Entity;
+				if (((previousValue != value) 
+							|| (this._DBPartido.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DBPartido.Entity = null;
+						previousValue.DBPartido_Interesado_Condicional.Remove(this);
+					}
+					this._DBPartido.Entity = value;
+					if ((value != null))
+					{
+						value.DBPartido_Interesado_Condicional.Add(this);
+						this._Id_Partido = value.Id_Partido;
+					}
+					else
+					{
+						this._Id_Partido = default(int);
+					}
+					this.SendPropertyChanged("DBPartido");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DBTipoJugador")]
+	public partial class DBTipoJugador : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id_TipoJugador;
+		
+		private string _Descripcion;
+		
+		private EntitySet<DBPartido_Interesado> _DBPartido_Interesado;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_TipoJugadorChanging(int value);
+    partial void OnId_TipoJugadorChanged();
+    partial void OnDescripcionChanging(string value);
+    partial void OnDescripcionChanged();
+    #endregion
+		
+		public DBTipoJugador()
+		{
+			this._DBPartido_Interesado = new EntitySet<DBPartido_Interesado>(new Action<DBPartido_Interesado>(this.attach_DBPartido_Interesado), new Action<DBPartido_Interesado>(this.detach_DBPartido_Interesado));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_TipoJugador", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id_TipoJugador
+		{
+			get
+			{
+				return this._Id_TipoJugador;
+			}
+			set
+			{
+				if ((this._Id_TipoJugador != value))
+				{
+					this.OnId_TipoJugadorChanging(value);
+					this.SendPropertyChanging();
+					this._Id_TipoJugador = value;
+					this.SendPropertyChanged("Id_TipoJugador");
+					this.OnId_TipoJugadorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Descripcion", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Descripcion
+		{
+			get
+			{
+				return this._Descripcion;
+			}
+			set
+			{
+				if ((this._Descripcion != value))
+				{
+					this.OnDescripcionChanging(value);
+					this.SendPropertyChanging();
+					this._Descripcion = value;
+					this.SendPropertyChanged("Descripcion");
+					this.OnDescripcionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DBTipoJugador_DBPartido_Interesado", Storage="_DBPartido_Interesado", ThisKey="Id_TipoJugador", OtherKey="Id_TipoJugador")]
+		public EntitySet<DBPartido_Interesado> DBPartido_Interesado
+		{
+			get
+			{
+				return this._DBPartido_Interesado;
+			}
+			set
+			{
+				this._DBPartido_Interesado.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_DBPartido_Interesado(DBPartido_Interesado entity)
+		{
+			this.SendPropertyChanging();
+			entity.DBTipoJugador = this;
+		}
+		
+		private void detach_DBPartido_Interesado(DBPartido_Interesado entity)
+		{
+			this.SendPropertyChanging();
+			entity.DBTipoJugador = null;
+		}
+	}
+	
 	public partial class Buscar_Jugadores_LResult
 	{
 		
@@ -2969,6 +3000,8 @@ namespace TP_Anual_DDS_E4
 		private string _Nombre;
 		
 		private string _Apellido;
+		
+		private System.DateTime _FechaNacimiento;
 		
 		private System.Nullable<int> _Handicap;
 		
@@ -3020,6 +3053,22 @@ namespace TP_Anual_DDS_E4
 				if ((this._Apellido != value))
 				{
 					this._Apellido = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaNacimiento", DbType="Date NOT NULL")]
+		public System.DateTime FechaNacimiento
+		{
+			get
+			{
+				return this._FechaNacimiento;
+			}
+			set
+			{
+				if ((this._FechaNacimiento != value))
+				{
+					this._FechaNacimiento = value;
 				}
 			}
 		}
@@ -3881,68 +3930,6 @@ namespace TP_Anual_DDS_E4
 		}
 	}
 	
-	public partial class Partido_LResult
-	{
-		
-		private string _Lugar;
-		
-		private System.Nullable<System.DateTime> _Fecha_Hora;
-		
-		private System.Nullable<bool> _Confirmado;
-		
-		public Partido_LResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lugar", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Lugar
-		{
-			get
-			{
-				return this._Lugar;
-			}
-			set
-			{
-				if ((this._Lugar != value))
-				{
-					this._Lugar = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha_Hora", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Fecha_Hora
-		{
-			get
-			{
-				return this._Fecha_Hora;
-			}
-			set
-			{
-				if ((this._Fecha_Hora != value))
-				{
-					this._Fecha_Hora = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Confirmado", DbType="Bit")]
-		public System.Nullable<bool> Confirmado
-		{
-			get
-			{
-				return this._Confirmado;
-			}
-			set
-			{
-				if ((this._Confirmado != value))
-				{
-					this._Confirmado = value;
-				}
-			}
-		}
-	}
-	
 	public partial class Partido_ObtenerInteresadosResult
 	{
 		
@@ -4296,6 +4283,184 @@ namespace TP_Anual_DDS_E4
 				if ((this._CantPartidosJugados != value))
 				{
 					this._CantPartidosJugados = value;
+				}
+			}
+		}
+	}
+	
+	public partial class Partido_LResult
+	{
+		
+		private string _Lugar;
+		
+		private System.Nullable<System.DateTime> _Fecha_Hora;
+		
+		private System.Nullable<bool> _Confirmado;
+		
+		private System.Nullable<bool> _Finalizado;
+		
+		public Partido_LResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lugar", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Lugar
+		{
+			get
+			{
+				return this._Lugar;
+			}
+			set
+			{
+				if ((this._Lugar != value))
+				{
+					this._Lugar = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha_Hora", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Fecha_Hora
+		{
+			get
+			{
+				return this._Fecha_Hora;
+			}
+			set
+			{
+				if ((this._Fecha_Hora != value))
+				{
+					this._Fecha_Hora = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Confirmado", DbType="Bit")]
+		public System.Nullable<bool> Confirmado
+		{
+			get
+			{
+				return this._Confirmado;
+			}
+			set
+			{
+				if ((this._Confirmado != value))
+				{
+					this._Confirmado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Finalizado", DbType="Bit")]
+		public System.Nullable<bool> Finalizado
+		{
+			get
+			{
+				return this._Finalizado;
+			}
+			set
+			{
+				if ((this._Finalizado != value))
+				{
+					this._Finalizado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class Interesado_ObtenerPartidosFinalizadosResult
+	{
+		
+		private int _Id_Partido;
+		
+		private string _Lugar;
+		
+		private System.Nullable<bool> _Confirmado;
+		
+		private System.Nullable<System.DateTime> _Fecha_Hora;
+		
+		private System.Nullable<bool> _Finalizado;
+		
+		public Interesado_ObtenerPartidosFinalizadosResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Partido", DbType="Int NOT NULL")]
+		public int Id_Partido
+		{
+			get
+			{
+				return this._Id_Partido;
+			}
+			set
+			{
+				if ((this._Id_Partido != value))
+				{
+					this._Id_Partido = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lugar", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Lugar
+		{
+			get
+			{
+				return this._Lugar;
+			}
+			set
+			{
+				if ((this._Lugar != value))
+				{
+					this._Lugar = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Confirmado", DbType="Bit")]
+		public System.Nullable<bool> Confirmado
+		{
+			get
+			{
+				return this._Confirmado;
+			}
+			set
+			{
+				if ((this._Confirmado != value))
+				{
+					this._Confirmado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha_Hora", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Fecha_Hora
+		{
+			get
+			{
+				return this._Fecha_Hora;
+			}
+			set
+			{
+				if ((this._Fecha_Hora != value))
+				{
+					this._Fecha_Hora = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Finalizado", DbType="Bit")]
+		public System.Nullable<bool> Finalizado
+		{
+			get
+			{
+				return this._Finalizado;
+			}
+			set
+			{
+				if ((this._Finalizado != value))
+				{
+					this._Finalizado = value;
 				}
 			}
 		}

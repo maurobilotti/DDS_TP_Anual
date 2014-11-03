@@ -44,28 +44,60 @@ namespace TP_Anual_DDS_E4
         public ArmadorPartido ArmadorPartido { get; set; }
         public bool Confirmado { get; set; }
         public bool Finalizado = false;
+        private string p;
+        private DateTime dateTime;
+        private bool? nullable1;
+        private bool? nullable2;
 
 
         #endregion
 
         #region Constructores
 
-        public Partido() { }
-        public Partido(string lugar, DateTime fechaHora)
+        public Partido(string lugar, DateTime fechaHora, bool confirmado, bool finalizado)
         {
             //ojo, el orden es importante
             this.Fecha_Hora = fechaHora;
             this.Lugar = lugar;
+            this.Confirmado = confirmado;
+            this.Finalizado = finalizado;
 
             ObtenerInscriptos();
             ObtenerInfractores();
             this.ListaCalificaciones = new List<Calificacion>();
-
         }
 
         #endregion
 
         #region Métodos públicos
+
+        public bool EstaInscripto(Interesado interesado)
+        {
+            return this.ListaJugadores.Any(x => x.Interesado.Nombre == interesado.Nombre && x.Interesado.Apellido == interesado.Apellido);
+        }
+
+        public List<Partido_Interesado_LResult> ObtenerListaJugadoresInteresados()
+        {
+            return new DDSDataContext().Partido_Interesado_L(this.Id_Partido).AsEnumerable().ToList();
+        }
+
+        public void AgregarCalificacion(Interesado critico, Interesado criticado, int calificacion, string critica)
+        {
+            this.ListaCalificaciones.Add(new Calificacion(critico, criticado, critica, calificacion));
+            
+            //registra la crítica en la base de datos
+            DDSDataContext db = new DDSDataContext();
+            db.Calificacion_I(this.Id_Partido, critica, critico.Id_Interesado, criticado.Id_Interesado, calificacion);
+            db.SubmitChanges();
+        }
+
+        public void Guardar()
+        {
+            DDSDataContext db = new DDSDataContext();
+            db.Partido_UI(this.Lugar, (bool)this.Confirmado,
+                Convert.ToDateTime(this.Fecha_Hora.ToString("yyyy-MM-dd HH:mm")));
+            db.SubmitChanges();
+        }
 
         public bool AgregarJugador(Usuario usuario, int idTipoJugador, List<int> condiciones)
         {
@@ -89,23 +121,26 @@ namespace TP_Anual_DDS_E4
                     DDSDataContext db = new DDSDataContext();
                     db.Partido_Interesado_UI(this.Id_Partido, usuario.Interesado.Id_Interesado, idTipoJugador, false);
                     db.SubmitChanges();
+                    return true;
                 }
                 else
                 {
                     if (tipo.Prioridad == Interesado.EnumPrioridad.Solidario)//Si quiere ingresar un solidario
                     {
-                        BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Condicional);//Busca si hay condicional y los cambia.
+                        return BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Condicional);//Busca si hay condicional y los cambia.
                     }
                     if (tipo.Prioridad == Interesado.EnumPrioridad.Estandar)//Si quiere ingresar un estandar
                     {
                         //Si hay un condicional, lo saca. Si no, busca si hay un solidario para sacarlo.
                         if (!BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Condicional))//Busca si hay condicional.
-                            BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Solidario);//Busca si hay solidario.
+                            return BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Solidario);//Busca si hay solidario.
+                        return true; //si eliminó un condicional
                     }
                 }
                 ChequearCondicionales(tipo);
             }
-            return true;
+
+            return false;
         }
 
         public void DarBaja(Usuario usuarioBaja)
@@ -118,6 +153,85 @@ namespace TP_Anual_DDS_E4
         {
             RemoverJugador(usuarioBaja);
             AgregarJugador(usuarioAlta, 3, null);
+        }
+
+        public void RegistrarPrimerEquipo()
+        {
+            foreach (Usuario usuario in ListaPrimerEquipo)
+            {
+                try
+                {
+                    DDSDataContext db = new DDSDataContext();
+
+                    DBPartido_Interesado interesado = (from x in db.DBPartido_Interesado
+                                                       where x.Id_Interesado == usuario.Interesado.Id_Interesado && x.Id_Partido == this.Id_Partido
+                                                       select x).Single();
+                    interesado.EquipoDesignado = 1;
+                    db.SubmitChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+            }
+        }
+
+        public void RegistrarSegundoEquipo()
+        {
+            foreach (Usuario usuario in ListaSegundoEquipo)
+            {
+                try
+                {
+                    DDSDataContext db = new DDSDataContext();
+
+                    DBPartido_Interesado interesado = (from x in db.DBPartido_Interesado
+                                                       where x.Id_Interesado == usuario.Interesado.Id_Interesado && x.Id_Partido == this.Id_Partido
+                                                       select x).Single();
+                    interesado.EquipoDesignado = 2;
+                    db.SubmitChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// finaliza el partido en la base de datos
+        /// </summary>
+        public void Finalizar()
+        {
+            DDSDataContext db = new DDSDataContext();
+            DBPartido dbPartido = (from x in db.DBPartido
+                                   where x.Id_Partido == this.Id_Partido
+                                   select x).SingleOrDefault();
+
+            dbPartido.Finalizado = true;
+            db.SubmitChanges();
+
+            if (!this.Finalizado)
+            {
+                this.Finalizado = true;
+                this.ListaJugadores.ForEach(z => z.Interesado.ListaPartidosFinalizados.Add(this));
+            }
+        }
+
+        /// <summary>
+        /// confirma el partido en la base de datos
+        /// </summary>
+        public void Confirmar()
+        {
+            DDSDataContext db = new DDSDataContext();
+
+            DBPartido dbPartido = (from x in db.DBPartido
+                                   where x.Id_Partido == this.Id_Partido
+                                   select x).SingleOrDefault();
+
+            dbPartido.Confirmado = true;
+            db.SubmitChanges();
         }
 
         #endregion
@@ -135,7 +249,6 @@ namespace TP_Anual_DDS_E4
         private void RemoverJugador(Usuario usuarioBaja)
         {
             this.ListaJugadores.Remove(usuarioBaja);
-
 
             DDSDataContext db = new DDSDataContext();
             db.Partido_Interesado_D((int)this.Id_Partido, (int)usuarioBaja.Interesado.Id_Interesado);
@@ -229,13 +342,6 @@ namespace TP_Anual_DDS_E4
             //ordeno la lista por posición y aplicando el criterio especificado
             this.ListaJugadores = (from x in ListaJugadores orderby x.Interesado.Posicion, x.Interesado.Criterio.AplicarCriterio() select x).ToList();
         }
-        #endregion
-
-
-        public bool EstaInscripto(Interesado interesado)
-        {
-            return this.ListaJugadores.Any(x => x.Interesado.Nombre == interesado.Nombre && x.Interesado.Apellido == interesado.Apellido);
-        }
 
         private Interesado.EnumPrioridad ObtenerTipoJugador(Usuario usuario)
         {
@@ -245,66 +351,6 @@ namespace TP_Anual_DDS_E4
             return (Interesado.EnumPrioridad)idTipoJugador;
         }
 
-        public void AgregarCalificacion(Interesado critico, Interesado criticado, int puntaje, string critica)
-        {
-            this.ListaCalificaciones.Add(new Calificacion(critico, criticado, critica, puntaje));
-        }
-
-        public void Guardar()
-        {
-            DDSDataContext db = new DDSDataContext();
-            db.Partido_UI(this.Lugar, (bool)this.Confirmado,
-                Convert.ToDateTime(this.Fecha_Hora.ToString("yyyy-MM-dd HH:mm")));
-            db.SubmitChanges();
-        }
-
-        public List<Partido_Interesado_LResult> ObtenerListaJugadoresInteresados()
-        {
-            return new DDSDataContext().Partido_Interesado_L(this.Id_Partido).AsEnumerable().ToList();
-        }
-
-        public void RegistrarPrimerEquipo()
-        {
-            foreach (Usuario usuario in ListaPrimerEquipo)
-            {
-                try
-                {
-                    DDSDataContext db = new DDSDataContext();
-
-                    DBPartido_Interesado interesado = (from x in db.DBPartido_Interesado
-                                                       where x.Id_Interesado == usuario.Interesado.Id_Interesado && x.Id_Partido == this.Id_Partido
-                                                       select x).Single();
-                    interesado.EquipoDesignado = 1;
-                    db.SubmitChanges();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-            }
-        }
-
-        public void RegistrarSegundoEquipo()
-        {
-            foreach (Usuario usuario in ListaSegundoEquipo)
-            {
-                try
-                {
-                    DDSDataContext db = new DDSDataContext();
-
-                    DBPartido_Interesado interesado = (from x in db.DBPartido_Interesado
-                                                       where x.Id_Interesado == usuario.Interesado.Id_Interesado && x.Id_Partido == this.Id_Partido
-                                                       select x).Single();
-                    interesado.EquipoDesignado = 2;
-                    db.SubmitChanges();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-            }
-        }
+        #endregion
     }
 }

@@ -25,15 +25,23 @@ namespace TP_Anual_DDS_E4
         private void frmCriterios_Load(object sender, EventArgs e)
         {
             DataTable tabla = new DataTable();
-            tabla.Columns.Add("Tipo", typeof (ArmadorPartido));
+            tabla.Columns.Add("Tipo", typeof(ArmadorPartido));
             tabla.Columns.Add("Descripcion", typeof(string));
-            tabla.Rows.Add(new ArmarPorParidad(this.Partido.ListaJugadores), typeof (ArmarPorParidad).Name);
-            tabla.Rows.Add(new ArmarPorOrdenAleatorio(this.Partido.ListaJugadores), typeof(ArmarPorOrdenAleatorio).Name);
+
+            var nombreClasePadre = typeof(ArmadorPartido);
+            List<Type> tiposDerivados = (AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => nombreClasePadre.IsAssignableFrom(p) && p != nombreClasePadre)).ToList();
+
+            foreach (Type tipo in tiposDerivados)
+            {
+                ArmadorPartido instancia = Activator.CreateInstance(tipo, new object[] { this.Partido.ListaJugadores }) as ArmadorPartido;
+                tabla.Rows.Add(instancia, tipo.Name);
+            }
 
             cmbCriterio.DataSource = tabla;
             cmbCriterio.DisplayMember = "Descripcion";
             cmbCriterio.ValueMember = "Tipo";
-
         }
 
         private void btnAplicarCriterio_Click(object sender, EventArgs e)

@@ -47,17 +47,17 @@ namespace TP_Anual_DDS_E4
             {
                 switch ((int)cmbTipoJugador.SelectedValue)
                 {
-                    case 0: //Condicional
+                    case 1: //Condicional
                         this.Id_TipoJugador = (int)EnumTipo_Jugador.Condicional;
                         Condiciones = new List<int>();
                         foreach (DataRowView condicion in chkCondiciones.CheckedItems)
                             Condiciones.Add((int)condicion[0]);
 
                         break;
-                    case 1: //Solidario
+                    case 2: //Solidario
                         this.Id_TipoJugador = (int)EnumTipo_Jugador.Solidario;
                         break;
-                    case 2: //Estandar
+                    case 3: //Estandar
                         this.Id_TipoJugador = (int)EnumTipo_Jugador.Estandar;
                         break;
                 }
