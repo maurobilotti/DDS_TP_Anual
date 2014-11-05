@@ -33,6 +33,33 @@ namespace TP_Anual_DDS_E4
         #endregion
 
         #region Eventos
+        private void btnOrdenamiento_Click(object sender, EventArgs e)
+        {
+            int idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
+            Partido partido = Administrador.ObtenerInstancia().ObtenerPartidos().Single(z => z.Id_Partido == idSeleccionado);
+            frmOrdenamiento frm = new frmOrdenamiento(partido);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                //ordeno la lista aplicando el criterio especificado
+                gridInteresados.DataSource = (from x in partido.ListaJugadores
+                                              orderby x.Interesado.Criterio.AplicarCriterio()
+                                              select new
+                                              {
+                                                  x.Interesado.Nombre,
+                                                  x.Interesado.Apellido,
+                                                  x.Interesado.FechaNacimiento,
+                                                  x.Interesado.Posicion,
+                                                  x.Interesado.Handicap,
+                                                  TipoJugador = x.Interesado.ObtenerTipoJugadorPartido(partido.Id_Partido)
+                                              }).ToList(); ;
+            }
+        }
+
+        private void btnEstadisticas_Click(object sender, EventArgs e)
+        {
+            new frmEstadisticas().ShowDialog();
+        }
+
         private void btnAgregarPartido_Click(object sender, EventArgs e)
         {
             var frm = new frmNuevoPartido();
@@ -492,33 +519,5 @@ namespace TP_Anual_DDS_E4
             }
         }
         #endregion
-
-        private void btnOrdenamiento_Click(object sender, EventArgs e)
-        {
-            int idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
-            Partido partido = Administrador.ObtenerInstancia().ObtenerPartidos().Single(z => z.Id_Partido == idSeleccionado);
-            frmOrdenamiento frm = new frmOrdenamiento(partido);
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                //ordeno la lista aplicando el criterio especificado
-                gridInteresados.DataSource = (from x in partido.ListaJugadores
-                                              orderby x.Interesado.Criterio.AplicarCriterio()
-                                              select new
-                {
-                    x.Interesado.Nombre,
-                    x.Interesado.Apellido,
-                    x.Interesado.FechaNacimiento,
-                    x.Interesado.Posicion,
-                    x.Interesado.Handicap,
-                    TipoJugador = x.Interesado.ObtenerTipoJugadorPartido(partido.Id_Partido)
-                }).ToList(); ;
-            }
-        }
-
-        private void btnEstadisticas_Click(object sender, EventArgs e)
-        {
-            new frmEstadisticas().ShowDialog();
-        }
-
     }
 }

@@ -16,6 +16,7 @@ namespace TP_Anual_DDS_E4
         {
             return true;
         }
+
         public virtual void AgregarCondicion(ICondiciones condicion){}
     }
 }

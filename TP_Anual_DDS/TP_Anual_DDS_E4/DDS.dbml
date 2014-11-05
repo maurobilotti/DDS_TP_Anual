@@ -321,10 +321,6 @@
     <Parameter Name="Usuario_Administrador" Parameter="usuario_Administrador" Type="System.Boolean" DbType="Bit" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.PromUltimoPartido" Method="PromUltimoPartido" IsComposable="true">
-    <Parameter Name="Id_Interesado" Parameter="id_Interesado" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Decimal" />
-  </Function>
   <Function Name="dbo.ObtenerJugadoresTraicioneros" Method="ObtenerJugadoresTraicioneros">
     <ElementType Name="ObtenerJugadoresTraicionerosResult">
       <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -363,5 +359,9 @@
       <Column Name="Handicap" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="CantPartidosJugados" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.PromUltimoPartido" Method="PromUltimoPartido" IsComposable="true">
+    <Parameter Name="Id_Interesado" Parameter="id_Interesado" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Decimal" />
   </Function>
 </Database>

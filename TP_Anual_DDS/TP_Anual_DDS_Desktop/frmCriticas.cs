@@ -30,6 +30,7 @@ namespace TP_Anual_DDS_E4
         }
         #endregion
 
+        #region Miembros
         public enum Modo
         {
             Ver, Realizar
@@ -37,8 +38,10 @@ namespace TP_Anual_DDS_E4
 
         private Modo ModoApertura { get; set; }
         public Interesado JugadorCritico { get; set; }
-        public List<Partido> ListaPartidos { get; set; }
+        public List<Partido> ListaPartidos { get; set; } 
+        #endregion
 
+        #region Eventos
         private void frmCriticas_Load(object sender, EventArgs e)
         {
             foreach (Partido partido in ListaPartidos)
@@ -65,6 +68,7 @@ namespace TP_Anual_DDS_E4
                 }
             }
 
-        }
+        } 
+        #endregion
     }
 }

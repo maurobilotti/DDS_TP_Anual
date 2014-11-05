@@ -12,17 +12,21 @@ namespace TP_Anual_DDS_E4
 {
     public partial class frmEstadisticas : Form
     {
+        #region Constructor
         public frmEstadisticas()
         {
             InitializeComponent();
-        }
+        } 
+        #endregion
 
+        #region Eventos
         private void frmEstadisticas_Load(object sender, EventArgs e)
         {
             DDSDataContext db = new DDSDataContext();
-            gridConFuturo.DataSource = (from x in db.ObtenerJugadoresConFuturo() select new {x.Nombre,x.Apellido,x.FechaNacimiento,x.Mail,x.Handicap,x.Posicion,x.CantPartidosJugados}).ToList();
+            gridConFuturo.DataSource = (from x in db.ObtenerJugadoresConFuturo() select new { x.Nombre, x.Apellido, x.FechaNacimiento, x.Mail, x.Handicap, x.Posicion, x.CantPartidosJugados }).ToList();
             gridMalos.DataSource = (from x in db.ObtenerJugadoresMalos() select new { x.Nombre, x.Apellido, x.FechaNacimiento, x.Mail, x.Handicap, x.Posicion, x.CantPartidosJugados }).ToList();
             gridTraicioneros.DataSource = (from x in db.ObtenerJugadoresTraicioneros() select new { x.Nombre, x.Apellido, x.FechaNacimiento, x.Mail, x.Handicap, x.Posicion, x.CantPartidosJugados }).ToList();
-        }
+        } 
+        #endregion
     }
 }

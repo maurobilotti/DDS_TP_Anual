@@ -98,6 +98,33 @@ namespace TP_Anual_DDS_E4
         #endregion
 
         #region Métodos públicos
+        public IEnumerable<object> ObtenerEquiposDesignados(int nroEquipo)
+        {
+            DDSDataContext db = new DDSDataContext();
+            return (from x in db.DBPartido_Interesado
+                    join y in db.DBInteresado on x.Id_Interesado equals y.Id_Interesado
+                    where x.Id_Partido == this.Id_Partido && !(bool)x.Baja
+                          && x.EquipoDesignado == nroEquipo
+                    select new
+                    {
+                        NombreyApellido = string.Format("{0} {1}", y.Nombre, y.Apellido),
+                        y.FechaNacimiento,
+                        y.Posicion,
+                        y.Handicap
+                    }).ToList();
+        }
+
+        public IEnumerable<object> ObtenerListaEquipo(int equipo)
+        {
+            return (from x in equipo == 1 ? this.ListaPrimerEquipo : ListaSegundoEquipo
+                    select new
+                    {
+                        NombreyApellido = string.Format("{0} {1}", x.Interesado.Nombre, x.Interesado.Apellido),
+                        x.Interesado.FechaNacimiento,
+                        x.Interesado.Posicion,
+                        x.Interesado.Handicap
+                    }).ToList();
+        }
 
         public bool EstaInscripto(Interesado interesado)
         {
@@ -434,33 +461,5 @@ namespace TP_Anual_DDS_E4
         }
 
         #endregion
-
-        public IEnumerable<object> ObtenerEquiposDesignados(int nroEquipo)
-        {
-            DDSDataContext db = new DDSDataContext();
-            return (from x in db.DBPartido_Interesado
-                    join y in db.DBInteresado on x.Id_Interesado equals y.Id_Interesado
-                    where x.Id_Partido == this.Id_Partido && !(bool)x.Baja
-                          && x.EquipoDesignado == nroEquipo
-                    select new
-                    {
-                        NombreyApellido = string.Format("{0} {1}", y.Nombre, y.Apellido),
-                        y.FechaNacimiento,
-                        y.Posicion,
-                        y.Handicap
-                    }).ToList();
-        }
-
-        public IEnumerable<object> ObtenerListaEquipo(int equipo)
-        {
-            return (from x in equipo == 1 ? this.ListaPrimerEquipo : ListaSegundoEquipo
-                    select new
-                    {
-                        NombreyApellido = string.Format("{0} {1}", x.Interesado.Nombre, x.Interesado.Apellido),
-                        x.Interesado.FechaNacimiento,
-                        x.Interesado.Posicion,
-                        x.Interesado.Handicap
-                    }).ToList();
-        }
     }
 }

@@ -137,21 +137,25 @@ GO
 
 --FUNCIONES
 
-CREATE FUNCTION PromUltimoPartido(
-	@Id_Interesado int
+ALTER FUNCTION PromUltimoPartido(
+	@Id_Interesado int	
 )
-RETURNS decimal(18,2)
+	RETURNS decimal(18,2)
 AS 
 BEGIN	
 RETURN 
 (
 	SELECT ISNULL(AVG(CAST(c.Calificacion as decimal(18,2))),0) as promedio
-	FROM DBCalificacion c 
-	JOIN DBPartido pa on pa.Id_Partido = c.Id_Partido
-	JOIN DBInteresado inte on inte.Id_Interesado = c.Id_Jugador_Criticado
-	WHERE CONVERT(datetime,pa.Fecha_Hora,103) = (SELECT TOP 1 CONVERT(datetime,part.Fecha_Hora,103)FROM DBPartido part 
-	JOIN DBCalificacion calif on calif.Id_Partido=part.Id_Partido order by CONVERT(datetime,part.Fecha_Hora,103) desc)
-	AND inte.Id_Interesado = @Id_Interesado
+		FROM DBCalificacion c 
+		JOIN DBPartido pa on pa.Id_Partido = c.Id_Partido
+		JOIN DBInteresado inte on inte.Id_Interesado = c.Id_Jugador_Criticado
+		WHERE CONVERT(datetime,pa.Fecha_Hora,103) = (SELECT TOP 1 	CONVERT(datetime,part.Fecha_Hora,103)
+		FROM DBPartido part 
+		JOIN DBCalificacion calif on calif.Id_Partido=part.Id_Partido 
+		JOIN DBInteresado dbi on dbi.Id_Interesado = calif.Id_Jugador_Criticado
+		WHERE dbi.Id_Interesado = @Id_Interesado
+		order by CONVERT(datetime,part.Fecha_Hora,103) desc)
+		AND inte.Id_Interesado = @Id_Interesado
 )
 END
 GO

@@ -9,6 +9,7 @@ namespace TP_Anual_DDS_E4
 {
     public class Interesado
     {
+        #region Miembros
         public enum EnumPrioridad
         {
             Condicional = 1, Solidario = 2, Estandar = 3
@@ -57,8 +58,10 @@ namespace TP_Anual_DDS_E4
             set { }
         }
 
-        public List<Partido> ListaPartidosCriticados { get; set; }
+        public List<Partido> ListaPartidosCriticados { get; set; } 
+        #endregion
 
+        #region Constructor
         /// <summary>
         /// Constructor para jugadores amigos... ya que el admin determina el tipo después
         /// </summary>
@@ -78,8 +81,10 @@ namespace TP_Anual_DDS_E4
             this.Posicion = posicion;
             this.CantPartidosJugados = cantPartidosJugados;
             this.Handicap = handicap;
-        }
+        } 
+        #endregion
 
+        #region Metodos
         public bool EstasInscriptoEn(Partido partido)
         {
             return partido.ListaJugadores.Any(z => z.Interesado.Id_Interesado == this.Id_Interesado);
@@ -113,8 +118,8 @@ namespace TP_Anual_DDS_E4
         public string ObtenerTipoJugadorPartido(int IdPartido)
         {
             DDSDataContext db = new DDSDataContext();
-                return (from x in db.DBPartido_Interesado
-                    join y in db.DBTipoJugador  on x.Id_TipoJugador equals y.Id_TipoJugador
+            return (from x in db.DBPartido_Interesado
+                    join y in db.DBTipoJugador on x.Id_TipoJugador equals y.Id_TipoJugador
                     where x.Id_Interesado == this.Id_Interesado && x.Id_Partido == IdPartido
                     select y.Descripcion).SingleOrDefault();
         }
@@ -157,10 +162,9 @@ namespace TP_Anual_DDS_E4
         {
             DDSDataContext db = new DDSDataContext();
             return (from x in db.DBCalificacion
-                where x.Id_Jugador_Criticado == this.Id_Interesado && x.Id_Partido == id_Partido 
+                    where x.Id_Jugador_Criticado == this.Id_Interesado && x.Id_Partido == id_Partido
                     select x.Calificacion).ToList();
-        }
-
-        
+        } 
+        #endregion
     }
 }

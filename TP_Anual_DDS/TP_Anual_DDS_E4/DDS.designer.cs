@@ -267,10 +267,9 @@ namespace TP_Anual_DDS_E4
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Interesado_UI")]
-		public int Interesado_UI([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Usuario", DbType="Int")] System.Nullable<int> id_Usuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Nombre", DbType="NVarChar(50)")] string nombre, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Apellido", DbType="NVarChar(50)")] string apellido, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FechaNacimiento", DbType="Date")] System.Nullable<System.DateTime> fechaNacimiento, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Mail", DbType="NVarChar(50)")] string mail, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Posicion", DbType="Int")] System.Nullable<int> posicion, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Handicap", DbType="Int")] System.Nullable<int> handicap)
+		public void Interesado_UI([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Usuario", DbType="Int")] System.Nullable<int> id_Usuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Nombre", DbType="NVarChar(50)")] string nombre, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Apellido", DbType="NVarChar(50)")] string apellido, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FechaNacimiento", DbType="Date")] System.Nullable<System.DateTime> fechaNacimiento, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Mail", DbType="NVarChar(50)")] string mail, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Posicion", DbType="Int")] System.Nullable<int> posicion, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Handicap", DbType="Int")] System.Nullable<int> handicap)
 		{
-            IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Usuario, nombre, apellido, fechaNacimiento, mail, posicion, handicap);
-            return ((int)(result.ReturnValue));
+			this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Usuario, nombre, apellido, fechaNacimiento, mail, posicion, handicap);
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Partido_Interesado_Condicional_D")]
@@ -343,12 +342,6 @@ namespace TP_Anual_DDS_E4
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.PromUltimoPartido", IsComposable=true)]
-		public System.Nullable<decimal> PromUltimoPartido([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Interesado", DbType="Int")] System.Nullable<int> id_Interesado)
-		{
-			return ((System.Nullable<decimal>)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Interesado).ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObtenerJugadoresTraicioneros")]
 		public ISingleResult<ObtenerJugadoresTraicionerosResult> ObtenerJugadoresTraicioneros()
 		{
@@ -368,6 +361,12 @@ namespace TP_Anual_DDS_E4
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
 			return ((ISingleResult<ObtenerJugadoresConFuturoResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.PromUltimoPartido", IsComposable=true)]
+		public System.Nullable<decimal> PromUltimoPartido([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Interesado", DbType="Int")] System.Nullable<int> id_Interesado)
+		{
+			return ((System.Nullable<decimal>)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Interesado).ReturnValue));
 		}
 	}
 	

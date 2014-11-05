@@ -11,6 +11,7 @@ namespace TP_Anual_DDS_E4
 {
     public class Administrador
     {
+        #region Miembros
         private static Administrador _instancia = null;
         private List<Partido> listaPartidos { get; set; }
         private List<Usuario> listaUsuarios { get; set; }
@@ -22,16 +23,20 @@ namespace TP_Anual_DDS_E4
             Todos,
             ConInfracciones,
             SinInfracciones
-        }
+        } 
+        #endregion
 
+        #region Constructor Singleton
         private Administrador()
         {
             this.listaPartidos = new List<Partido>();
             this.listaUsuarios = new List<Usuario>();
             this.listaUsuariosPropuestos = new List<Usuario>();
             this.listaDenegaciones = new List<Denegacion>();
-        }
+        } 
+        #endregion
 
+        #region Metodos públicos
         public static Administrador ObtenerInstancia()
         {
             if (null == _instancia)
@@ -133,34 +138,18 @@ namespace TP_Anual_DDS_E4
             DataTable dt = new DataTable();
 
             DDSDataContext db = new DDSDataContext();
-            var lista = (from x in db.DBInteresado select new
-            {
-                Nombre = string.Format("{0} {1}",x.Nombre,x.Apellido),
-                x.Handicap,
-                Promedio = (from y in db.DBCalificacion where y.Id_Jugador_Criticado == x.Id_Interesado select y.Calificacion).ToList().Average()
-            }).ToList();
+            var lista = (from x in db.DBInteresado
+                         select new
+                             {
+                                 Nombre = string.Format("{0} {1}", x.Nombre, x.Apellido),
+                                 x.Handicap,
+                                 Promedio = (from y in db.DBCalificacion where y.Id_Jugador_Criticado == x.Id_Interesado select y.Calificacion).ToList().Average()
+                             }).ToList();
 
-           
-            
+
+
             return dt;
-        }
-
-        private DataTable ToDataTable<T>(IList<T> data)
-        {
-            PropertyDescriptorCollection properties =
-                TypeDescriptor.GetProperties(typeof(T));
-            DataTable table = new DataTable();
-            foreach (PropertyDescriptor prop in properties)
-                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-            foreach (T item in data)
-            {
-                DataRow row = table.NewRow();
-                foreach (PropertyDescriptor prop in properties)
-                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-                table.Rows.Add(row);
-            }
-            return table;
-        }
-
+        } 
+        #endregion
     }
 }
