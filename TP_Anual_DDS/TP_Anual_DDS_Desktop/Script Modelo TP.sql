@@ -137,7 +137,7 @@ GO
 
 --FUNCIONES
 
-ALTER FUNCTION PromUltimoPartido(
+CREATE FUNCTION PromUltimoPartido(
 	@Id_Interesado int	
 )
 	RETURNS decimal(18,2)
@@ -478,7 +478,7 @@ BEGIN
 	
 	SELECT * FROM @TempJugadoresMalos WHERE (YEAR(GETDATE()) - YEAR(FechaNacimiento)) < 25
 END
-
+GO
 
 CREATE PROCEDURE Infraccion_I
 (
@@ -640,20 +640,7 @@ BEGIN
 END 
 GO
 
-
-
-CREATE TABLE DBEstandar(
-	Modalidad_deJuego nvarchar(50) NULL,
-	Descripcion_Estandar nvarchar(50) NULL,
-	Prioridad nvarchar(50) null
-)
 insert into DBEstandar values('Comprometido','Se compromete a presentarse en tiempo y forma','ALTA')
 
-CREATE TABLE DBSolidario(
-	Modalidad_deJuego nvarchar(50) NULL,
-	Descripcion_Estandar nvarchar(50) NULL,
-	Datos_contacto nvarchar(50) null,
-	Prioridad nvarchar(50) null
-)
 insert into DBSolidario values('Solidaria','Se compromete a presentarse si se lo necesita','4944-4390','MEDIA')
 
