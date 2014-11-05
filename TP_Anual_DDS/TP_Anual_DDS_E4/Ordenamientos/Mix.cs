@@ -10,11 +10,12 @@ namespace TP_Anual_DDS_E4
     {
         private List<ICriterio> ListaCriterios;
 
-        public string Descripcion {
-            get { return typeof (Mix).Name; }
+        public string Descripcion
+        {
+            get { return typeof(Mix).Name; }
         }
 
-        public Mix(List<ICriterio> listaCriterios) 
+        public Mix(List<ICriterio> listaCriterios)
         {
             this.ListaCriterios = new List<ICriterio>();
             this.ListaCriterios = listaCriterios;
@@ -22,7 +23,7 @@ namespace TP_Anual_DDS_E4
 
         public double AplicarCriterio()
         {
-            return this.ListaCriterios.Sum(x => x.AplicarCriterio()) / this.ListaCriterios.Count;
+            return this.ListaCriterios.Count != 0 ? this.ListaCriterios.Sum(x => x.AplicarCriterio()) / this.ListaCriterios.Count : 0;
         }
     }
 }

@@ -33,6 +33,7 @@
             this.gridPartidos = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnOrdenamiento = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.lblCount = new System.Windows.Forms.Label();
             this.btnFinalizarPartido = new System.Windows.Forms.Button();
@@ -63,6 +64,10 @@
             this.btnVerCriticas = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRealizarCriticas = new System.Windows.Forms.ToolStripButton();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPartidos)).BeginInit();
             this.panel2.SuspendLayout();
@@ -78,7 +83,11 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.IndianRed;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.panel4);
+            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.gridPartidos);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -117,7 +126,8 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.IndianRed;
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.panel2.Controls.Add(this.btnOrdenamiento);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.lblCount);
             this.panel2.Controls.Add(this.btnFinalizarPartido);
@@ -133,6 +143,18 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(765, 445);
             this.panel2.TabIndex = 3;
+            // 
+            // btnOrdenamiento
+            // 
+            this.btnOrdenamiento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOrdenamiento.Enabled = false;
+            this.btnOrdenamiento.Location = new System.Drawing.Point(676, 4);
+            this.btnOrdenamiento.Name = "btnOrdenamiento";
+            this.btnOrdenamiento.Size = new System.Drawing.Size(86, 23);
+            this.btnOrdenamiento.TabIndex = 13;
+            this.btnOrdenamiento.Text = "Ordenamiento";
+            this.btnOrdenamiento.UseVisualStyleBackColor = true;
+            this.btnOrdenamiento.Click += new System.EventHandler(this.btnOrdenamiento_Click);
             // 
             // label3
             // 
@@ -453,6 +475,40 @@
             this.btnRealizarCriticas.Visible = false;
             this.btnRealizarCriticas.Click += new System.EventHandler(this.btnRealizarCriticas_Click);
             // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel3.Location = new System.Drawing.Point(280, 10);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(18, 17);
+            this.panel3.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(305, 13);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(60, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Confirmado";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(406, 13);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(54, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Finalizado";
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Aqua;
+            this.panel4.Location = new System.Drawing.Point(381, 10);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(18, 17);
+            this.panel4.TabIndex = 4;
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -528,6 +584,11 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.Button btnOrdenamiento;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel3;
     }
 }
 

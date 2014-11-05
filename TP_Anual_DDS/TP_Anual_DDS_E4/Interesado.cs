@@ -109,6 +109,15 @@ namespace TP_Anual_DDS_E4
             return tabla;
         }
 
+
+        public string ObtenerTipoJugadorPartido(int IdPartido)
+        {
+            DDSDataContext db = new DDSDataContext();
+                return (from x in db.DBPartido_Interesado
+                    join y in db.DBTipoJugador  on x.Id_TipoJugador equals y.Id_TipoJugador
+                    where x.Id_Interesado == this.Id_Interesado && x.Id_Partido == IdPartido
+                    select y.Descripcion).SingleOrDefault();
+        }
         //public void IncriptoEn(Partido partido)
         //{
         //    Mail mail = new Mail();
@@ -139,7 +148,7 @@ namespace TP_Anual_DDS_E4
         public void Guardar(int idUsuario)
         {
             DDSDataContext db = new DDSDataContext();
-            db.Interesado_UI((int)idUsuario, this.Nombre, this.Apellido, this.FechaNacimiento, this.Mail, this.Posicion, this.Handicap, new Handicap(this.Handicap).Descripcion);
+            db.Interesado_UI((int)idUsuario, this.Nombre, this.Apellido, this.FechaNacimiento, this.Mail, this.Posicion, this.Handicap);
             db.SubmitChanges();
         }
 
@@ -151,5 +160,7 @@ namespace TP_Anual_DDS_E4
                 where x.Id_Jugador_Criticado == this.Id_Interesado && x.Id_Partido == id_Partido 
                     select x.Calificacion).ToList();
         }
+
+        
     }
 }

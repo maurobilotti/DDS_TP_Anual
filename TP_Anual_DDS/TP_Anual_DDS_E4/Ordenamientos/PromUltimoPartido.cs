@@ -6,26 +6,24 @@ using System.Threading.Tasks;
 
 namespace TP_Anual_DDS_E4
 {
-    public class PromUltimosNPartidos : ICriterio
+    public class PromUltimoPartido : ICriterio
     {
-        public int partidos {get;set;}
         private List<int> ListaCalificaciones;
 
         public string Descripcion
         {
-            get { return typeof(PromUltimosNPartidos).Name; }
+            get { return typeof(PromUltimoPartido).Name; }
         }
 
-        public PromUltimosNPartidos(List<int> listaCalificaciones, int cantidadPartidos)
+        public PromUltimoPartido(List<int> listaCalificaciones)
         {
             this.ListaCalificaciones = new List<int>();
             this.ListaCalificaciones = listaCalificaciones;
-            this.partidos = cantidadPartidos;
         }
 
         public double AplicarCriterio()
         {
-            return this.ListaCalificaciones.Sum() / this.partidos;
+            return this.ListaCalificaciones.Count !=0 ? this.ListaCalificaciones.Sum() / this.ListaCalificaciones.Count : 0;
         }
     }
 }

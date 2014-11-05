@@ -62,15 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Administrador.cs" />
-    <Compile Include="ArmadorEstandar.cs" />
-    <Compile Include="ArmadorPartido.cs" />
-    <Compile Include="ArmarPorOrdenAleatorio.cs" />
-    <Compile Include="ArmarPorParidad.cs" />
-    <Compile Include="BaseDatos.cs" />
+    <Compile Include="CriteriosArmado\ArmadorEstandar.cs" />
+    <Compile Include="CriteriosArmado\ArmadorPartido.cs" />
+    <Compile Include="CriteriosArmado\ArmarPorOrdenAleatorio.cs" />
+    <Compile Include="CriteriosArmado\ArmarPorParidad.cs" />
     <Compile Include="Calificacion.cs" />
-    <Compile Include="Condicional.cs" />
-    <Compile Include="CondicionCantidadMayoresDe20.cs" />
-    <Compile Include="CondicionLugar.cs" />
+    <Compile Include="Condicional\Condicional.cs" />
+    <Compile Include="Condicional\CondicionCantidadMayoresDe20.cs" />
+    <Compile Include="Condicional\CondicionLugar.cs" />
     <Compile Include="DDS.cs">
       <DependentUpon>DDS.dbml</DependentUpon>
     </Compile>
@@ -82,18 +81,17 @@
     <Compile Include="DDS_DB.cs" />
     <Compile Include="Denegacion.cs" />
     <Compile Include="Estandar.cs" />
-    <Compile Include="Handicap.cs" />
-    <Compile Include="ICondiciones.cs" />
-    <Compile Include="ICriterio.cs" />
+    <Compile Include="Ordenamientos\Handicap.cs" />
+    <Compile Include="Condicional\ICondiciones.cs" />
+    <Compile Include="Ordenamientos\ICriterio.cs" />
     <Compile Include="IMail.cs" />
     <Compile Include="Interesado.cs" />
     <Compile Include="Mail.cs" />
-    <Compile Include="Mix.cs" />
-    <Compile Include="Parametro.cs" />
+    <Compile Include="Ordenamientos\Mix.cs" />
     <Compile Include="Partido.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="PromUltimoPartido.cs" />
-    <Compile Include="PromUltimosNPartidos.cs" />
+    <Compile Include="Ordenamientos\PromUltimoPartido.cs" />
+    <Compile Include="Ordenamientos\NUltimosPartidosPromedio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

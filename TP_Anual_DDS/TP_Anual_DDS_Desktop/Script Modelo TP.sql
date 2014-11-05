@@ -14,8 +14,7 @@ CREATE TABLE DBInteresado(
 	FechaNacimiento date NOT NULL,
 	Mail nvarchar(50) NULL,	
 	Posicion int NULL,
-	Handicap int NULL,
-	Criterio nvarchar(50) NULL,	
+	Handicap int NULL,	 
 	CantPartidosJugados int NOT NULL,
 	PRIMARY KEY (Id_Interesado),
 	foreign key(Id_Usuario)references DBUsuario(Id_Usuario),
@@ -121,7 +120,6 @@ CREATE TABLE DBInfraccion(
 	CONSTRAINT [PK_Infracciones] PRIMARY KEY(Id_Infraccion),
 	foreign key(Id_Usuario)references DBUsuario(Id_Usuario)ON DELETE CASCADE
 )
-GO
 
 CREATE TABLE [dbo].[DBEstandar](
 	[Modalidad_deJuego] [nvarchar](50) NULL,
@@ -135,24 +133,25 @@ CREATE TABLE [dbo].[DBSolidario](
 	[Datos_contacto] [nvarchar](50) NULL,
 	[Prioridad] [nvarchar](50) NULL
 ) ON [PRIMARY]
+GO
 
 --FUNCIONES
 
 CREATE FUNCTION PromUltimoPartido(
-@Id_Partido int
+	@Id_Interesado int
 )
 RETURNS decimal(18,2)
 AS 
 BEGIN	
 RETURN 
 (
-SELECT ISNULL(AVG(CAST(c.Calificacion as decimal(18,2))),0) as promedio
-FROM DBCalificacion c 
-JOIN DBPartido pa on pa.Id_Partido = c.Id_Partido
-JOIN DBInteresado inte on inte.Id_Interesado = c.Id_Jugador_Criticado
-WHERE CONVERT(datetime,pa.Fecha_Hora,103) = (SELECT TOP 1 CONVERT(datetime,part.Fecha_Hora,103)FROM DBPartido part 
-JOIN DBCalificacion calif on calif.Id_Partido=part.Id_Partido order by CONVERT(datetime,part.Fecha_Hora,103) desc)
-AND inte.Id_Interesado = @Id_Partido
+	SELECT ISNULL(AVG(CAST(c.Calificacion as decimal(18,2))),0) as promedio
+	FROM DBCalificacion c 
+	JOIN DBPartido pa on pa.Id_Partido = c.Id_Partido
+	JOIN DBInteresado inte on inte.Id_Interesado = c.Id_Jugador_Criticado
+	WHERE CONVERT(datetime,pa.Fecha_Hora,103) = (SELECT TOP 1 CONVERT(datetime,part.Fecha_Hora,103)FROM DBPartido part 
+	JOIN DBCalificacion calif on calif.Id_Partido=part.Id_Partido order by CONVERT(datetime,part.Fecha_Hora,103) desc)
+	AND inte.Id_Interesado = @Id_Interesado
 )
 END
 GO
@@ -171,9 +170,9 @@ END
 GO
 
 CREATE PROCEDURE [dbo].[Usuario_UI](
-@Nombre_Usuario nvarchar(50),
-@Password_Usuario nvarchar(50),
-@Usuario_Administrador bit
+	@Nombre_Usuario nvarchar(50),
+	@Password_Usuario nvarchar(50),
+	@Usuario_Administrador bit
 )
 AS
 BEGIN
@@ -199,8 +198,7 @@ CREATE PROCEDURE [dbo].Interesado_UI(
     @FechaNacimiento date,
     @Mail nvarchar(50),
     @Posicion int,
-    @Handicap int,
-    @Criterio nvarchar(50)
+    @Handicap int    
 )
 AS
 BEGIN
@@ -215,14 +213,13 @@ BEGIN
 		FechaNacimiento = @FechaNacimiento,
 		Mail = @Mail,
 		Posicion = @Posicion,
-		Handicap = @Handicap,
-		Criterio = @Criterio,
+		Handicap = @Handicap,		
 		CantPartidosJugados = 0
 	END
 	ELSE
 	BEGIN
 		INSERT INTO dbo.DBInteresado 
-		VALUES (@Id_Usuario,@Nombre,@Apellido,@FechaNacimiento,@Mail,@Posicion,@Handicap,@Criterio, 0)	
+		VALUES (@Id_Usuario,@Nombre,@Apellido,@FechaNacimiento,@Mail,@Posicion,@Handicap, 0)	
 	END
 END
 GO
@@ -279,8 +276,7 @@ BEGIN
 		FechaNacimiento,
 		Mail,
 		Posicion,
-		Handicap,
-		Criterio,
+		Handicap,		
 		CantPartidosJugados
 		FROM DBUsuario U
 		INNER JOIN DBInteresado I ON I.Id_Usuario = U.Id_Usuario
@@ -417,7 +413,7 @@ END
 GO
 
 CREATE PROCEDURE Partido_Interesado_L(
-@Id_Partido int
+	@Id_Partido int
 )
 AS
 BEGIN
@@ -504,7 +500,7 @@ GO
 
 
 CREATE PROCEDURE [dbo].[Interesado_Detalle_L](
-@Id_Interesado int 
+	@Id_Interesado int 
 )
 AS
 BEGIN
@@ -527,7 +523,7 @@ GO
 
 
 CREATE PROCEDURE [dbo].[Interesado_Infracciones_L](
-@Id_Interesado int 
+	@Id_Interesado int 
 )
 AS
 BEGIN
@@ -617,7 +613,7 @@ END
 GO
 
 CREATE PROCEDURE Interesado_ObtenerPartidosFinalizados(
-@Id_Interesado int
+	@Id_Interesado int
 )
 AS 
 BEGIN

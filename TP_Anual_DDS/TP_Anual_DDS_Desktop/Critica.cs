@@ -31,7 +31,7 @@ namespace TP_Anual_DDS_E4
 
         private void Critica_Load(object sender, EventArgs e)
         {
-            BackColor = _modoApertura == frmCriticas.Modo.Realizar ? Color.Tomato : Color.LimeGreen;
+            BackColor = _modoApertura == frmCriticas.Modo.Realizar ? Color.Tomato : Color.LightGreen;
             //si se pide realizar la critica habilito los controles
             numPuntaje.Enabled = txtCritica.Enabled = btnOK.Visible = _modoApertura == frmCriticas.Modo.Realizar;
 

@@ -15,6 +15,7 @@ namespace TP_Anual_DDS_E4
     public class Partido
     {
         #region Propiedades
+
         public int Id_Partido
         {
             get
@@ -26,6 +27,7 @@ namespace TP_Anual_DDS_E4
 
             }
         }
+
         public DateTime Fecha_Hora { get; set; }
         public string Lugar { get; set; }
         public List<Usuario> ListaJugadores { get; set; }
@@ -33,10 +35,7 @@ namespace TP_Anual_DDS_E4
 
         public List<Calificacion> ListaCalificaciones
         {
-            get
-            {
-                return ObtenerCalificaciones();
-            }
+            get { return ObtenerCalificaciones(); }
             set { }
         }
 
@@ -102,7 +101,11 @@ namespace TP_Anual_DDS_E4
 
         public bool EstaInscripto(Interesado interesado)
         {
-            return this.ListaJugadores.Any(x => x.Interesado.Nombre == interesado.Nombre && x.Interesado.Apellido == interesado.Apellido && !this.Confirmado);
+            return
+                this.ListaJugadores.Any(
+                    x =>
+                        x.Interesado.Nombre == interesado.Nombre && x.Interesado.Apellido == interesado.Apellido &&
+                        !this.Confirmado);
         }
 
         public List<Partido_Interesado_LResult> ObtenerListaJugadoresInteresados()
@@ -154,15 +157,18 @@ namespace TP_Anual_DDS_E4
                 }
                 else
                 {
-                    if (tipo.Prioridad == Interesado.EnumPrioridad.Solidario)//Si quiere ingresar un solidario
+                    if (tipo.Prioridad == Interesado.EnumPrioridad.Solidario) //Si quiere ingresar un solidario
                     {
-                        return BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Condicional);//Busca si hay condicional y los cambia.
+                        return BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Condicional);
+                        //Busca si hay condicional y los cambia.
                     }
-                    if (tipo.Prioridad == Interesado.EnumPrioridad.Estandar)//Si quiere ingresar un estandar
+                    if (tipo.Prioridad == Interesado.EnumPrioridad.Estandar) //Si quiere ingresar un estandar
                     {
                         //Si hay un condicional, lo saca. Si no, busca si hay un solidario para sacarlo.
-                        if (!BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Condicional))//Busca si hay condicional.
-                            return BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Solidario);//Busca si hay solidario.
+                        if (!BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Condicional))
+                            //Busca si hay condicional.
+                            return BuscarYEliminar(tipo, usuario, Interesado.EnumPrioridad.Solidario);
+                        //Busca si hay solidario.
                         return true; //si eliminó un condicional
                     }
                 }
@@ -239,6 +245,14 @@ namespace TP_Anual_DDS_E4
                                    select x).SingleOrDefault();
 
             dbPartido.Finalizado = true;
+
+            //obtengo todos los jugadores del partido para incrementar la cantidad de partidos jugados
+            List<DBInteresado> interesados = (from x in db.DBPartido_Interesado
+                                              where x.Id_Partido == this.Id_Partido && !(bool)x.Baja
+                                              select x.DBInteresado).ToList();
+            //sumo un partido a los jugados
+            interesados.ForEach(z => z.CantPartidosJugados++);
+
             db.SubmitChanges();
             //añade al partido como finalizado a cada jugador
             this.ListaJugadores.ForEach(z => z.Interesado.ListaPartidosFinalizados.Add(this));
@@ -294,7 +308,7 @@ namespace TP_Anual_DDS_E4
 
         private void RegistrarInfraccion(Usuario usuarioInfractor)
         {
-            this.ListaInfractores.Add(usuarioInfractor);//Se agrega a una lista de infractores.
+            this.ListaInfractores.Add(usuarioInfractor); //Se agrega a una lista de infractores.
             DDSDataContext db = new DDSDataContext();
             db.Infraccion_I(usuarioInfractor.Id_Usuario);
             db.SubmitChanges();
@@ -320,12 +334,14 @@ namespace TP_Anual_DDS_E4
                 }
             }
         }
+
         /// <summary>
         /// Busca en la lista de interesados inscriptos los que tienen menor prioridad y los vuela.
         /// </summary>
         /// <param name="interesadoAIngresar"></param>
         /// <param name="prioridadDeIngresanteAVolar">Busca interesados segun esto</param>
-        private bool BuscarYEliminar(TipoJugador tipo, Usuario usuarioAIngresar, Interesado.EnumPrioridad prioridadDeIngresanteAVolar)
+        private bool BuscarYEliminar(TipoJugador tipo, Usuario usuarioAIngresar,
+            Interesado.EnumPrioridad prioridadDeIngresanteAVolar)
         {
             foreach (Usuario usuario in this.ListaJugadores)
             {
@@ -338,7 +354,8 @@ namespace TP_Anual_DDS_E4
 
                     //se agrega un nuevo jugador por ganar en prioridad, también a la lista y a la base
 
-                    db.Partido_Interesado_UI(this.Id_Partido, usuarioAIngresar.Interesado.Id_Interesado, tipo.Id_TipoJugador, false);
+                    db.Partido_Interesado_UI(this.Id_Partido, usuarioAIngresar.Interesado.Id_Interesado,
+                        tipo.Id_TipoJugador, false);
                     db.SubmitChanges();
                     ListaJugadores.Add(usuarioAIngresar);
 
@@ -379,33 +396,41 @@ namespace TP_Anual_DDS_E4
                     break;
                 case 'P':
                     DDSDataContext db = new DDSDataContext();
-                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new PromUltimoPartido(z.Interesado.ObtenerCalificacionesPartido(ObtenerUltimoPartido(z.Interesado.Id_Interesado))));
+                    ListaJugadores.ForEach(
+                        z =>
+                            z.Interesado.Criterio =
+                                new PromUltimoPartido(
+                                    z.Interesado.ObtenerCalificacionesPartido(
+                                        ObtenerUltimoPartido(z.Interesado.Id_Interesado))));
                     break;
                 case 'N':
-                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new NUltimosPartidosPromedio(z.Interesado.ListaCalificaciones, z.Interesado.CantPartidosJugados));
+                    ListaJugadores.ForEach(
+                        z =>
+                            z.Interesado.Criterio =
+                                new NUltimosPartidosPromedio(z.Interesado.ListaCalificaciones,
+                                    z.Interesado.CantPartidosJugados));
                     break;
                 case 'M':
                     //incluye los tres criterios
                     ListaJugadores.ForEach(z => z.Interesado.Criterio = new Mix(new List<ICriterio>()
                     {
                         new Handicap(z.Interesado.Handicap),
-                        new PromUltimoPartido(z.Interesado.ListaCalificaciones),
-                        new NUltimosPartidosPromedio(z.Interesado.ListaCalificaciones,z.Interesado.CantPartidosJugados)
+                        new PromUltimoPartido(
+                            z.Interesado.ObtenerCalificacionesPartido(ObtenerUltimoPartido(z.Interesado.Id_Interesado))),
+                        new NUltimosPartidosPromedio(z.Interesado.ListaCalificaciones, z.Interesado.CantPartidosJugados)
                     }));
                     break;
             }
-            //ordeno la lista por posición y aplicando el criterio especificado
-            this.ListaJugadores = (from x in ListaJugadores orderby x.Interesado.Criterio.AplicarCriterio() select x).ToList();
         }
 
         private int ObtenerUltimoPartido(int id_Interesado)
         {
             DDSDataContext db = new DDSDataContext();
             int idPartido = (from x in db.DBPartido_Interesado
-                join y in db.DBPartido on x.Id_Partido equals y.Id_Partido
-                where x.Id_Interesado == id_Interesado && (bool)y.Finalizado
-                orderby y.Fecha_Hora descending 
-                select x.Id_Partido).FirstOrDefault();
+                             join y in db.DBPartido on x.Id_Partido equals y.Id_Partido
+                             where x.Id_Interesado == id_Interesado && (bool)y.Finalizado
+                             orderby y.Fecha_Hora descending
+                             select x.Id_Partido).FirstOrDefault();
             return idPartido;
         }
 
@@ -418,5 +443,33 @@ namespace TP_Anual_DDS_E4
         }
 
         #endregion
+
+        public IEnumerable<object> ObtenerEquiposDesignados(int nroEquipo)
+        {
+            DDSDataContext db = new DDSDataContext();
+            return (from x in db.DBPartido_Interesado
+                    join y in db.DBInteresado on x.Id_Interesado equals y.Id_Interesado
+                    where x.Id_Partido == this.Id_Partido && !(bool)x.Baja
+                          && x.EquipoDesignado == nroEquipo
+                    select new
+                    {
+                        NombreyApellido = string.Format("{0} {1}", y.Nombre, y.Apellido),
+                        y.FechaNacimiento,
+                        y.Posicion,
+                        y.Handicap
+                    }).ToList();
+        }
+
+        public IEnumerable<object> ObtenerListaEquipo(int equipo)
+        {
+            return (from x in equipo == 1 ? this.ListaPrimerEquipo : ListaSegundoEquipo
+                    select new
+                    {
+                        NombreyApellido = string.Format("{0} {1}", x.Interesado.Nombre, x.Interesado.Apellido),
+                        x.Interesado.FechaNacimiento,
+                        x.Interesado.Posicion,
+                        x.Interesado.Handicap
+                    }).ToList();
+        }
     }
 }

@@ -116,6 +116,12 @@
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmOrdenamiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrdenamiento.Designer.cs">
+      <DependentUpon>frmOrdenamiento.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmProponerJugador.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOrdenamiento.resx">
+      <DependentUpon>frmOrdenamiento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProponerJugador.resx">
       <DependentUpon>frmProponerJugador.cs</DependentUpon>
