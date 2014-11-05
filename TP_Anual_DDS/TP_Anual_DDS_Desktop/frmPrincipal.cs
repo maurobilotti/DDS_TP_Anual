@@ -42,14 +42,13 @@ namespace TP_Anual_DDS_E4
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 Administrador.ObtenerInstancia().CrearPartido(frm.ObtenerPartido());
-                Actualizar();
+                CargarPartidos();
             }
         }
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
             DeshablitarControles();
-            Actualizar();
             EvaluarEstadoGrilla();
         }
 
@@ -124,8 +123,14 @@ namespace TP_Anual_DDS_E4
         private void btnLogout_Click(object sender, EventArgs e)
         {
             DeshablitarControles();
+            LimpiarGrillas();
             lblUsuario.Text = "";
             lblUsuario.Visible = false;
+        }
+
+        private void LimpiarGrillas()
+        {
+            gridPartidos.DataSource = gridEquipo1.DataSource = gridEquipo2.DataSource = gridInteresados.DataSource = null;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -134,6 +139,7 @@ namespace TP_Anual_DDS_E4
             frm.ListaInteresados = this.ListaUsuarios;
             if (frm.ShowDialog() == DialogResult.OK)
             {
+                CargarPartidos();
                 lblUsuario.Visible = true;
                 this.EsAdministrador = Properties.Settings.Default.EsAdmin;
                 EstaLogueado = true;
@@ -142,11 +148,13 @@ namespace TP_Anual_DDS_E4
                 {
                     Usuario usuario = Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario);
                     lblUsuario.Text = usuario._Usuario;
-                    btnRealizarCriticas.Visible = Administrador.ObtenerInstancia().DebeCriticas(usuario);
+                    //btnRealizarCriticas.Visible = Administrador.ObtenerInstancia().DebeCriticas(usuario);
+                    btnRealizarCriticas.Visible = true;
                 }
                 else
                 {
                     VerificarUsuariosPropuestos();
+                    ResaltarPartidos();
                     lblUsuario.Text = "Admin";
                     if (gridInteresados.Rows.Count >= 10)
                     {
@@ -156,6 +164,19 @@ namespace TP_Anual_DDS_E4
 
                 }
             }
+        }
+
+        private void ResaltarPartidos()
+        {
+            List<Partido> partidos = Administrador.ObtenerInstancia().ObtenerPartidos();
+            foreach (Partido partido in partidos)
+            {
+                //foreach (DataRow row in gridPartidos.Rows)
+                //{
+                //    //if(row.[])
+                //}
+            }
+            
         }
 
         private void gridEquipo1_MouseClick(object sender, MouseEventArgs e)
@@ -183,7 +204,10 @@ namespace TP_Anual_DDS_E4
             {
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido((int)gridPartidos.SelectedCells[0].Value);
                 if (partido.Confirmado)
+                {
+                    MessageBox.Show("Ya no es posible darse de baja del partido porque está confirmado");
                     return;
+                }
 
                 DialogResult resp = MessageBox.Show("Va a ser dado de baja al partido. ¿Desea proponer un reemplazo?", "Advertencia",
                     MessageBoxButtons.YesNoCancel);
@@ -291,9 +315,7 @@ namespace TP_Anual_DDS_E4
             MarcarJugadoresExcluidos(gridEquipo1);
             MarcarJugadoresConAltoHandicap(gridEquipo1);
         }
-
-
-
+        
         private void gridEquipo2_DataSourceChanged(object sender, EventArgs e)
         {
             MarcarJugadoresExcluidos(gridEquipo2);
@@ -371,10 +393,15 @@ namespace TP_Anual_DDS_E4
             btnInscribirse.Enabled = btnProponerAmigo.Enabled = !EsAdministrador;
         }
 
-        public void Actualizar()
+        public void CargarPartidos()
         {
             gridPartidos.DataSource = null;
-            gridPartidos.DataSource = Administrador.ObtenerInstancia().ObtenerPartidos();
+            gridPartidos.DataSource = (from x in Administrador.ObtenerInstancia().ObtenerPartidos()
+                                           select new {
+                                               x.Id_Partido,
+                                               x.Lugar,
+                                               x.Fecha_Hora,
+                                               x.Confirmado}).ToList();
         }
 
         private void EvaluarEstadoGrilla()
@@ -400,7 +427,7 @@ namespace TP_Anual_DDS_E4
 
                 if (gridInteresados.RowCount == 10 && EsAdministrador)
                 {
-                    btnCriterios.Enabled = true;
+                    btnCriterios.Visible = btnCriterios.Enabled = btnOrdenamiento.Enabled = true;
                 }
 
             }
@@ -438,5 +465,17 @@ namespace TP_Anual_DDS_E4
             }
         }
         #endregion
+
+        private void btnOrdenamiento_Click(object sender, EventArgs e)
+        {
+            int idSeleccionado = (int)gridPartidos.SelectedCells[0].Value;
+            Partido partido = Administrador.ObtenerInstancia().ObtenerPartidos().Single(z => z.Id_Partido == idSeleccionado);
+            frmOrdenamiento frm = new frmOrdenamiento(partido);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                
+            }
+        }
+
     }
 }

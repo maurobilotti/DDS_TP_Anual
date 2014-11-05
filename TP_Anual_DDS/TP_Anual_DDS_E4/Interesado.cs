@@ -32,7 +32,13 @@ namespace TP_Anual_DDS_E4
         public List<Interesado> ListaAmigos { get; set; }
         public int Posicion { get; set; }
         public ICriterio Criterio { get; set; }
-        public List<int> ListaCalificaciones { get; set; }
+
+        public List<int> ListaCalificaciones
+        {
+            get;
+            set;
+        }
+
         public int Handicap { get; set; }
         public int CantPartidosJugados { get; set; }
         public string NombreYApellido
@@ -40,7 +46,17 @@ namespace TP_Anual_DDS_E4
             get { return Nombre + " " + Apellido; }
         }
 
-        public List<Partido> ListaPartidosFinalizados { get; set; }
+        public List<Partido> ListaPartidosFinalizados
+        {
+            get
+            {
+                DDSDataContext db = new DDSDataContext();
+                return (from y in db.Interesado_ObtenerPartidosFinalizados(this.Id_Interesado)
+                        select new Partido(y.Lugar, (DateTime)y.Fecha_Hora, (bool)y.Confirmado, (bool)y.Finalizado)).ToList();
+            }
+            set { }
+        }
+
         public List<Partido> ListaPartidosCriticados { get; set; }
 
         /// <summary>
@@ -55,7 +71,6 @@ namespace TP_Anual_DDS_E4
             this.ListaAmigos = new List<Interesado>();
             this.ListaCalificaciones = new List<int>();
             this.ListaPartidosCriticados = new List<Partido>();
-            CargarPartidosFinalizados();
             this.FechaNacimiento = fechaNacimiento;
             this.Nombre = nombre;
             this.Apellido = apellido;
@@ -63,14 +78,6 @@ namespace TP_Anual_DDS_E4
             this.Posicion = posicion;
             this.CantPartidosJugados = cantPartidosJugados;
             this.Handicap = handicap;
-        }
-
-        private void CargarPartidosFinalizados()
-        {
-            this.ListaPartidosFinalizados = new List<Partido>();
-            DDSDataContext db = new DDSDataContext();
-            this.ListaPartidosFinalizados = (from x in db.Interesado_ObtenerPartidosFinalizados(this.Id_Interesado)
-                select new Partido(x.Lugar, (DateTime) x.Fecha_Hora, x.Confirmado.Value, x.Finalizado.Value)).ToList();
         }
 
         public bool EstasInscriptoEn(Partido partido)
@@ -134,6 +141,15 @@ namespace TP_Anual_DDS_E4
             DDSDataContext db = new DDSDataContext();
             db.Interesado_UI((int)idUsuario, this.Nombre, this.Apellido, this.FechaNacimiento, this.Mail, this.Posicion, this.Handicap, new Handicap(this.Handicap).Descripcion);
             db.SubmitChanges();
+        }
+
+
+        internal List<int> ObtenerCalificacionesPartido(int id_Partido)
+        {
+            DDSDataContext db = new DDSDataContext();
+            return (from x in db.DBCalificacion
+                where x.Id_Jugador_Criticado == this.Id_Interesado && x.Id_Partido == id_Partido 
+                    select x.Calificacion).ToList();
         }
     }
 }

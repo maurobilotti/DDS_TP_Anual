@@ -54,7 +54,7 @@ namespace TP_Anual_DDS_E4
         public List<Partido> ObtenerPartidos()
         {
             this.listaPartidos = (from x in new DDSDataContext().Partido_L()
-                                  select new Partido(x.Lugar, (DateTime)x.Fecha_Hora, x.Confirmado.Value, x.Finalizado.Value)).ToList();
+                                  select new Partido(x.Lugar, (DateTime)x.Fecha_Hora, (bool)x.Confirmado, (bool)x.Finalizado)).ToList();
 
             return this.listaPartidos;
         }

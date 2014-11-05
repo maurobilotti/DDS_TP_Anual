@@ -23,6 +23,7 @@ namespace TP_Anual_DDS_E4
                     case 5:
                     case 8:
                     case 9:
+                    case 11:
                         listaPrimerEquipo.Add(jugador);
                         break;
                 }

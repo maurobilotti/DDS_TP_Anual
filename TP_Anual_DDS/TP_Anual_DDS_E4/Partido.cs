@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,15 @@ namespace TP_Anual_DDS_E4
         public string Lugar { get; set; }
         public List<Usuario> ListaJugadores { get; set; }
         private List<Usuario> ListaInfractores { get; set; }
-        public List<Calificacion> ListaCalificaciones { get; set; }
+
+        public List<Calificacion> ListaCalificaciones
+        {
+            get
+            {
+                return ObtenerCalificaciones();
+            }
+            set { }
+        }
 
         public List<Usuario> ListaPrimerEquipo
         {
@@ -61,10 +70,30 @@ namespace TP_Anual_DDS_E4
             this.Lugar = lugar;
             this.Confirmado = confirmado;
             this.Finalizado = finalizado;
-
             ObtenerInscriptos();
             ObtenerInfractores();
-            this.ListaCalificaciones = new List<Calificacion>();
+            this.ListaCalificaciones = ObtenerCalificaciones();
+        }
+
+        /// <summary>
+        /// obtiene la lista de criticas realizadas
+        /// </summary>
+        private List<Calificacion> ObtenerCalificaciones()
+        {
+            DDSDataContext db = new DDSDataContext();
+            return (from x in db.DBCalificacion
+                    join criticado in db.DBInteresado on x.Id_Jugador_Criticado equals criticado.Id_Interesado
+                    join critico in db.DBInteresado on x.Id_Jugador_Critico equals critico.Id_Interesado
+                    where x.Id_Partido == this.Id_Partido
+                    select
+                        new Calificacion(
+                            new Interesado(critico.Nombre, critico.Apellido, critico.FechaNacimiento, critico.Mail,
+                                (int)critico.Posicion, (int)critico.Handicap, critico.CantPartidosJugados),
+                            new Interesado(criticado.Nombre, criticado.Apellido, criticado.FechaNacimiento, criticado.Mail,
+                                (int)criticado.Posicion, (int)criticado.Handicap, criticado.CantPartidosJugados),
+                            x.Descripcion,
+                            x.Calificacion
+                            )).ToList();
         }
 
         #endregion
@@ -73,7 +102,7 @@ namespace TP_Anual_DDS_E4
 
         public bool EstaInscripto(Interesado interesado)
         {
-            return this.ListaJugadores.Any(x => x.Interesado.Nombre == interesado.Nombre && x.Interesado.Apellido == interesado.Apellido);
+            return this.ListaJugadores.Any(x => x.Interesado.Nombre == interesado.Nombre && x.Interesado.Apellido == interesado.Apellido && !this.Confirmado);
         }
 
         public List<Partido_Interesado_LResult> ObtenerListaJugadoresInteresados()
@@ -84,7 +113,7 @@ namespace TP_Anual_DDS_E4
         public void AgregarCalificacion(Interesado critico, Interesado criticado, int calificacion, string critica)
         {
             this.ListaCalificaciones.Add(new Calificacion(critico, criticado, critica, calificacion));
-            
+
             //registra la crítica en la base de datos
             DDSDataContext db = new DDSDataContext();
             db.Calificacion_I(this.Id_Partido, critica, critico.Id_Interesado, criticado.Id_Interesado, calificacion);
@@ -211,13 +240,38 @@ namespace TP_Anual_DDS_E4
 
             dbPartido.Finalizado = true;
             db.SubmitChanges();
-
+            //añade al partido como finalizado a cada jugador
+            this.ListaJugadores.ForEach(z => z.Interesado.ListaPartidosFinalizados.Add(this));
             if (!this.Finalizado)
             {
                 this.Finalizado = true;
-                this.ListaJugadores.ForEach(z => z.Interesado.ListaPartidosFinalizados.Add(this));
             }
         }
+
+
+        /// <summary>
+        /// crea una critica por cada jugador
+        /// </summary>
+        //private void CrearCriticasJugadores()
+        //{
+        //    foreach (Usuario jugadorCritico in this.ListaJugadores)
+        //    {
+        //        foreach (Usuario jugadorCriticado in ListaJugadores)
+        //        {
+        //            if (jugadorCriticado == jugadorCritico)
+        //                continue;
+
+        //            DDSDataContext db = new DDSDataContext();
+        //            DBCalificacion calificacion = new DBCalificacion();
+        //            calificacion.Id_Partido = this.Id_Partido;
+        //            calificacion.Id_Jugador_Critico = jugadorCritico.Interesado.Id_Interesado;
+        //            calificacion.Id_Jugador_Criticado = jugadorCriticado.Interesado.Id_Interesado;
+        //            calificacion.Calificacion = -1;
+        //            db.DBCalificacion.InsertOnSubmit(calificacion);
+        //            db.SubmitChanges();
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// confirma el partido en la base de datos
@@ -324,10 +378,11 @@ namespace TP_Anual_DDS_E4
                     ListaJugadores.ForEach(z => z.Interesado.Criterio = new Handicap(z.Interesado.Handicap));
                     break;
                 case 'P':
-                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new PromUltimoPartido(z.Interesado.ListaCalificaciones));
+                    DDSDataContext db = new DDSDataContext();
+                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new PromUltimoPartido(z.Interesado.ObtenerCalificacionesPartido(ObtenerUltimoPartido(z.Interesado.Id_Interesado))));
                     break;
                 case 'N':
-                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new PromUltimosNPartidos(z.Interesado.ListaCalificaciones, z.Interesado.CantPartidosJugados));
+                    ListaJugadores.ForEach(z => z.Interesado.Criterio = new NUltimosPartidosPromedio(z.Interesado.ListaCalificaciones, z.Interesado.CantPartidosJugados));
                     break;
                 case 'M':
                     //incluye los tres criterios
@@ -335,12 +390,23 @@ namespace TP_Anual_DDS_E4
                     {
                         new Handicap(z.Interesado.Handicap),
                         new PromUltimoPartido(z.Interesado.ListaCalificaciones),
-                        new PromUltimosNPartidos(z.Interesado.ListaCalificaciones,z.Interesado.CantPartidosJugados)
+                        new NUltimosPartidosPromedio(z.Interesado.ListaCalificaciones,z.Interesado.CantPartidosJugados)
                     }));
                     break;
             }
             //ordeno la lista por posición y aplicando el criterio especificado
-            this.ListaJugadores = (from x in ListaJugadores orderby x.Interesado.Posicion, x.Interesado.Criterio.AplicarCriterio() select x).ToList();
+            this.ListaJugadores = (from x in ListaJugadores orderby x.Interesado.Criterio.AplicarCriterio() select x).ToList();
+        }
+
+        private int ObtenerUltimoPartido(int id_Interesado)
+        {
+            DDSDataContext db = new DDSDataContext();
+            int idPartido = (from x in db.DBPartido_Interesado
+                join y in db.DBPartido on x.Id_Partido equals y.Id_Partido
+                where x.Id_Interesado == id_Interesado && (bool)y.Finalizado
+                orderby y.Fecha_Hora descending 
+                select x.Id_Partido).FirstOrDefault();
+            return idPartido;
         }
 
         private Interesado.EnumPrioridad ObtenerTipoJugador(Usuario usuario)

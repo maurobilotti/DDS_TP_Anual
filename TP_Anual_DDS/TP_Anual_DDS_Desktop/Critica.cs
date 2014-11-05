@@ -45,6 +45,8 @@ namespace TP_Anual_DDS_E4
             BackColor = Color.LawnGreen;
             btnOK.Enabled = false;
             Partido.AgregarCalificacion(JugadorCritico, JugadorCriticado, (int)numPuntaje.Value, txtCritica.Text);
+
+            //si completo todas las criticas, se agrega a la lista de partidos criticados
             if (Partido.ListaCalificaciones.Count(z => z.JugadorCritico == JugadorCritico) == Partido.ListaJugadores.Count - 1)
                 this.JugadorCritico.ListaPartidosCriticados.Add(Partido);
         }

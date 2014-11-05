@@ -45,7 +45,7 @@ create TABLE DBPartido_Interesado(
 	Id_Interesado int NOT NULL,
 	Id_TipoJugador int NOT NULL,
 	EquipoDesignado int NULL,
-	Baja bit NULL,
+	Baja bit NULL,		
 	CONSTRAINT Partido_Interesado_pk PRIMARY KEY(Id_Interesado,Id_Partido),
 	foreign key(Id_Interesado)references DBInteresado(Id_Interesado),
 	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE,
@@ -59,7 +59,7 @@ CREATE TABLE DBCalificacion(
 	Descripcion nvarchar(50) NULL,
 	Id_Jugador_Critico int NULL,
 	Id_Jugador_Criticado int NULL,
-	Calificacion int NOT NULL,
+	Calificacion int NOT NULL,	
 	PRIMARY KEY (Id_Calificacion),
 	foreign key(Id_Partido)references DBPartido(Id_Partido)ON DELETE CASCADE 
 ) 
@@ -122,6 +122,19 @@ CREATE TABLE DBInfraccion(
 	foreign key(Id_Usuario)references DBUsuario(Id_Usuario)ON DELETE CASCADE
 )
 GO
+
+CREATE TABLE [dbo].[DBEstandar](
+	[Modalidad_deJuego] [nvarchar](50) NULL,
+	[Descripcion_Estandar] [nvarchar](50) NULL,
+	[Prioridad] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[DBSolidario](
+	[Modalidad_deJuego] [nvarchar](50) NULL,
+	[Descripcion_Estandar] [nvarchar](50) NULL,
+	[Datos_contacto] [nvarchar](50) NULL,
+	[Prioridad] [nvarchar](50) NULL
+) ON [PRIMARY]
 
 --FUNCIONES
 
@@ -484,7 +497,8 @@ CREATE PROCEDURE Calificacion_I(
 )
 AS
 BEGIN
-	INSERT INTO DBCalificacion VALUES(@Id_Partido, @Descripcion, @Id_Jugador_Critico, @Id_Jugador_Criticado, @Calificacion)
+	INSERT INTO DBCalificacion (Id_Partido,Descripcion,Id_Jugador_Critico,Id_Jugador_Criticado,Calificacion) 
+	VALUES(@Id_Partido, @Descripcion, @Id_Jugador_Critico, @Id_Jugador_Criticado, @Calificacion)
 END
 GO
 

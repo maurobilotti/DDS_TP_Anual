@@ -45,10 +45,15 @@ namespace TP_Anual_DDS_E4
             {
                 if (ModoApertura == Modo.Realizar)
                 {
+                    DDSDataContext db = new DDSDataContext();
                     foreach (Usuario usuarioCriticado in partido.ListaJugadores)
                     {
-                        if (usuarioCriticado.Interesado == JugadorCritico ||
+                        if (usuarioCriticado.Interesado.Id_Interesado == JugadorCritico.Id_Interesado ||
                             partido.ListaCalificaciones.Exists(z => z.JugadorCriticado == usuarioCriticado.Interesado && z.JugadorCritico == JugadorCritico))
+                            continue;
+
+                        //chequeo que no exista la critica en la base
+                        if (db.DBCalificacion.Any(x => x.Id_Jugador_Criticado == usuarioCriticado.Id_Usuario && x.Id_Jugador_Critico == JugadorCritico.Id_Interesado))
                             continue;
 
                         container.Controls.Add(new Critica(this.JugadorCritico, usuarioCriticado.Interesado, partido, this.ModoApertura));
