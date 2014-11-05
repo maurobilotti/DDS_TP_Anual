@@ -26,14 +26,16 @@ namespace TP_Anual_DDS_E4
 
         private void frmProponerJugador_Load(object sender, EventArgs e)
         {
+            this.listaNoPropuestos = new List<Usuario>();
             this.listaNoPropuestos = Administrador.ObtenerInstancia().ObtenerJugadoresNoInscriptos(this.Partido);
-            cmbJugadorPropuesto.DataSource = this.listaNoPropuestos.Select(z => z.Interesado.NombreYApellido);
+            cmbJugadorPropuesto.DataSource = (from x in this.listaNoPropuestos select new {x.Interesado.NombreYApellido, x.Interesado.Id_Interesado}).ToList();
             cmbJugadorPropuesto.DisplayMember = "NombreYApellido";
+            cmbJugadorPropuesto.ValueMember = "Id_Interesado";
         }
 
         private void btnProponer_Click(object sender, EventArgs e)
         {
-            this.JugadorPropuesto = this.listaNoPropuestos.Single(z => z.Interesado.NombreYApellido == cmbJugadorPropuesto.SelectedText);
+            this.JugadorPropuesto = this.listaNoPropuestos.Single(z => z.Interesado.Id_Interesado == (int)cmbJugadorPropuesto.SelectedValue);
             DialogResult = DialogResult.OK;
         }
     }

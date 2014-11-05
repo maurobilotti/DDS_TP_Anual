@@ -36,7 +36,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 48);
+            this.label1.Location = new System.Drawing.Point(26, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 13);
             this.label1.TabIndex = 0;
@@ -46,14 +46,14 @@
             // 
             this.cmbCriterio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCriterio.FormattingEnabled = true;
-            this.cmbCriterio.Location = new System.Drawing.Point(90, 45);
+            this.cmbCriterio.Location = new System.Drawing.Point(90, 24);
             this.cmbCriterio.Name = "cmbCriterio";
             this.cmbCriterio.Size = new System.Drawing.Size(205, 21);
             this.cmbCriterio.TabIndex = 1;
             // 
             // btnAplicarCriterio
             // 
-            this.btnAplicarCriterio.Location = new System.Drawing.Point(124, 104);
+            this.btnAplicarCriterio.Location = new System.Drawing.Point(124, 68);
             this.btnAplicarCriterio.Name = "btnAplicarCriterio";
             this.btnAplicarCriterio.Size = new System.Drawing.Size(75, 23);
             this.btnAplicarCriterio.TabIndex = 2;
@@ -65,7 +65,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(323, 139);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.ClientSize = new System.Drawing.Size(323, 114);
             this.Controls.Add(this.btnAplicarCriterio);
             this.Controls.Add(this.cmbCriterio);
             this.Controls.Add(this.label1);

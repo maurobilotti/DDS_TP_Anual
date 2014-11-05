@@ -37,7 +37,7 @@
             // 
             // btnGuardarPartido
             // 
-            this.btnGuardarPartido.Location = new System.Drawing.Point(222, 92);
+            this.btnGuardarPartido.Location = new System.Drawing.Point(223, 87);
             this.btnGuardarPartido.Name = "btnGuardarPartido";
             this.btnGuardarPartido.Size = new System.Drawing.Size(75, 23);
             this.btnGuardarPartido.TabIndex = 0;
@@ -83,13 +83,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(524, 122);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateFecha);
             this.Controls.Add(this.txtLugar);
             this.Controls.Add(this.btnGuardarPartido);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmNuevoPartido";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Nuevo Partido";

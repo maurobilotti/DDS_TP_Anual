@@ -34,7 +34,7 @@
             // 
             // btnRegistrarDenegacion
             // 
-            this.btnRegistrarDenegacion.Location = new System.Drawing.Point(142, 112);
+            this.btnRegistrarDenegacion.Location = new System.Drawing.Point(144, 112);
             this.btnRegistrarDenegacion.Name = "btnRegistrarDenegacion";
             this.btnRegistrarDenegacion.Size = new System.Drawing.Size(75, 23);
             this.btnRegistrarDenegacion.TabIndex = 0;

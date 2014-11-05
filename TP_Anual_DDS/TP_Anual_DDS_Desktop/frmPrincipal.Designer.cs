@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.gridPartidos = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -48,7 +52,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.btnRegistrarse = new System.Windows.Forms.Button();
+            this.btnRegistrar = new System.Windows.Forms.Button();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.btnNuevoPartido = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -64,10 +68,8 @@
             this.btnVerCriticas = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRealizarCriticas = new System.Windows.Forms.ToolStripButton();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.btnEstadisticas = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPartidos)).BeginInit();
             this.panel2.SuspendLayout();
@@ -95,6 +97,40 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(469, 445);
             this.panel1.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(406, 13);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(54, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Finalizado";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(305, 13);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(60, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Confirmado";
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.panel4.Location = new System.Drawing.Point(381, 10);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(18, 17);
+            this.panel4.TabIndex = 4;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel3.Location = new System.Drawing.Point(280, 10);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(18, 17);
+            this.panel3.TabIndex = 2;
             // 
             // gridPartidos
             // 
@@ -329,16 +365,16 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // btnRegistrarse
+            // btnRegistrar
             // 
-            this.btnRegistrarse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRegistrarse.Location = new System.Drawing.Point(999, 2);
-            this.btnRegistrarse.Name = "btnRegistrarse";
-            this.btnRegistrarse.Size = new System.Drawing.Size(75, 23);
-            this.btnRegistrarse.TabIndex = 8;
-            this.btnRegistrarse.Text = "Registrarse";
-            this.btnRegistrarse.UseVisualStyleBackColor = true;
-            this.btnRegistrarse.Click += new System.EventHandler(this.btnRegistrarse_Click);
+            this.btnRegistrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRegistrar.Location = new System.Drawing.Point(999, 2);
+            this.btnRegistrar.Name = "btnRegistrar";
+            this.btnRegistrar.Size = new System.Drawing.Size(75, 23);
+            this.btnRegistrar.TabIndex = 8;
+            this.btnRegistrar.Text = "Registrar";
+            this.btnRegistrar.UseVisualStyleBackColor = true;
+            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrarse_Click);
             // 
             // lblUsuario
             // 
@@ -412,6 +448,8 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnBuscarJugadores,
             this.toolStripSeparator6,
+            this.btnEstadisticas,
+            this.toolStripSeparator7,
             this.btnNuevoPartido,
             this.toolStripSeparator1,
             this.btnInscribirse,
@@ -475,39 +513,20 @@
             this.btnRealizarCriticas.Visible = false;
             this.btnRealizarCriticas.Click += new System.EventHandler(this.btnRealizarCriticas_Click);
             // 
-            // panel3
+            // btnEstadisticas
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel3.Location = new System.Drawing.Point(280, 10);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(18, 17);
-            this.panel3.TabIndex = 2;
+            this.btnEstadisticas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEstadisticas.Image = ((System.Drawing.Image)(resources.GetObject("btnEstadisticas.Image")));
+            this.btnEstadisticas.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEstadisticas.Name = "btnEstadisticas";
+            this.btnEstadisticas.Size = new System.Drawing.Size(23, 22);
+            this.btnEstadisticas.Text = "toolStripButton1";
+            this.btnEstadisticas.Click += new System.EventHandler(this.btnEstadisticas_Click);
             // 
-            // label6
+            // toolStripSeparator7
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(305, 13);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(60, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Confirmado";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(406, 13);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(54, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Finalizado";
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.Aqua;
-            this.panel4.Location = new System.Drawing.Point(381, 10);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(18, 17);
-            this.panel4.TabIndex = 4;
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
             // 
             // frmPrincipal
             // 
@@ -516,7 +535,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1234, 470);
             this.Controls.Add(this.lblUsuario);
-            this.Controls.Add(this.btnRegistrarse);
+            this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.panel2);
@@ -565,7 +584,7 @@
         private System.Windows.Forms.DataGridView gridEquipo1;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.Button btnRegistrarse;
+        private System.Windows.Forms.Button btnRegistrar;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Button btnFinalizarPartido;
         private System.Windows.Forms.ToolStripLabel btnNuevoPartido;
@@ -589,6 +608,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ToolStripButton btnEstadisticas;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }
 

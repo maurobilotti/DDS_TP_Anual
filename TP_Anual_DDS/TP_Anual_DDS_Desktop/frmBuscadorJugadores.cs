@@ -58,6 +58,7 @@ namespace TP_Anual_DDS_E4
                              x.Apellido,
                              x.FechaNacimiento,
                              x.Handicap,
+                             x.CantPartidosJugados,
                              Promedio = db.PromUltimoPartido(x.Id_Interesado)
                          }).ToList();
 

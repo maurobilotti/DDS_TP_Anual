@@ -267,22 +267,10 @@ namespace TP_Anual_DDS_E4
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Interesado_UI")]
-		public void Interesado_UI([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Usuario", DbType="Int")] System.Nullable<int> id_Usuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Nombre", DbType="NVarChar(50)")] string nombre, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Apellido", DbType="NVarChar(50)")] string apellido, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FechaNacimiento", DbType="Date")] System.Nullable<System.DateTime> fechaNacimiento, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Mail", DbType="NVarChar(50)")] string mail, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Posicion", DbType="Int")] System.Nullable<int> posicion, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Handicap", DbType="Int")] System.Nullable<int> handicap)
+		public int Interesado_UI([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Usuario", DbType="Int")] System.Nullable<int> id_Usuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Nombre", DbType="NVarChar(50)")] string nombre, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Apellido", DbType="NVarChar(50)")] string apellido, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FechaNacimiento", DbType="Date")] System.Nullable<System.DateTime> fechaNacimiento, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Mail", DbType="NVarChar(50)")] string mail, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Posicion", DbType="Int")] System.Nullable<int> posicion, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Handicap", DbType="Int")] System.Nullable<int> handicap)
 		{
-			this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Usuario, nombre, apellido, fechaNacimiento, mail, posicion, handicap);
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObtenerJugadoresConFuturo")]
-		public void ObtenerJugadoresConFuturo()
-		{
-			this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObtenerJugadoresMalos")]
-		public ISingleResult<ObtenerJugadoresMalosResult> ObtenerJugadoresMalos()
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
-			return ((ISingleResult<ObtenerJugadoresMalosResult>)(result.ReturnValue));
+            IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Usuario, nombre, apellido, fechaNacimiento, mail, posicion, handicap);
+            return ((int)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Partido_Interesado_Condicional_D")]
@@ -356,9 +344,30 @@ namespace TP_Anual_DDS_E4
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.PromUltimoPartido", IsComposable=true)]
-		public System.Nullable<decimal> PromUltimoPartido([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Partido", DbType="Int")] System.Nullable<int> id_Partido)
+		public System.Nullable<decimal> PromUltimoPartido([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Id_Interesado", DbType="Int")] System.Nullable<int> id_Interesado)
 		{
-			return ((System.Nullable<decimal>)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Partido).ReturnValue));
+			return ((System.Nullable<decimal>)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_Interesado).ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObtenerJugadoresTraicioneros")]
+		public ISingleResult<ObtenerJugadoresTraicionerosResult> ObtenerJugadoresTraicioneros()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<ObtenerJugadoresTraicionerosResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObtenerJugadoresMalos")]
+		public ISingleResult<ObtenerJugadoresMalosResult> ObtenerJugadoresMalos()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<ObtenerJugadoresMalosResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObtenerJugadoresConFuturo")]
+		public ISingleResult<ObtenerJugadoresConFuturoResult> ObtenerJugadoresConFuturo()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<ObtenerJugadoresConFuturoResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -3141,6 +3150,8 @@ namespace TP_Anual_DDS_E4
 		
 		private System.Nullable<int> _Handicap;
 		
+		private int _CantPartidosJugados;
+		
 		public Buscar_Jugadores_LResult()
 		{
 		}
@@ -3221,6 +3232,22 @@ namespace TP_Anual_DDS_E4
 				if ((this._Handicap != value))
 				{
 					this._Handicap = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CantPartidosJugados", DbType="Int NOT NULL")]
+		public int CantPartidosJugados
+		{
+			get
+			{
+				return this._CantPartidosJugados;
+			}
+			set
+			{
+				if ((this._CantPartidosJugados != value))
+				{
+					this._CantPartidosJugados = value;
 				}
 			}
 		}
@@ -3860,176 +3887,6 @@ namespace TP_Anual_DDS_E4
 		}
 	}
 	
-	public partial class ObtenerJugadoresMalosResult
-	{
-		
-		private int _Id_Interesado;
-		
-		private int _Id_Usuario;
-		
-		private string _Nombre;
-		
-		private string _Apellido;
-		
-		private System.DateTime _FechaNacimiento;
-		
-		private System.Nullable<int> _Posicion;
-		
-		private string _Mail;
-		
-		private System.Nullable<int> _Handicap;
-		
-		private int _CantPartidosJugados;
-		
-		public ObtenerJugadoresMalosResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int NOT NULL")]
-		public int Id_Interesado
-		{
-			get
-			{
-				return this._Id_Interesado;
-			}
-			set
-			{
-				if ((this._Id_Interesado != value))
-				{
-					this._Id_Interesado = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Usuario", DbType="Int NOT NULL")]
-		public int Id_Usuario
-		{
-			get
-			{
-				return this._Id_Usuario;
-			}
-			set
-			{
-				if ((this._Id_Usuario != value))
-				{
-					this._Id_Usuario = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this._Nombre = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Apellido
-		{
-			get
-			{
-				return this._Apellido;
-			}
-			set
-			{
-				if ((this._Apellido != value))
-				{
-					this._Apellido = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaNacimiento", DbType="Date NOT NULL")]
-		public System.DateTime FechaNacimiento
-		{
-			get
-			{
-				return this._FechaNacimiento;
-			}
-			set
-			{
-				if ((this._FechaNacimiento != value))
-				{
-					this._FechaNacimiento = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Posicion", DbType="Int")]
-		public System.Nullable<int> Posicion
-		{
-			get
-			{
-				return this._Posicion;
-			}
-			set
-			{
-				if ((this._Posicion != value))
-				{
-					this._Posicion = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mail", DbType="NVarChar(50)")]
-		public string Mail
-		{
-			get
-			{
-				return this._Mail;
-			}
-			set
-			{
-				if ((this._Mail != value))
-				{
-					this._Mail = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Handicap", DbType="Int")]
-		public System.Nullable<int> Handicap
-		{
-			get
-			{
-				return this._Handicap;
-			}
-			set
-			{
-				if ((this._Handicap != value))
-				{
-					this._Handicap = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CantPartidosJugados", DbType="Int NOT NULL")]
-		public int CantPartidosJugados
-		{
-			get
-			{
-				return this._CantPartidosJugados;
-			}
-			set
-			{
-				if ((this._CantPartidosJugados != value))
-				{
-					this._CantPartidosJugados = value;
-				}
-			}
-		}
-	}
-	
 	public partial class Partido_Interesado_LResult
 	{
 		
@@ -4569,6 +4426,516 @@ namespace TP_Anual_DDS_E4
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CantPartidosJugados", DbType="Int NOT NULL")]
 		public int CantPartidosJugados
+		{
+			get
+			{
+				return this._CantPartidosJugados;
+			}
+			set
+			{
+				if ((this._CantPartidosJugados != value))
+				{
+					this._CantPartidosJugados = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ObtenerJugadoresTraicionerosResult
+	{
+		
+		private int _Id_Interesado;
+		
+		private int _Id_Usuario;
+		
+		private string _Nombre;
+		
+		private string _Apellido;
+		
+		private System.DateTime _FechaNacimiento;
+		
+		private System.Nullable<int> _Posicion;
+		
+		private string _Mail;
+		
+		private System.Nullable<int> _Handicap;
+		
+		private int _CantPartidosJugados;
+		
+		public ObtenerJugadoresTraicionerosResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int NOT NULL")]
+		public int Id_Interesado
+		{
+			get
+			{
+				return this._Id_Interesado;
+			}
+			set
+			{
+				if ((this._Id_Interesado != value))
+				{
+					this._Id_Interesado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Usuario", DbType="Int NOT NULL")]
+		public int Id_Usuario
+		{
+			get
+			{
+				return this._Id_Usuario;
+			}
+			set
+			{
+				if ((this._Id_Usuario != value))
+				{
+					this._Id_Usuario = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this._Nombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Apellido
+		{
+			get
+			{
+				return this._Apellido;
+			}
+			set
+			{
+				if ((this._Apellido != value))
+				{
+					this._Apellido = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaNacimiento", DbType="Date NOT NULL")]
+		public System.DateTime FechaNacimiento
+		{
+			get
+			{
+				return this._FechaNacimiento;
+			}
+			set
+			{
+				if ((this._FechaNacimiento != value))
+				{
+					this._FechaNacimiento = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Posicion", DbType="Int")]
+		public System.Nullable<int> Posicion
+		{
+			get
+			{
+				return this._Posicion;
+			}
+			set
+			{
+				if ((this._Posicion != value))
+				{
+					this._Posicion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mail", DbType="NVarChar(50)")]
+		public string Mail
+		{
+			get
+			{
+				return this._Mail;
+			}
+			set
+			{
+				if ((this._Mail != value))
+				{
+					this._Mail = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Handicap", DbType="Int")]
+		public System.Nullable<int> Handicap
+		{
+			get
+			{
+				return this._Handicap;
+			}
+			set
+			{
+				if ((this._Handicap != value))
+				{
+					this._Handicap = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CantPartidosJugados", DbType="Int NOT NULL")]
+		public int CantPartidosJugados
+		{
+			get
+			{
+				return this._CantPartidosJugados;
+			}
+			set
+			{
+				if ((this._CantPartidosJugados != value))
+				{
+					this._CantPartidosJugados = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ObtenerJugadoresMalosResult
+	{
+		
+		private int _Id_Interesado;
+		
+		private int _Id_Usuario;
+		
+		private string _Nombre;
+		
+		private string _Apellido;
+		
+		private System.DateTime _FechaNacimiento;
+		
+		private System.Nullable<int> _Posicion;
+		
+		private string _Mail;
+		
+		private System.Nullable<int> _Handicap;
+		
+		private int _CantPartidosJugados;
+		
+		public ObtenerJugadoresMalosResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int NOT NULL")]
+		public int Id_Interesado
+		{
+			get
+			{
+				return this._Id_Interesado;
+			}
+			set
+			{
+				if ((this._Id_Interesado != value))
+				{
+					this._Id_Interesado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Usuario", DbType="Int NOT NULL")]
+		public int Id_Usuario
+		{
+			get
+			{
+				return this._Id_Usuario;
+			}
+			set
+			{
+				if ((this._Id_Usuario != value))
+				{
+					this._Id_Usuario = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this._Nombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Apellido
+		{
+			get
+			{
+				return this._Apellido;
+			}
+			set
+			{
+				if ((this._Apellido != value))
+				{
+					this._Apellido = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaNacimiento", DbType="Date NOT NULL")]
+		public System.DateTime FechaNacimiento
+		{
+			get
+			{
+				return this._FechaNacimiento;
+			}
+			set
+			{
+				if ((this._FechaNacimiento != value))
+				{
+					this._FechaNacimiento = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Posicion", DbType="Int")]
+		public System.Nullable<int> Posicion
+		{
+			get
+			{
+				return this._Posicion;
+			}
+			set
+			{
+				if ((this._Posicion != value))
+				{
+					this._Posicion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mail", DbType="NVarChar(50)")]
+		public string Mail
+		{
+			get
+			{
+				return this._Mail;
+			}
+			set
+			{
+				if ((this._Mail != value))
+				{
+					this._Mail = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Handicap", DbType="Int")]
+		public System.Nullable<int> Handicap
+		{
+			get
+			{
+				return this._Handicap;
+			}
+			set
+			{
+				if ((this._Handicap != value))
+				{
+					this._Handicap = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CantPartidosJugados", DbType="Int NOT NULL")]
+		public int CantPartidosJugados
+		{
+			get
+			{
+				return this._CantPartidosJugados;
+			}
+			set
+			{
+				if ((this._CantPartidosJugados != value))
+				{
+					this._CantPartidosJugados = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ObtenerJugadoresConFuturoResult
+	{
+		
+		private System.Nullable<int> _Id_Usuario;
+		
+		private System.Nullable<int> _Id_Interesado;
+		
+		private string _Nombre;
+		
+		private string _Apellido;
+		
+		private System.Nullable<System.DateTime> _FechaNacimiento;
+		
+		private System.Nullable<int> _Posicion;
+		
+		private string _Mail;
+		
+		private System.Nullable<int> _Handicap;
+		
+		private System.Nullable<int> _CantPartidosJugados;
+		
+		public ObtenerJugadoresConFuturoResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Usuario", DbType="Int")]
+		public System.Nullable<int> Id_Usuario
+		{
+			get
+			{
+				return this._Id_Usuario;
+			}
+			set
+			{
+				if ((this._Id_Usuario != value))
+				{
+					this._Id_Usuario = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Interesado", DbType="Int")]
+		public System.Nullable<int> Id_Interesado
+		{
+			get
+			{
+				return this._Id_Interesado;
+			}
+			set
+			{
+				if ((this._Id_Interesado != value))
+				{
+					this._Id_Interesado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this._Nombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(50)")]
+		public string Apellido
+		{
+			get
+			{
+				return this._Apellido;
+			}
+			set
+			{
+				if ((this._Apellido != value))
+				{
+					this._Apellido = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaNacimiento", DbType="Date")]
+		public System.Nullable<System.DateTime> FechaNacimiento
+		{
+			get
+			{
+				return this._FechaNacimiento;
+			}
+			set
+			{
+				if ((this._FechaNacimiento != value))
+				{
+					this._FechaNacimiento = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Posicion", DbType="Int")]
+		public System.Nullable<int> Posicion
+		{
+			get
+			{
+				return this._Posicion;
+			}
+			set
+			{
+				if ((this._Posicion != value))
+				{
+					this._Posicion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mail", DbType="NVarChar(50)")]
+		public string Mail
+		{
+			get
+			{
+				return this._Mail;
+			}
+			set
+			{
+				if ((this._Mail != value))
+				{
+					this._Mail = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Handicap", DbType="Int")]
+		public System.Nullable<int> Handicap
+		{
+			get
+			{
+				return this._Handicap;
+			}
+			set
+			{
+				if ((this._Handicap != value))
+				{
+					this._Handicap = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CantPartidosJugados", DbType="Int")]
+		public System.Nullable<int> CantPartidosJugados
 		{
 			get
 			{

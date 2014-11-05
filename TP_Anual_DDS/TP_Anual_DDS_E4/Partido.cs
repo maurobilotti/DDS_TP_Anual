@@ -237,69 +237,60 @@ namespace TP_Anual_DDS_E4
         /// <summary>
         /// finaliza el partido en la base de datos
         /// </summary>
-        public void Finalizar()
+        public bool Finalizar()
         {
-            DDSDataContext db = new DDSDataContext();
-            DBPartido dbPartido = (from x in db.DBPartido
-                                   where x.Id_Partido == this.Id_Partido
-                                   select x).SingleOrDefault();
-
-            dbPartido.Finalizado = true;
-
-            //obtengo todos los jugadores del partido para incrementar la cantidad de partidos jugados
-            List<DBInteresado> interesados = (from x in db.DBPartido_Interesado
-                                              where x.Id_Partido == this.Id_Partido && !(bool)x.Baja
-                                              select x.DBInteresado).ToList();
-            //sumo un partido a los jugados
-            interesados.ForEach(z => z.CantPartidosJugados++);
-
-            db.SubmitChanges();
-            //añade al partido como finalizado a cada jugador
-            this.ListaJugadores.ForEach(z => z.Interesado.ListaPartidosFinalizados.Add(this));
-            if (!this.Finalizado)
+            try
             {
-                this.Finalizado = true;
+                DDSDataContext db = new DDSDataContext();
+                DBPartido dbPartido = (from x in db.DBPartido
+                                       where x.Id_Partido == this.Id_Partido
+                                       select x).SingleOrDefault();
+
+                dbPartido.Finalizado = true;
+
+                //obtengo todos los jugadores del partido para incrementar la cantidad de partidos jugados
+                List<DBInteresado> interesados = (from x in db.DBPartido_Interesado
+                                                  where x.Id_Partido == this.Id_Partido && !(bool)x.Baja
+                                                  select x.DBInteresado).ToList();
+                //sumo un partido a los jugados
+                interesados.ForEach(z => z.CantPartidosJugados++);
+
+                db.SubmitChanges();
+                //añade al partido como finalizado a cada jugador
+                this.ListaJugadores.ForEach(z => z.Interesado.ListaPartidosFinalizados.Add(this));
+                if (!this.Finalizado)
+                {
+                    this.Finalizado = true;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
-
-
-        /// <summary>
-        /// crea una critica por cada jugador
-        /// </summary>
-        //private void CrearCriticasJugadores()
-        //{
-        //    foreach (Usuario jugadorCritico in this.ListaJugadores)
-        //    {
-        //        foreach (Usuario jugadorCriticado in ListaJugadores)
-        //        {
-        //            if (jugadorCriticado == jugadorCritico)
-        //                continue;
-
-        //            DDSDataContext db = new DDSDataContext();
-        //            DBCalificacion calificacion = new DBCalificacion();
-        //            calificacion.Id_Partido = this.Id_Partido;
-        //            calificacion.Id_Jugador_Critico = jugadorCritico.Interesado.Id_Interesado;
-        //            calificacion.Id_Jugador_Criticado = jugadorCriticado.Interesado.Id_Interesado;
-        //            calificacion.Calificacion = -1;
-        //            db.DBCalificacion.InsertOnSubmit(calificacion);
-        //            db.SubmitChanges();
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// confirma el partido en la base de datos
         /// </summary>
-        public void Confirmar()
+        public bool Confirmar()
         {
-            DDSDataContext db = new DDSDataContext();
+            try
+            {
+                DDSDataContext db = new DDSDataContext();
 
-            DBPartido dbPartido = (from x in db.DBPartido
-                                   where x.Id_Partido == this.Id_Partido
-                                   select x).SingleOrDefault();
+                DBPartido dbPartido = (from x in db.DBPartido
+                                       where x.Id_Partido == this.Id_Partido
+                                       select x).SingleOrDefault();
 
-            dbPartido.Confirmado = true;
-            db.SubmitChanges();
+                dbPartido.Confirmado = true;
+                db.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         #endregion
@@ -316,6 +307,7 @@ namespace TP_Anual_DDS_E4
 
         private void RemoverJugador(Usuario usuarioBaja)
         {
+            usuarioBaja = this.ListaJugadores.Single(z => z.Id_Usuario == usuarioBaja.Id_Usuario);
             this.ListaJugadores.Remove(usuarioBaja);
 
             DDSDataContext db = new DDSDataContext();
@@ -395,7 +387,6 @@ namespace TP_Anual_DDS_E4
                     ListaJugadores.ForEach(z => z.Interesado.Criterio = new Handicap(z.Interesado.Handicap));
                     break;
                 case 'P':
-                    DDSDataContext db = new DDSDataContext();
                     ListaJugadores.ForEach(
                         z =>
                             z.Interesado.Criterio =

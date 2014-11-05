@@ -82,7 +82,7 @@ namespace TP_Anual_DDS_E4
 
         public bool EstasInscriptoEn(Partido partido)
         {
-            return partido.ListaJugadores.Any(z => z.Interesado.Nombre == this.Nombre && z.Interesado.Apellido == this.Apellido);
+            return partido.ListaJugadores.Any(z => z.Interesado.Id_Interesado == this.Id_Interesado);
         }
 
         public void AgregarAmigo(Interesado amigo)

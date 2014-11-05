@@ -72,10 +72,7 @@ namespace TP_Anual_DDS_E4
                     if (partidoInteresado != null)
                     {
                         partidoInteresado.Baja = false;
-                        partido.ListaJugadores.Add(usuario);
                         db.SubmitChanges();
-                        EvaluarEstadoGrilla();
-                        return;
                     }
 
                     var frmInscribirJugador = new frmInscribirseAPartido(Administrador.ObtenerInstancia().ObtenerUsuario(Properties.Settings.Default.IdUsuario), partido);
@@ -151,7 +148,8 @@ namespace TP_Anual_DDS_E4
                 }
                 else
                 {
-                    btnRegistrarse.Enabled = true;
+                    btnRealizarCriticas.Visible = false;
+                    btnRegistrar.Enabled = true;
                     VerificarUsuariosPropuestos();
                     lblUsuario.Text = "Admin";
                     if (gridInteresados.Rows.Count >= 10)
@@ -171,7 +169,7 @@ namespace TP_Anual_DDS_E4
                 if (row.Cells["Confirmado"].Value.Equals("True"))
                     row.DefaultCellStyle.BackColor = Color.LightGreen;
                 if (row.Cells["Finalizado"].Value.Equals("True"))
-                    row.DefaultCellStyle.BackColor = Color.LightSkyBlue;
+                    row.DefaultCellStyle.BackColor = Color.Orange;
             }
 
         }
@@ -254,12 +252,12 @@ namespace TP_Anual_DDS_E4
 
                     gridEquipo1.DataSource = (from x in frm.Partido.ListaPrimerEquipo
                                               select new { x.Interesado.NombreYApellido, x.Interesado.FechaNacimiento, x.Interesado.Posicion, x.Interesado.Handicap }).ToList();
-                    frm.Partido.RegistrarPrimerEquipo();
                     gridEquipo2.DataSource = (from x in frm.Partido.ListaSegundoEquipo
                                               select new { x.Interesado.NombreYApellido, x.Interesado.FechaNacimiento, x.Interesado.Posicion, x.Interesado.Handicap }).ToList();
+                    frm.Partido.RegistrarPrimerEquipo();
                     frm.Partido.RegistrarSegundoEquipo();
                     //se habilita el botón confirmar si los equipos están completos y es el admin
-                    EvaluarEstadoGrilla();
+                    EvaluarHabilitacionControles(partido);
                 }
             }
         }
@@ -273,9 +271,17 @@ namespace TP_Anual_DDS_E4
                 partido.Confirmado = true;
 
                 //confirma el partido en la base de datos
-                partido.Confirmar();
-
-                btnFinalizarPartido.Enabled = btnFinalizarPartido.Visible = true;
+                if (partido.Confirmar())
+                {
+                    btnConfirmar.Enabled = false;
+                    btnFinalizarPartido.Enabled = btnFinalizarPartido.Visible = true;
+                    ResaltarPartidos();
+                    MessageBox.Show("La confirmación del partido fue exitosa.", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("El partido no pudo ser confirmado correctamente. Contacte al administrador.", "Incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -285,11 +291,19 @@ namespace TP_Anual_DDS_E4
             {
                 Partido partido = Administrador.ObtenerInstancia().ObtenerPartido((int)gridPartidos.SelectedCells[0].Value);
                 //finaliza el partido en la base de datos
-                partido.Finalizar();
-
-                MessageBox.Show(
+                if (partido.Finalizar())
+                {
+                    btnFinalizarPartido.Enabled = false;
+                    ResaltarPartidos();
+                    MessageBox.Show(
                     "El partido se ha finalizado correctamente. Los jugadores realizarán las criticas al conectarse al sistema.",
                     "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("El partido no pudo ser finalizado correctamente. Contacte al administrador.", "Incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
             else
             {
@@ -381,8 +395,8 @@ namespace TP_Anual_DDS_E4
             btnConfirmar.Enabled = btnConfirmar.Visible =
             btnCriterios.Visible = btnCriterios.Enabled =
             btnBaja.Enabled =
-            btnInscribirse.Enabled = 
-            btnRegistrarse.Enabled = false;
+            btnInscribirse.Enabled =
+            btnRegistrar.Enabled = false;
         }
 
         private void HabilitarControles()
@@ -426,19 +440,23 @@ namespace TP_Anual_DDS_E4
                 gridEquipo1.DataSource = partido.ArmadorPartido != null ? partido.ObtenerListaEquipo(1) : partido.ObtenerEquiposDesignados(1);
                 gridEquipo2.DataSource = partido.ArmadorPartido != null ? partido.ObtenerListaEquipo(2) : partido.ObtenerEquiposDesignados(2);
 
-                if (gridInteresados.RowCount == 10 && EsAdministrador)
-                {
-                    btnCriterios.Visible = btnCriterios.Enabled = btnOrdenamiento.Enabled = true;
-                        
-                    //si está confirmado, bloqueo el botón
-                    if (gridEquipo1.RowCount == 5 && gridEquipo2.RowCount == 5)
-                    {
-                        btnConfirmar.Visible = btnFinalizarPartido.Visible = true;
-                        btnConfirmar.Enabled = !partido.Confirmado;
-                        btnFinalizarPartido.Enabled = !partido.Finalizado;
-                    }
-                }
+                EvaluarHabilitacionControles(partido);
+            }
+        }
 
+        private void EvaluarHabilitacionControles(Partido partido)
+        {
+            if (gridInteresados.RowCount == 10 && EsAdministrador)
+            {
+                btnCriterios.Visible = btnCriterios.Enabled = btnOrdenamiento.Enabled = true;
+
+                //si está confirmado, bloqueo el botón
+                if (gridEquipo1.RowCount == 5 && gridEquipo2.RowCount == 5)
+                {
+                    btnConfirmar.Visible = btnFinalizarPartido.Visible = true;
+                    btnConfirmar.Enabled = !partido.Confirmado;
+                    btnFinalizarPartido.Enabled = !partido.Finalizado;
+                }
             }
         }
 
@@ -495,6 +513,11 @@ namespace TP_Anual_DDS_E4
                     TipoJugador = x.Interesado.ObtenerTipoJugadorPartido(partido.Id_Partido)
                 }).ToList(); ;
             }
+        }
+
+        private void btnEstadisticas_Click(object sender, EventArgs e)
+        {
+            new frmEstadisticas().ShowDialog();
         }
 
     }

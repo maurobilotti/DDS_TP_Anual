@@ -80,12 +80,6 @@
     <Compile Include="frmBuscadorJugadores.Designer.cs">
       <DependentUpon>frmBuscadorJugadores.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmConfirmarEquipo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConfirmarEquipo.Designer.cs">
-      <DependentUpon>frmConfirmarEquipo.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmCriterios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +97,12 @@
     </Compile>
     <Compile Include="frmDenegacion.Designer.cs">
       <DependentUpon>frmDenegacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEstadisticas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEstadisticas.Designer.cs">
+      <DependentUpon>frmEstadisticas.cs</DependentUpon>
     </Compile>
     <Compile Include="frmInscribirseAPartido.cs">
       <SubType>Form</SubType>
@@ -154,9 +154,6 @@
     <EmbeddedResource Include="frmBuscadorJugadores.resx">
       <DependentUpon>frmBuscadorJugadores.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConfirmarEquipo.resx">
-      <DependentUpon>frmConfirmarEquipo.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmCriterios.resx">
       <DependentUpon>frmCriterios.cs</DependentUpon>
     </EmbeddedResource>
@@ -165,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmDenegacion.resx">
       <DependentUpon>frmDenegacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEstadisticas.resx">
+      <DependentUpon>frmEstadisticas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmInscribirseAPartido.resx">
       <DependentUpon>frmInscribirseAPartido.cs</DependentUpon>

@@ -155,6 +155,7 @@
       <Column Name="Apellido" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="FechaNacimiento" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="Handicap" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CantPartidosJugados" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.UsuarioInteresado_Obtener" Method="UsuarioInteresado_Obtener">
@@ -235,20 +236,6 @@
     <Parameter Name="Mail" Parameter="mail" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="Posicion" Parameter="posicion" Type="System.Int32" DbType="Int" />
     <Parameter Name="Handicap" Parameter="handicap" Type="System.Int32" DbType="Int" />
-  </Function>
-  <Function Name="dbo.ObtenerJugadoresConFuturo" Method="ObtenerJugadoresConFuturo" />
-  <Function Name="dbo.ObtenerJugadoresMalos" Method="ObtenerJugadoresMalos">
-    <ElementType Name="ObtenerJugadoresMalosResult">
-      <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Id_Usuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="FechaNacimiento" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="Posicion" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Mail" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Handicap" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CantPartidosJugados" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
   </Function>
   <Function Name="dbo.Partido_Interesado_Condicional_D" Method="Partido_Interesado_Condicional_D">
     <Parameter Name="Id_Partido" Parameter="id_Partido" Type="System.Int32" DbType="Int" />
@@ -335,7 +322,46 @@
     <Return Type="System.Int32" />
   </Function>
   <Function Name="dbo.PromUltimoPartido" Method="PromUltimoPartido" IsComposable="true">
-    <Parameter Name="Id_Partido" Parameter="id_Partido" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Id_Interesado" Parameter="id_Interesado" Type="System.Int32" DbType="Int" />
     <Return Type="System.Decimal" />
+  </Function>
+  <Function Name="dbo.ObtenerJugadoresTraicioneros" Method="ObtenerJugadoresTraicioneros">
+    <ElementType Name="ObtenerJugadoresTraicionerosResult">
+      <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Id_Usuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaNacimiento" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Posicion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Mail" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Handicap" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CantPartidosJugados" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ObtenerJugadoresMalos" Method="ObtenerJugadoresMalos">
+    <ElementType Name="ObtenerJugadoresMalosResult">
+      <Column Name="Id_Interesado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Id_Usuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaNacimiento" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Posicion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Mail" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Handicap" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CantPartidosJugados" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ObtenerJugadoresConFuturo" Method="ObtenerJugadoresConFuturo">
+    <ElementType Name="ObtenerJugadoresConFuturoResult">
+      <Column Name="Id_Usuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Id_Interesado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="FechaNacimiento" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Posicion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Mail" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Handicap" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CantPartidosJugados" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
   </Function>
 </Database>

@@ -432,45 +432,48 @@ END
 GO
 
 
---CREATE PROCEDURE ObtenerJugadoresTraicioneros
---AS
---BEGIN
---	SELECT 
---		Id_Interesado,
---		Id_Usuario,
---		Nombre,		
---		Apellido,
---		FechaNacimiento,
---		Posicion,
---		Mail,
---		Handicap,
---		CantPartidosJugados
---	FROM DBINTERESADO I
---	WHERE
---		(SELECT Count(1) FROM DBInfraccion WHERE I.Id_Usuario = INF_IdUsuario) > 3
---		--FALTA CONDICION DE "EL ULTIMO MES". Agregar un campo fecha en la infracción		
---END
---GO
-
-
-CREATE PROCEDURE ObtenerJugadoresConFuturo
+CREATE PROCEDURE ObtenerJugadoresTraicioneros
 AS
 BEGIN
-	CREATE TABLE #TempJugadoresMalos
-	(
-		Id_Interesado INT,
-		Nombre NVARCHAR(50),
-		Apellido NVARCHAR(50),
-		Handicap INT,
-		FechaNacimiento INT
-	)
-
-	INSERT INTO #TempJugadoresMalos
-	EXEC ObtenerJugadoresMalos 
-	
-	SELECT * FROM #TempJugadoresMalos WHERE (GETDATE() - YEAR(FechaNacimiento)) > 25
+	SELECT 
+		Id_Interesado,
+		Id_Usuario,
+		Nombre,		
+		Apellido,
+		FechaNacimiento,
+		Posicion,
+		Mail,
+		Handicap,
+		CantPartidosJugados
+	FROM DBINTERESADO I
+	WHERE
+		(SELECT Count(1) FROM DBInfraccion INF WHERE I.Id_Usuario = INF.Id_Usuario) > 3
+		--FALTA CONDICION DE "EL ULTIMO MES". Agregar un campo fecha en la infracción		
 END
 GO
+
+
+CREATE PROCEDURE [dbo].[ObtenerJugadoresConFuturo]
+AS
+BEGIN
+	DECLARE @TempJugadoresMalos TABLE
+	(
+		Id_Usuario INT,
+		Id_Interesado INT,
+		Nombre NVARCHAR(50),
+		Apellido NVARCHAR(50),		
+		FechaNacimiento date,
+		Posicion INT,
+		Mail nvarchar(50),
+		Handicap int,
+		CantPartidosJugados int
+	)
+
+	INSERT INTO @TempJugadoresMalos
+	EXEC ObtenerJugadoresMalos 
+	
+	SELECT * FROM @TempJugadoresMalos WHERE (YEAR(GETDATE()) - YEAR(FechaNacimiento)) < 25
+END
 
 
 CREATE PROCEDURE Infraccion_I
@@ -564,7 +567,8 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 				 i.Nombre,
 				 i.Apellido,
 				 i.FechaNacimiento,
-				 i.Handicap			
+				 i.Handicap,
+				 i.CantPartidosJugados	
 			FROM DBInteresado i
 			LEFT JOIN DBCalificacion ca on ca.Id_Jugador_Criticado = i.Id_Interesado
 			WHERE i.nombre LIKE (CASE WHEN @nombre_jugador = '' THEN  i.Nombre ELSE @nombre_jugador+'%' END) 
@@ -582,7 +586,8 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 				 i.Nombre,
 				 i.Apellido,
 				 i.FechaNacimiento,
-				 i.Handicap				
+				 i.Handicap,
+				 i.CantPartidosJugados		
 			FROM DBInteresado i
 			LEFT JOIN DBCalificacion ca on ca.Id_Jugador_Criticado = i.Id_Interesado
 			WHERE i.nombre LIKE (CASE WHEN @nombre_jugador = '' THEN  i.Nombre ELSE @nombre_jugador+'%' END) 
@@ -599,7 +604,8 @@ set @promedio_hasta = ISNULL(@promedio_hasta,11)
 				 i.Nombre,
 				 i.Apellido,
 				 i.FechaNacimiento,
-				 i.Handicap
+				 i.Handicap,
+				 i.CantPartidosJugados	
 			FROM DBInteresado i
 			LEFT JOIN DBCalificacion ca on ca.Id_Jugador_Criticado = i.Id_Interesado
 			WHERE i.nombre LIKE (CASE WHEN @nombre_jugador = '' THEN  i.Nombre ELSE @nombre_jugador+'%' END) 

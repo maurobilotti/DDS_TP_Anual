@@ -35,7 +35,9 @@ namespace TP_Anual_DDS_E4
 
             foreach (Type tipo in tiposDerivados)
             {
-                ArmadorPartido instancia = Activator.CreateInstance(tipo, new object[] { this.Partido.ListaJugadores }) as ArmadorPartido;
+                //le da al armador de partidos la lista segun el ordenamiento especificad
+
+                ArmadorPartido instancia = Activator.CreateInstance(tipo, new object[] { this.Partido.ListaJugadores.OrderBy(z => z.Interesado.Criterio.AplicarCriterio()).ToList() }) as ArmadorPartido;
                 tabla.Rows.Add(instancia, tipo.Name);
             }
 
